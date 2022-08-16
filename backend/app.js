@@ -73,4 +73,11 @@ app.use((err, _req, res, _next) => {
   });
 });
 
+//test
+app.get('/hello', (req, res) => {
+  res.json({
+    hello: "I work"
+  })
+})
+
 module.exports = app;
