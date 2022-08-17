@@ -6,8 +6,8 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
 
-router.get('/', (req, res) => {
-  res.json({message: 'Spot Router Works'})
+router.get('/', async (req, res) => {
+  return res.json({message: 'Spot Router Works'})
 })
 
 module.exports = router;
