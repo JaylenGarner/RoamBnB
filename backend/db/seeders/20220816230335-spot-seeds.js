@@ -16,7 +16,7 @@ const rentalListings = [
     price: 60,
     previewImage: 'url-filler',
     avgStarRating: 3.5,
-    images: 'https://www.google.com/imgres?imgurl=https%3A%2F%2Fimages.adsttc.com%2Fmedia%2Fimages%2F5ecd%2Fd4ac%2Fb357%2F65c6%2F7300%2F009d%2Flarge_jpg%2F02C.jpg%3F1590547607&imgrefurl=https%3A%2F%2Fwww.archdaily.com%2F940445%2Fab-house-bwa&tbnid=zZX_6N9gJAnIFM&vet=12ahUKEwiJpN3kvMz5AhU4sHIEHQ2sAtoQMygQegUIARDaAg..i&docid=ycr1f-MM1FMK6M&w=2000&h=1333&q=house%20images&ved=2ahUKEwiJpN3kvMz5AhU4sHIEHQ2sAtoQMygQegUIARDaAg'
+    images: 'https://www.pexels.com/photo/house-lights-turned-on-106399/'
   },
   {
     ownerId: 2,
@@ -31,7 +31,7 @@ const rentalListings = [
     price: 250,
     previewImage: 'url-filler',
     avgStarRating: 4.3,
-    images: 'https://www.google.com/imgres?imgurl=https%3A%2F%2Fimages.pexels.com%2Fphotos%2F186077%2Fpexels-photo-186077.jpeg%3Fcs%3Dsrgb%26dl%3Dpexels-binyamin-mellish-186077.jpg%26fm%3Djpg&imgrefurl=https%3A%2F%2Fwww.pexels.com%2Fsearch%2Fhouse%2F&tbnid=GAWtfGsbHL7D3M&vet=12ahUKEwiJpN3kvMz5AhU4sHIEHQ2sAtoQMygJegUIARDJAg..i&docid=w_edFuvJNI2ApM&w=3352&h=2286&itg=1&q=house%20images&ved=2ahUKEwiJpN3kvMz5AhU4sHIEHQ2sAtoQMygJegUIARDJAg'
+    images: 'https://www.pexels.com/photo/photograph-of-a-white-and-green-house-9472589/'
   },
   {
     ownerId: 1,
@@ -46,7 +46,7 @@ const rentalListings = [
     price: 400,
     previewImage: 'url-filler',
     avgStarRating: 4.9,
-    images: 'https://unsplash.com/images/things/house'
+    images: 'https://www.pexels.com/photo/trees-behind-a-house-8031875/'
   }
 ];
 
