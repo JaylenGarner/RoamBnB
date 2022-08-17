@@ -7,7 +7,15 @@ const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
 
 router.get('/', async (req, res) => {
-  return res.json({message: 'Spot Router Works'})
+  const spots = await Spot.findAll({
+    attributes: [
+      'id', 'ownerId', 'address', 'city', 'state', 'country',
+      'lat','lng', 'name', 'description', 'price',
+      'createdAt', 'updatedAt', 'previewImage'
+    ]
+  })
+
+  return res.json(spots);
 })
 
 module.exports = router;
