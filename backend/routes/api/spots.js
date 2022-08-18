@@ -1,5 +1,5 @@
 const express = require('express')
-const Sequelize = require('sequelize');
+const sequelize = require('sequelize');
 const { Spot } = require('../../db/models');
 const { Image } = require('../../db/models');
 const { User } = require('../../db/models');
@@ -37,6 +37,12 @@ router.get('/:spotId', async (req, res) => {
   const spot = await Spot.findOne({
     where: { id : spotId },
 
+    attributes: [
+      'id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name',
+      'description', 'price', 'createdAt', 'updatedAt',
+      [sequelize.fn("COUNT", sequelize.col("Reviews.id")), "numReviews"], 'avgStarRating'
+    ],
+
     include: [
       {
       model: Image,
@@ -62,12 +68,6 @@ router.get('/:spotId', async (req, res) => {
     },
     attributes: []
   }],
-
-  attributes: [
-    'id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name',
-    'description', 'price', 'createdAt', 'updatedAt',
-    [Sequelize.fn("COUNT", Sequelize.col("reviews.id")), "numReviews"], 'avgStarRating'
-  ],
 })
 
 return res.json(spot)
