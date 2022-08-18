@@ -72,8 +72,49 @@ router.get('/:spotId', async (req, res) => {
   }],
 })
 
-return res.json(spot)
+return res.json(spot);
 
+})
+
+// Get All Reviews By a Spot's ID
+router.get('/:spotId/reviews', async (req, res) => {
+  const { spotId } = req.params
+
+  const isValidSpot = await Spot.findByPk(spotId)
+
+  if (!isValidSpot) {
+    res.status(404).send({ "message": "Spot couldn't be found", "statusCode": 404 });
+    return
+  }
+
+  const spot = await Spot.findByPk(spotId)
+  const reviews = await spot.getReviews({
+    attributes: [
+      'id', 'userId', 'spotId', 'review', 'stars', 'createdAt', 'updatedAt'
+    ],
+
+    include: [
+      {
+      model: User,
+      attributes: [
+        'id', 'firstName', 'lastName'
+      ]
+    },
+    {
+      model: Image,
+      where: {
+        imageableId: spotId,
+        imageableType: 'review'
+      },
+      attributes: [
+        'id', 'imageableId', 'url'
+      ]
+    }],
+  })
+
+
+
+  return res.json(reviews)
 })
 
 module.exports = router;

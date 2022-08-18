@@ -6,8 +6,6 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
 
-router.get('/', async (req, res) => {
-  return res.json({message: 'Booking Router Works'})
-})
+
 
 module.exports = router;
