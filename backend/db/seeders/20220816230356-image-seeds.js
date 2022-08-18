@@ -4,7 +4,7 @@ const { Image } = require('../models');
 
 let imageSeeds = [
   {
-    imageableId: 2,
+    imageableId: 1,
     imageableType: 'spot',
     url: 'https://www.pexels.com/photo/residential-house-4469150/'
   },
@@ -14,7 +14,7 @@ let imageSeeds = [
     url: 'https://www.pexels.com/photo/residential-house-4469163/'
   },
   {
-    imageableId: 2,
+    imageableId: 1,
     imageableType: 'review',
     url: 'https://www.pexels.com/photo/blue-and-white-building-3122830/'
   }
