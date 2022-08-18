@@ -62,13 +62,15 @@ router.get('/:spotId', async (req, res) => {
   },
   {
     model: Review,
+    where: {
+      spotId: spotId
+    },
     attributes: []
   }]
 })
 
 return res.json(spot)
 
-// TO DO: ERROR
 })
 
 module.exports = router;
