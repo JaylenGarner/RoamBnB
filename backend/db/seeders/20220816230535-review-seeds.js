@@ -4,13 +4,13 @@ const { Review } = require('../models');
 
 let reviewSeeds = [
   {
-    userId: 2,
+    userId: 1,
     spotId: 1,
     review: 'amazing place',
     stars: 5
   },
   {
-    userId: 1,
+    userId: 2,
     spotId: 2,
     review: 'great getaway',
     stars: 4
