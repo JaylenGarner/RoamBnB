@@ -115,4 +115,5 @@ router.get('/:spotId/reviews', async (req, res) => {
   return res.json(reviews)
 })
 
+
 module.exports = router;
