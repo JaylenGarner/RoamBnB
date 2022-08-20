@@ -79,6 +79,14 @@ module.exports = (sequelize, DataTypes) => {
           len: [3, 256]
         }
       },
+      firstName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
+      lastName: {
+        type: DataTypes.STRING,
+        allowNull: false,
+      },
       hashedPassword: {
         type: DataTypes.STRING.BINARY,
         allowNull: false,
@@ -100,7 +108,12 @@ module.exports = (sequelize, DataTypes) => {
           attributes: { exclude: ["hashedPassword"] }
         },
         loginUser: {
-          attributes: {}
+          attributes: {
+            id: User.id,
+            firstName: User.firstName,
+            lastName: User.lastName,
+            email: User.email,
+          }
         }
       }
     }
