@@ -76,20 +76,20 @@ router.delete(
 
 // Get the current user
 // Restore session user
-router.get('/',restoreUser,(req, res) => {
-    const { user } = req;
-    if (user) {
-      return res.json({
-        currentUser: {
-        id: user.id,
-        firstName: user.firstName,
-        lastName: user.lastName,
-        email: user.email
-        }
-      });
-    } else return res.json({});
-  }
-);
+// router.get('/',restoreUser,(req, res) => {
+//     const { user } = req;
+//     if (user) {
+//       return res.json({
+//         currentUser: {
+//         id: user.id,
+//         firstName: user.firstName,
+//         lastName: user.lastName,
+//         email: user.email
+//         }
+//       });
+//     } else return res.json({});
+//   }
+// );
 
 // Get all spots owned by the current user
 router.get('/spots', restoreUser, async (req, res) => {

@@ -43,4 +43,20 @@ router.post(
   }
 );
 
+// Get current user
+router.get('/:userId',restoreUser, requireAuth,(req, res) => {
+  const { userId } = req.params
+  const { user } = req;
+  if (user.id == userId) {
+
+    return res.json({
+      currentUser: {
+      id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email
+      }});
+  } else return res.json({});
+});
+
 module.exports = router;
