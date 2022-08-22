@@ -122,14 +122,12 @@ router.get('/:spotId/bookings', restoreUser, requireAuth, async (req, res) => {
   const { spotId } = req.params;
   const { user } = req;
 
-  const isValidSpot = await Spot.findByPk(spotId)
+  const spot = await Spot.findByPk(spotId)
 
-  if (!isValidSpot) {
+  if (!spot) {
     res.status(404).send({ "message": "Spot couldn't be found", "statusCode": 404 });
     return
   }
-
-  const spot = await Spot.findByPk(spotId)
 
   // If you are the owner
   if (user.id == spot.ownerId) {
@@ -196,6 +194,73 @@ router.post('/', restoreUser, requireAuth, async (req, res) => {
     createdAt: spot.createdAt,
     updatedAt: spot.updatedAt
   })
+})
+
+// Delete a spot
+router.delete('/:spotId', restoreUser, requireAuth, async (req, res) => {
+  const { spotId } = req.params;
+  const { user } = req;
+
+  const spot = await Spot.findByPk(spotId)
+
+  if (!spot) {
+    res.status(404).send({ "message": "Spot couldn't be found", "statusCode": 404 });
+    return
+  }
+
+  if (spot.ownerId === user.id) {
+    await spot.destroy()
+    res.json({ "message": "Successfully deleted", "statusCode": 200 })
+  }
+
+  return res.json({message: "Authorization error: You are not the spot owner"})
+})
+
+// Edit a spot
+router.put('/:spotId', restoreUser, requireAuth, async (req, res) => {
+  const { user } = req;
+  const { spotId } = req.params;
+  const { address, city, state, country, lat, lng, name, description, price } = req.body;
+  const spot = await Spot.findByPk(spotId)
+
+  if (!spot) {
+    res.status(404).send({ "message": "Spot couldn't be found", "statusCode": 404 });
+    return
+  }
+
+  if (spot.ownerId === user.id) {
+    await spot.update({
+        address: address,
+        city: city,
+        state: state,
+        country: country,
+        lat: lat,
+        lng: lng,
+        name: name,
+        description: description,
+        price: price
+    })
+
+    await spot.save();
+
+    return res.json({
+      id: spot.id,
+      ownerId: spot.ownerId,
+      address: spot.address,
+      city: spot.city,
+      state: spot.state,
+      country: spot.country,
+      lat: spot.lat,
+      lng: spot.lng,
+      name: spot.name,
+      description: spot.description,
+      price: spot.price,
+      createdAt: spot.createdAt,
+      updatedAt: spot.updatedAt
+    })
+  }
+
+  res.json({message: "You are not the owner"})
 })
 
 module.exports = router;
