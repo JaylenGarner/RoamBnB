@@ -1,4 +1,7 @@
 'use strict';
+
+const { User } = require('./user')
+
 const {
   Model
 } = require('sequelize');
@@ -27,6 +30,12 @@ module.exports = (sequelize, DataTypes) => {
   }, {
     sequelize,
     modelName: 'Booking',
-  });
-  return Booking;
+    defaultScope: {
+      attributes: [
+        'spotId', 'startDate', 'endDate'
+      ]
+    },
+  }
+);
+return Booking;
 };

@@ -4,6 +4,8 @@ const { Spot } = require('../../db/models');
 const { Image } = require('../../db/models');
 const { User } = require('../../db/models');
 const { Review } = require('../../db/models');
+const { Booking } = require('../../db/models');
+const { restoreUser, requireAuth } = require('../../utils/auth')
 
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
@@ -115,5 +117,85 @@ router.get('/:spotId/reviews', async (req, res) => {
   return res.json(reviews)
 })
 
+// Get All Bookings By a Spot's ID
+router.get('/:spotId/bookings', restoreUser, requireAuth, async (req, res) => {
+  const { spotId } = req.params;
+  const { user } = req;
+
+  const isValidSpot = await Spot.findByPk(spotId)
+
+  if (!isValidSpot) {
+    res.status(404).send({ "message": "Spot couldn't be found", "statusCode": 404 });
+    return
+  }
+
+  const spot = await Spot.findByPk(spotId)
+
+  // If you are the owner
+  if (user.id == spot.ownerId) {
+    const ownerBookings = await Booking.findAll({
+      where: {
+        spotId: spotId
+      },
+      attributes: [
+        'id', 'spotId', 'userId', 'startDate', 'endDate', 'createdAt', 'updatedAt'
+      ],
+      include: {
+        model: User,
+        attributes: [
+          'id', 'firstName', 'lastName'
+        ]
+      }
+    })
+
+    return res.json(ownerBookings);
+
+  } else {
+
+    // If you are not the owner
+    const bookings = await Booking.findAll({
+      where: {
+        spotId: spotId
+      }
+    })
+
+    return res.json(bookings)
+  }
+})
+
+// Create a spot
+router.post('/', restoreUser, requireAuth, async (req, res) => {
+  const { user } = req;
+  const { address, city, state, country, lat, lng, name, description, price } = req.body;
+
+  const spot = await Spot.create({
+    ownerId: user.id,
+    address: address,
+    city: city,
+    state: state,
+    country: country,
+    lat: lat,
+    lng: lng,
+    name: name,
+    description: description,
+    price: price
+  })
+
+  return res.json({
+    id: spot.id,
+    ownerId: spot.ownerId,
+    address: spot.address,
+    city: spot.city,
+    state: spot.state,
+    country: spot.country,
+    lat: spot.lat,
+    lng: spot.lng,
+    name: spot.name,
+    description: spot.description,
+    price: spot.price,
+    createdAt: spot.createdAt,
+    updatedAt: spot.updatedAt
+  })
+})
 
 module.exports = router;
