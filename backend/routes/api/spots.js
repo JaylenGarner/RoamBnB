@@ -263,4 +263,34 @@ router.put('/:spotId', restoreUser, requireAuth, async (req, res) => {
   res.json({message: "You are not the owner"})
 })
 
+// Add an image to a spot based on the Spot's Id
+router.post('/:spotId/images', restoreUser, requireAuth, async (req, res) => {
+  const { user } = req;
+  const { spotId } = req.params;
+  const { url } = req.body;
+  const spot = await Spot.findByPk(spotId)
+
+  if (!spot) {
+    res.status(404).send({ "message": "Spot couldn't be found", "statusCode": 404 });
+    return
+  }
+
+  if (spot.ownerId === user.id) {
+
+  const image = await Image.create({
+    url: url,
+    imageableId: spotId,
+    imageableType: 'spot',
+  })
+
+  return res.json({
+    id: image.id,
+    imageableId: image.imageableId,
+    imageableType: image.imageableType
+  })
+}
+
+res.json({message: "You don't own this spot"})
+})
+
 module.exports = router;
