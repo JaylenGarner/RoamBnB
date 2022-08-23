@@ -7,18 +7,18 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
 
-// // Get all Reviews ***TESTING PURPOSES***
-// router.get('/', async (req, res) => {
-//   const reviews = await Review.findAll()
-//   res.json(reviews)
-// })
+// Get all Reviews ***TESTING PURPOSES***
+router.get('/', async (req, res) => {
+  const reviews = await Review.findAll()
+  res.json(reviews)
+})
 
-// // Get a review ***TESTING PURPOSES***
-// router.get('/:reviewId', async (req, res) => {
-//   const { reviewId } = req.params
-//   const review = await Review.findByPk(reviewId)
-//   res.json(review)
-// })
+// Get a review ***TESTING PURPOSES***
+router.get('/:reviewId', async (req, res) => {
+  const { reviewId } = req.params
+  const review = await Review.findByPk(reviewId)
+  res.json(review)
+})
 
 // Edit a review
 router.put('/:reviewId', restoreUser, requireAuth, async (req, res) => {
