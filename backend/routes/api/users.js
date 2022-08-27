@@ -105,6 +105,34 @@ router.get('/:userId/reviews', restoreUser, requireAuth, async (req, res) => {
   ]
   })
 
+  for (const review of reviews) {
+
+    const resImages = []
+
+    const images = await Image.findAll({ where: {
+      imageableId: review.id,
+      imageableType: 'review'
+     } });
+
+     for (let i = 0; i < images.length; i++) {
+      const currImage = images[i]
+      let resImage = {
+        id: currImage.id,
+        imageableId: currImage.imageableId,
+        url: currImage.url
+      }
+      resImages.push(resImage)
+     }
+
+    review.dataValues['Images'] = resImages
+  }
+
+  res.json({
+    Reviews: reviews
+  });
+
+
+
   res.json(reviews)
 })
 
