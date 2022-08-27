@@ -45,9 +45,9 @@ router.post(
   '/login',
   validateLogin,
   async (req, res, next) => {
-    const { credential, password } = req.body;
+    const { email, password } = req.body;
 
-    const user = await User.login({ credential, password });
+    const user = await User.login({ email, password });
 
     if (!user) {
       const err = new Error('Login failed');
@@ -61,7 +61,7 @@ router.post(
 
     const userInfo = await User.scope('loginUser').findOne({
       where: {
-        username: credential
+        email: email
       },
       attributes: {
         id: User.id,

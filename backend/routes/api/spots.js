@@ -126,17 +126,6 @@ router.get('/:spotId/reviews', async (req, res, next) => {
       resImages.push(resImage)
      }
 
-    // for each image in found images
-    // images.map(image => {
-    //   // push all its attribute into here
-    //   const currentImage = {
-    //     ...image.dataValues
-    //   };
-    //   reviewImages.push(currentImage);
-    // });
-
-    // review.dataValues['Images'] = reviewImages;
-
     review.dataValues['Images'] = resImages
   }
 

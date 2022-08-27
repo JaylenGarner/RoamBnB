@@ -32,13 +32,13 @@ module.exports = (sequelize, DataTypes) => {
       return User.scope("currentUser").findByPk(id);
     }
 
-    static async login({ credential, password }) {
+    static async login({ email, password }) {
       const { Op } = require('sequelize');
       const user = await User.scope('loginUser').findOne({
         where: {
           [Op.or]: {
-            username: credential,
-            email: credential
+            username: email,
+            email: email
           }
         }
       });
