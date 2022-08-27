@@ -93,15 +93,15 @@ router.get('/:userId/reviews', restoreUser, requireAuth, async (req, res) => {
         'id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price'
       ]
     },
-    {
-      model: Image,
-      where: {
-        imageableType: 'review'
-      },
-      attributes: [
-        'id', 'imageableId', 'url'
-      ]
-    },
+    // {
+    //   model: Image,
+    //   where: {
+    //     imageableType: 'review'
+    //   },
+    //   attributes: [
+    //     'id', 'imageableId', 'url'
+    //   ]
+    // },
   ]
   })
 
