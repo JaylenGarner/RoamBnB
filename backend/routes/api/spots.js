@@ -117,7 +117,13 @@ router.get('/:spotId/reviews', async (req, res, next) => {
      } });
 
      for (let i = 0; i < images.length; i++) {
-      resImages.push(images[i])
+      const currImage = images[i]
+      let resImage = {
+        id: currImage.id,
+        imageableId: currImage.imageableId,
+        url: currImage.url
+      }
+      resImages.push(resImage)
      }
 
     // for each image in found images
