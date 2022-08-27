@@ -1,5 +1,5 @@
 const express = require('express')
-const { Review } = require('../../db/models');
+const { Review, Image } = require('../../db/models');
 const { restoreUser, requireAuth } = require('../../utils/auth')
 
 const { check } = require('express-validator');
@@ -20,8 +20,20 @@ router.get('/:reviewId', async (req, res) => {
   res.json(review)
 })
 
+const validateReview = [
+  check('review')
+    .exists({ checkFalsy: true })
+    .withMessage('Review text is required'),
+  check('stars')
+    .exists({ checkFalsy: true })
+    .isFloat({min: 1, max: 5})
+    .withMessage('Stars must be an integer from 1 to 5'),
+  handleValidationErrors
+];
+
+
 // Edit a review
-router.put('/:reviewId', restoreUser, requireAuth, async (req, res) => {
+router.put('/:reviewId', restoreUser, requireAuth, validateReview, async (req, res) => {
   const { user } = req;
   const { reviewId } = req.params;
   const { review, stars} = req.body;
@@ -65,6 +77,45 @@ router.delete('/:reviewId', restoreUser, requireAuth, async (req, res) => {
   }
 
   res.json({message: "This is not your review"})
+})
+
+// Add an image to a review based on the review's id
+router.post('/:reviewId/images', restoreUser, requireAuth, async (req, res) => {
+  const { user } = req;
+  const { reviewId } = req.params;
+  const { url } = req.body;
+  const review = await Review.findByPk(reviewId)
+
+  if (!review) {
+    res.status(404).send({ "message": "Review couldn't be found", "statusCode": 404 });
+    return
+  }
+
+  const allImages = await review.getImages({
+    attributes: ['id', 'imageableId', 'imageableType']
+  })
+
+  if (allImages.length >= 10) {
+    res.status(404).send({ "message": "Maximum number of images for this resource was reached", "statusCode": 400 });
+    return
+  }
+
+  if (review.userId === user.id) {
+
+    const image = await Image.create({
+      imageableId: reviewId,
+      imageableType: 'review',
+      url: url,
+    })
+
+    return res.json({
+      id: image.id,
+      imageableId: reviewId,
+      url: image.url
+    })
+  }
+
+  return res.json({message: "This is not your review"})
 })
 
 module.exports = router;

@@ -42,7 +42,8 @@ router.get('/:spotId', async (req, res) => {
     attributes: [
       'id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name',
       'description', 'price', 'createdAt', 'updatedAt',
-       [sequelize.fn("COUNT", sequelize.col("Reviews.id")), "numReviews"], 'avgStarRating'
+       [sequelize.fn("COUNT", sequelize.col("Reviews.id")), "numReviews"],
+       [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgStarRating"]
     ],
 
     group: ['Spot.id','Images.id', 'Owner.id'],
@@ -79,43 +80,55 @@ return res.json(spot);
 })
 
 // Get All Reviews By a Spot's ID
-router.get('/:spotId/reviews', async (req, res) => {
-  const { spotId } = req.params
+router.get('/:spotId/reviews', async (req, res, next) => {
+  // deconstruct spotId
+  const { spotId } = req.params;
 
-  const isValidSpot = await Spot.findByPk(spotId)
-
-  if (!isValidSpot) {
-    res.status(404).send({ "message": "Spot couldn't be found", "statusCode": 404 });
-    return
-  }
-
-  const spot = await Spot.findByPk(spotId)
-  const reviews = await spot.getReviews({
-    attributes: [
-      'id', 'userId', 'spotId', 'review', 'stars', 'createdAt', 'updatedAt'
-    ],
-
+  // get reviews
+  const reviews = await Review.findAll({
+    where: {
+      spotId
+    },
     include: [
       {
-      model: User,
-      attributes: [
-        'id', 'firstName', 'lastName'
-      ]
-    },
-    {
-      model: Image,
-      where: {
-        imageableId: spotId,
-        imageableType: 'review'
-      },
-      attributes: [
-        'id', 'imageableId', 'url'
-      ]
-    }],
-  })
+        model: User
+      }
+    ]
+  });
 
-  return res.json(reviews)
-})
+  // TODO: Error response: Couldn't find a Spot with the specified id
+  if (!reviews.length) {
+    const err = Error("Spot couldn't be found");
+    err.status = 404;
+    return next(err);
+  }
+
+  // get array of images for current review
+  // reviews.map(async review => {
+  for (const review of reviews) {
+    // for all images per review
+    const images = await Image.findAll({ where: { imageableId: review.id } });
+
+    // put it into review images to be placed in reviews
+    const reviewImages = [];
+
+    // for each image in found images
+    images.map(image => {
+      // push all its attribute into here
+      const currentImage = {
+        ...image.dataValues
+      };
+      reviewImages.push(currentImage);
+    });
+
+    review.dataValues['Images'] = reviewImages;
+  }
+
+  res.json({
+    Reviews: reviews
+  });
+});
+
 
 // Get All Bookings By a Spot's ID
 router.get('/:spotId/bookings', restoreUser, requireAuth, async (req, res) => {
@@ -161,8 +174,55 @@ router.get('/:spotId/bookings', restoreUser, requireAuth, async (req, res) => {
   }
 })
 
+const validateSpot = [
+  check('address')
+    .exists({ checkFalsy: true })
+    .withMessage('Street address is required'),
+  check('city')
+    .exists({ checkFalsy: true })
+    .withMessage('City is required'),
+  check('state')
+    .exists({ checkFalsy: true })
+    .withMessage('State is required'),
+  check('country')
+    .exists({ checkFalsy: true })
+    .withMessage('Country is required'),
+  check('lat')
+    .exists({ checkFalsy: true })
+    .withMessage('Latitude is not valid'),
+  check('lng')
+    .exists({ checkFalsy: true })
+    .withMessage('Longitude is not valid'),
+  check('name')
+    .exists({ checkFalsy: true })
+    .withMessage('Name must be less than 50 characters'),
+  check('name')
+    .isLength({ max: 50 })
+    .withMessage('Name must be less than 50 characters'),
+  // check if description is valid
+  check('description')
+    .exists({ checkFalsy: true })
+    .withMessage('Description is required'),
+  // check if price is valid
+  check('price')
+    .exists({ checkFalsy: true })
+    .withMessage('Price per day is required'),
+  handleValidationErrors
+];
+
+const validateReview = [
+  check('review')
+    .exists({ checkFalsy: true })
+    .withMessage('Review text is required'),
+  check('stars')
+    .exists({ checkFalsy: true })
+    .isFloat({min: 1, max: 5})
+    .withMessage('Stars must be an integer from 1 to 5'),
+  handleValidationErrors
+];
+
 // Create a spot
-router.post('/', restoreUser, requireAuth, async (req, res) => {
+router.post('/', restoreUser, requireAuth, validateSpot, async (req, res) => {
   const { user } = req;
   const { address, city, state, country, lat, lng, name, description, price } = req.body;
 
@@ -217,7 +277,7 @@ router.delete('/:spotId', restoreUser, requireAuth, async (req, res) => {
 })
 
 // Edit a spot
-router.put('/:spotId', restoreUser, requireAuth, async (req, res) => {
+router.put('/:spotId', restoreUser, requireAuth, validateSpot, async (req, res) => {
   const { user } = req;
   const { spotId } = req.params;
   const { address, city, state, country, lat, lng, name, description, price } = req.body;
@@ -280,7 +340,7 @@ router.post('/:spotId/images', restoreUser, requireAuth, async (req, res) => {
   const image = await Image.create({
     url: url,
     imageableId: spotId,
-    imageableType: 'spot',
+    imageableType: 'spot'
   })
 
   return res.json({
@@ -292,5 +352,126 @@ router.post('/:spotId/images', restoreUser, requireAuth, async (req, res) => {
 
 res.json({message: "You don't own this spot"})
 })
+
+// Create a review for a spot based on the Spot's Id
+router.post('/:spotId/reviews', restoreUser, requireAuth, validateReview, async (req, res) => {
+  const { user } = req;
+  const { spotId } = req.params;
+  const { review, stars } = req.body;
+  const spot = await Spot.findByPk(spotId)
+
+  if (!spot) {
+    res.status(404).send({ "message": "Spot couldn't be found", "statusCode": 404 });
+    return
+  }
+
+  const hasReview = await Review.findOne({
+    where: {
+      userId: user.id,
+      spotId: spotId
+    }
+  })
+
+  if (hasReview) {
+    res.status(403).send({ "message": "User already has a review for this spot",
+    "statusCode": 403 });
+    return
+  }
+
+  if (spot.ownerId !== user.id) {
+
+    const newReview = await Review.create({
+      userId: user.id,
+      spotId: spotId,
+      review: review,
+      stars: stars
+    })
+
+    return res.json({
+      id: newReview.id,
+      userId: newReview.userId,
+      spotId: newReview.spotId,
+      review: newReview.review,
+      stars: newReview.stars,
+      createdAt: newReview.createdAt,
+      updatedAt: newReview.updatedAt
+    })
+  }
+
+  return res.json({message: "You can't review your own spot"})
+})
+
+// Create a booking for a spot based on the Spot's Id
+router.get('/:spotId/bookings/test', restoreUser, requireAuth, async (req, res) => {
+  const { user } = req;
+  const { spotId } = req.params;
+  const { startDate, endDate } = req.body;
+  const spot = await Spot.findByPk(spotId)
+
+  if (!spot) {
+    res.status(404).send({ "message": "Spot couldn't be found", "statusCode": 404 });
+    return
+  }
+
+  const allBookings = await Booking.findAll({
+    where: {
+      spotId: spotId
+    }
+  })
+
+  // conflictChecker = (array) => {
+  //   for (let i = 0; i < allBookings.length; i++) {
+  //     const booking = allBookings[0];
+
+  //     if ((booking.startDate <= startDate && booking.endDate >= endDate)
+  //     || (booking.startDate >= startDate && booking.endDate )) {
+
+  //     }
+  //   }
+  // }
+
+  if (spot.ownerId !== user.id) {
+
+    conflictChecker(allBookings)
+
+    const newBooking = await Booking.create({
+      userId: user.id,
+      spotId: spotId,
+      startDate: startDate,
+      endDate: endDate
+    })
+
+    return res.json({
+      id: newBooking.id,
+      spotId: newBooking.spotId,
+      userId: newBooking.userId,
+      startDate: newBooking.startDate,
+      endDate: newBooking.endDate,
+      createdAt: newBooking.createdAt,
+      updatedAt: newBooking.updatedAt
+    })
+  }
+
+  return res.json({message: "You can't create a booking for your own spot"})
+})
+
+// Add query filters to get spots
+// router.get('/', async (req, res) => {
+//   let { page, size, minLat, maxLat, mixLng, maxLng, minPrice, maxPrice } = req.query;
+//   let where = {}
+//   let pagination = {}
+
+//   if (size < 0 || !size) size = 20;
+//   if (size > 20) size = 20;
+
+//   if (page < 0 || !page) page = 10;
+//   if (page > 10) page = 10;
+
+//   pagination.limit = size;
+//   pagination.offset = size * (page - 1);
+
+// })
+
+
 
 module.exports = router;

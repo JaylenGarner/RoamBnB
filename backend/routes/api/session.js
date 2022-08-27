@@ -12,13 +12,31 @@ const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
 
 const validateLogin = [
-  check('credential')
+  check('email')
     .exists({ checkFalsy: true })
     .notEmpty()
-    .withMessage('Please provide a valid email or username.'),
+    .withMessage('Email is required'),
   check('password')
     .exists({ checkFalsy: true })
-    .withMessage('Please provide a password.'),
+    .withMessage('Password is required'),
+  handleValidationErrors
+];
+
+const validateSignup = [
+  check('email')
+    .exists({ checkFalsy: true })
+    .isEmail()
+    .withMessage('Invalid email'),
+  check('firstName')
+    .exists({ checkFalsy: true })
+    .withMessage('First Name is required'),
+  check('lastName')
+    .exists({ checkFalsy: true })
+    .withMessage('Last Name is required'),
+  check('password')
+    .exists({ checkFalsy: true })
+    .isLength({ min: 6 })
+    .withMessage('Password must be 6 characters or more.'),
   handleValidationErrors
 ];
 
@@ -71,6 +89,43 @@ router.delete(
   (_req, res) => {
     res.clearCookie('token');
     return res.json({ message: 'success' });
+  }
+);
+
+// Sign up
+router.post(
+  '/signup',
+  validateSignup,
+  async (req, res) => {
+    const { firstName, lastName, username, email, password } = req.body;
+
+    const checkforEmail = await User.findOne({
+      where: {
+        email: email
+      }
+    })
+
+    if (checkforEmail) {
+      res.json
+    }
+
+    if (checkforEmail) {
+      res.status(403).send({ "message": "User already exists", "statusCode": 403,
+      "errors": { "email": "User with that email already exists" } });
+      return
+    }
+
+    const user = await User.signup({ firstName, lastName, username, email, password });
+
+    const token = await setTokenCookie(res, user);
+
+    return res.json({
+      id: user.id,
+      firstName: user.firstName,
+      lastName: user.lastName,
+      email: user.email,
+      token: token
+    });
   }
 );
 

@@ -5,20 +5,32 @@ const { Review } = require('../models');
 let reviewSeeds = [
   {
     userId: 1,
-    spotId: 1,
+    spotId: 2,
     review: 'amazing place',
     stars: 5
   },
   {
     userId: 2,
-    spotId: 2,
+    spotId: 3,
     review: 'great getaway',
     stars: 4
   },
   {
-    userId: 3,
-    spotId: 3,
+    userId: 2,
+    spotId: 1,
     review: 'great getaway',
+    stars: 3
+  },
+  {
+    userId: 3,
+    spotId: 1,
+    review: 'great getaway!',
+    stars: 4
+  },
+  {
+    userId: 3,
+    spotId: 1,
+    review: 'great getaway!!!',
     stars: 3
   }
 ]
