@@ -119,6 +119,7 @@ router.post(
 
     const token = await setTokenCookie(res, user);
 
+    res.status(200)
     return res.json({
       id: user.id,
       firstName: user.firstName,
