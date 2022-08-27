@@ -427,10 +427,11 @@ router.post('/:spotId/bookings', restoreUser, requireAuth, async (req, res) => {
   })
 
   for (let i = 0; i < allBookings.length; i++) {
+    let currBooking = allBookings[i]
 
-  const compareStartDate = booking.startDate
+  const compareStartDate = currBooking.startDate
   .toISOString().split('T')[0];
-  const compareEndDate = booking.endDate
+  const compareEndDate = currBooking.endDate
   .toISOString().split('T')[0];
   // const currentDate = new Date()
   // .toISOString().split('T')[0];
