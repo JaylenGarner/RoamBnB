@@ -84,6 +84,13 @@ router.get('/:spotId/reviews', async (req, res, next) => {
   // deconstruct spotId
   const { spotId } = req.params;
 
+  const spot = await Spot.findByPk(spotId)
+
+  if (!spot) {
+    res.status(404).send({ "message": "Spot couldn't be found", "statusCode": 404 });
+    return
+  }
+
   // get reviews
   const reviews = await Review.findAll({
     where: {
@@ -91,37 +98,40 @@ router.get('/:spotId/reviews', async (req, res, next) => {
     },
     include: [
       {
-        model: User
+        model: User,
+        attributes: [
+          'id', 'firstName', 'lastName'
+        ]
       }
     ]
   });
 
-  // TODO: Error response: Couldn't find a Spot with the specified id
-  if (!reviews.length) {
-    const err = Error("Spot couldn't be found");
-    err.status = 404;
-    return next(err);
-  }
 
-  // get array of images for current review
-  // reviews.map(async review => {
   for (const review of reviews) {
-    // for all images per review
-    const images = await Image.findAll({ where: { imageableId: review.id } });
 
-    // put it into review images to be placed in reviews
-    const reviewImages = [];
+    const resImages = []
+
+    const images = await Image.findAll({ where: {
+      imageableId: review.id,
+      imageableType: 'review'
+     } });
+
+     for (let i = 0; i < images.length; i++) {
+      resImages.push(images[i])
+     }
 
     // for each image in found images
-    images.map(image => {
-      // push all its attribute into here
-      const currentImage = {
-        ...image.dataValues
-      };
-      reviewImages.push(currentImage);
-    });
+    // images.map(image => {
+    //   // push all its attribute into here
+    //   const currentImage = {
+    //     ...image.dataValues
+    //   };
+    //   reviewImages.push(currentImage);
+    // });
 
-    review.dataValues['Images'] = reviewImages;
+    // review.dataValues['Images'] = reviewImages;
+
+    review.dataValues['Images'] = resImages
   }
 
   res.json({
