@@ -455,22 +455,22 @@ router.post('/:spotId/bookings', restoreUser, requireAuth, async (req, res) => {
   }
 
 
-  const newBooking = await Booking.create({
-    userId: user.id,
-    spotId: spotId,
-    startDate: startDate,
-    endDate: endDate
-  })
+  // const newBooking = await Booking.create({
+  //   userId: user.id,
+  //   spotId: spotId,
+  //   startDate: startDate,
+  //   endDate: endDate
+  // })
 
-  return res.json({
-    id: newBooking.id,
-    spotId: newBooking.spotId,
-    userId: newBooking.userId,
-    startDate: newBooking.startDate,
-    endDate: newBooking.endDate,
-    createdAt: newBooking.createdAt,
-    updatedAt: newBooking.updatedAt
-  })
+  // return res.json({
+  //   id: newBooking.id,
+  //   spotId: newBooking.spotId,
+  //   userId: newBooking.userId,
+  //   startDate: newBooking.startDate,
+  //   endDate: newBooking.endDate,
+  //   createdAt: newBooking.createdAt,
+  //   updatedAt: newBooking.updatedAt
+  // })
 }}
   return res.json({message: "You can't create a booking for your own spot"})
 })
