@@ -407,7 +407,7 @@ router.post('/:spotId/reviews', restoreUser, requireAuth, validateReview, async 
 })
 
 // Create a booking for a spot based on the Spot's Id
-router.get('/:spotId/bookings/test', restoreUser, requireAuth, async (req, res) => {
+router.post('/:spotId/bookings', restoreUser, requireAuth, async (req, res) => {
   const { user } = req;
   const { spotId } = req.params;
   const { startDate, endDate } = req.body;
@@ -418,45 +418,59 @@ router.get('/:spotId/bookings/test', restoreUser, requireAuth, async (req, res) 
     return
   }
 
+  if (spot.ownerId !== user.id) {
+
   const allBookings = await Booking.findAll({
     where: {
       spotId: spotId
     }
   })
 
-  // conflictChecker = (array) => {
-  //   for (let i = 0; i < allBookings.length; i++) {
-  //     const booking = allBookings[0];
+  for (let i = 0; i < allBookings.length; i++) {
 
-  //     if ((booking.startDate <= startDate && booking.endDate >= endDate)
-  //     || (booking.startDate >= startDate && booking.endDate )) {
+  const compareStartDate = booking.startDate
+  .toISOString().split('T')[0];
+  const compareEndDate = booking.endDate
+  .toISOString().split('T')[0];
+  // const currentDate = new Date()
+  // .toISOString().split('T')[0];
 
-  //     }
-  //   }
-  // }
-
-  if (spot.ownerId !== user.id) {
-
-    conflictChecker(allBookings)
-
-    const newBooking = await Booking.create({
-      userId: user.id,
-      spotId: spotId,
-      startDate: startDate,
-      endDate: endDate
-    })
-
-    return res.json({
-      id: newBooking.id,
-      spotId: newBooking.spotId,
-      userId: newBooking.userId,
-      startDate: newBooking.startDate,
-      endDate: newBooking.endDate,
-      createdAt: newBooking.createdAt,
-      updatedAt: newBooking.updatedAt
-    })
+  // if booking start date or end date exist with given dates
+  if (compareStartDate === startDate || compareEndDate === endDate) {
+    return res.status(403).send({ "message": "Sorry, this spot is already booked for the specified dates",
+     "statusCode": 403 });
   }
 
+      // start date conflicts
+  if (compareStartDate === startDate) {
+  return res.status(403).send({ "message": "Sorry, this spot is already booked for the specified dates",
+  "statusCode": 403 });
+  }
+
+  // end date conflicts
+  if (compareEndDate === endDate) {
+    return res.status(403).send({ "message": "Sorry, this spot is already booked for the specified dates",
+    "statusCode": 403 });
+  }
+
+
+  const newBooking = await Booking.create({
+    userId: user.id,
+    spotId: spotId,
+    startDate: startDate,
+    endDate: endDate
+  })
+
+  return res.json({
+    id: newBooking.id,
+    spotId: newBooking.spotId,
+    userId: newBooking.userId,
+    startDate: newBooking.startDate,
+    endDate: newBooking.endDate,
+    createdAt: newBooking.createdAt,
+    updatedAt: newBooking.updatedAt
+  })
+}}
   return res.json({message: "You can't create a booking for your own spot"})
 })
 
