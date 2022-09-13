@@ -19,13 +19,16 @@ router.get('/:userId',restoreUser, requireAuth,(req, res) => {
   const { user } = req;
   if (user.id == userId) {
 
-    return res.json({
-      currentUser: {
-      id: user.id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email
-      }});
+  let currentUser = {
+    id: user.id,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email
+  }
+
+    return res.json(
+      currentUser
+    );
   } else return res.json({});
 });
 
@@ -42,7 +45,7 @@ router.get('/:userId/spots', restoreUser, requireAuth, async (req, res) => {
     ]
   })
 
-  res.json(spots)
+  res.json({"Spots" :spots})
 })
 
 // Get all of the current users bookings

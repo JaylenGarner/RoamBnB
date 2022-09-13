@@ -50,10 +50,8 @@ router.post(
     const user = await User.login({ email, password });
 
     if (!user) {
-      const err = new Error('Login failed');
+      const err = new Error();
       err.status = 401;
-      err.title = 'Login failed';
-      err.errors = ['The provided credentials were invalid.'];
       res.json(
       { "message": "Invalid credentials", "statusCode": 401 })
       return next(err);
@@ -96,7 +94,7 @@ router.delete(
 router.post(
   '/signup',
   validateSignup,
-  async (req, res) => {
+  async (req, res, next) => {
     const { firstName, lastName, email, password } = req.body;
 
     const checkforEmail = await User.findOne({
@@ -106,13 +104,14 @@ router.post(
     })
 
     if (checkforEmail) {
-      res.json
-    }
 
-    if (checkforEmail) {
-      res.status(403).send({ "message": "User already exists", "statusCode": 403,
-      "errors": { "email": "User with that email already exists" } });
-      return
+      const err = new Error();
+      err.status = 403;
+      err.errors = { "email": "User with that email already exists" };
+      res.json(
+      { message: "User already exists", "statusCode": 403,
+       errors: { "email": "User with that email already exists" } })
+      return next(err);
     }
 
     const user = await User.signup({ firstName, lastName, email, password });
