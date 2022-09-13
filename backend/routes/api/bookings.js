@@ -7,6 +7,8 @@ const { restoreUser, requireAuth } = require('../../utils/auth')
 
 const router = express.Router();
 
+// Create a booking
+
 // Edit a booking for a spot based on the Spot's Id
 router.put('/:bookingId', restoreUser, requireAuth, async (req, res) => {
   const { user } = req;
@@ -49,28 +51,28 @@ router.delete('/:bookingId', restoreUser, requireAuth, async (req, res) => {
   const userId = user.id;
 
   // const booking = await Booking.findByPk(bookingId)
-  const booking = await Booking.findOne({where:{
-    id: bookingId
-  },
+  const booking = await Booking.findOne({where: { id: bookingId },
     attributes: ['id', 'userId']
-})
+  })
 
   if (!booking) {
     res.status(404).send({ "message": "Booking couldn't be found", "statusCode": 404 });
     return
   }
 
+    let today = new Date();
+    let dd = String(today.getDate()).padStart(2, '0');
+    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+    let yyyy = today.getFullYear();
+    today = yyyy + '-' + mm + '-' + dd;
+
+    if (booking.startDate <= today) {
+      res.status(400).send({ "message": "Bookings that have been started can't be deleted",
+      "statusCode": 404 });
+      return
+    }
+
   const spot = await Spot.findByPk(booking.spotId)
-
-  // if (booking.userId === userId) {
-  //   res.json('this is your booking')
-  //   return
-  // }
-
-  // if (spot.ownerId === user.id) {
-  //   res.json('this is your spot')
-  //   return
-  // }
 
   if (booking.userId === userId || spot.ownerId === userId) {
     await booking.destroy()

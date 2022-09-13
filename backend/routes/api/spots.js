@@ -434,13 +434,6 @@ router.post('/:spotId/bookings', restoreUser, requireAuth, async (req, res) => {
   for (let i = 0; i < allBookings.length; i++) {
     let currBooking = allBookings[i]
 
-  // const compareStartDate = currBooking.startDate
-  // .toISOString().split('T')[0];
-  // const compareEndDate = currBooking.endDate
-  // .toISOString().split('T')[0];
-  // const currentDate = new Date()
-  // .toISOString().split('T')[0];
-
     if (startDate >= currBooking.startDate && startDate <= currBooking.endDate){
       return res.json({message: "booking conflict"})
     }
@@ -452,23 +445,7 @@ router.post('/:spotId/bookings', restoreUser, requireAuth, async (req, res) => {
     if (currBooking.startDate >= startDate && currBooking.startDate <= endDate) {
       return res.json({message: "booking conflict"})
     }
-  // // if booking start date or end date exist with given dates
-  // if (compareStartDate === startDate || compareEndDate === endDate) {
-  //   return res.status(403).send({ "message": "Sorry, this spot is already booked for the specified dates",
-  //    "statusCode": 403 });
-  // }
 
-  //     // start date conflicts
-  // if (compareStartDate === startDate) {
-  // return res.status(403).send({ "message": "Sorry, this spot is already booked for the specified dates",
-  // "statusCode": 403 });
-  // }
-
-  // // end date conflicts
-  // if (compareEndDate === endDate) {
-  //   return res.status(403).send({ "message": "Sorry, this spot is already booked for the specified dates",
-  //   "statusCode": 403 });
-  // }
 
 
   const newBooking = await Booking.create({
