@@ -29,7 +29,7 @@ let reviewSeeds = [
   },
   {
     userId: 3,
-    spotId: 1,
+    spotId: 2,
     review: 'great getaway!!!',
     stars: 3
   }

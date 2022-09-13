@@ -20,6 +20,12 @@ let bookingSeeds = [
     spotId: 3,
     startDate: `01-02-2023`,
     endDate:`01-12-2023`
+  },
+  {
+  userId: 3,
+  spotId: 2,
+  startDate: '01-05-2025',
+  endDate: '01-06-2026'
   }
 ]
 

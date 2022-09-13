@@ -8,6 +8,7 @@ const { Booking } = require('../../db/models');
 const { restoreUser, requireAuth } = require('../../utils/auth')
 
 const { check } = require('express-validator');
+const { query } = require('express-validator/check')
 const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
@@ -233,32 +234,34 @@ router.post('/', restoreUser, requireAuth, validateSpot, async (req, res) => {
 
   const spot = await Spot.create({
     ownerId: user.id,
-    address: address,
-    city: city,
-    state: state,
-    country: country,
-    lat: lat,
-    lng: lng,
-    name: name,
-    description: description,
-    price: price
+    address,
+    city,
+    state,
+    country,
+    lat,
+    lng,
+    name,
+    description,
+    price
   })
 
-  return res.json({
-    id: spot.id,
-    ownerId: spot.ownerId,
-    address: spot.address,
-    city: spot.city,
-    state: spot.state,
-    country: spot.country,
-    lat: spot.lat,
-    lng: spot.lng,
-    name: spot.name,
-    description: spot.description,
-    price: spot.price,
-    createdAt: spot.createdAt,
-    updatedAt: spot.updatedAt
-  })
+  const newSpot = await Spot.findByPk(spot.id)
+  res.json(newSpot)
+  // res.json({
+  //   id: spot.id,
+  //   ownerId: spot.ownerId,
+  //   address: spot.address,
+  //   city: spot.city,
+  //   state: spot.state,
+  //   country: spot.country,
+  //   lat: spot.lat,
+  //   lng: spot.lng,
+  //   name: spot.name,
+  //   description: spot.description,
+  //   price: spot.price,
+  //   createdAt: spot.createdAt,
+  //   updatedAt: spot.updatedAt
+  // })
 })
 
 // Delete a spot
