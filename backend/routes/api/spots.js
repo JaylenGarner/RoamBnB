@@ -245,23 +245,21 @@ router.post('/', restoreUser, requireAuth, validateSpot, async (req, res) => {
     price
   })
 
-  const newSpot = await Spot.findByPk(spot.id)
-  res.json(newSpot)
-  // res.json({
-  //   id: spot.id,
-  //   ownerId: spot.ownerId,
-  //   address: spot.address,
-  //   city: spot.city,
-  //   state: spot.state,
-  //   country: spot.country,
-  //   lat: spot.lat,
-  //   lng: spot.lng,
-  //   name: spot.name,
-  //   description: spot.description,
-  //   price: spot.price,
-  //   createdAt: spot.createdAt,
-  //   updatedAt: spot.updatedAt
-  // })
+  res.json({
+    id: spot.id,
+    ownerId: spot.ownerId,
+    address: spot.address,
+    city: spot.city,
+    state: spot.state,
+    country: spot.country,
+    lat: spot.lat,
+    lng: spot.lng,
+    name: spot.name,
+    description: spot.description,
+    price: spot.price,
+    createdAt: spot.createdAt,
+    updatedAt: spot.updatedAt
+  })
 })
 
 // Delete a spot

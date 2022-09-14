@@ -9,6 +9,7 @@ const router = express.Router();
 
 // Create a booking
 
+
 // Edit a booking for a spot based on the Spot's Id
 router.put('/:bookingId', restoreUser, requireAuth, async (req, res) => {
   const { user } = req;
@@ -60,17 +61,17 @@ router.delete('/:bookingId', restoreUser, requireAuth, async (req, res) => {
     return
   }
 
-    let today = new Date();
-    let dd = String(today.getDate()).padStart(2, '0');
-    let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
-    let yyyy = today.getFullYear();
-    today = yyyy + '-' + mm + '-' + dd;
+  let today = new Date();
+  let dd = String(today.getDate()).padStart(2, '0');
+  let mm = String(today.getMonth() + 1).padStart(2, '0'); //January is 0!
+  let yyyy = today.getFullYear();
+  today = yyyy + '-' + mm + '-' + dd;
 
-    if (booking.startDate <= today) {
-      res.status(400).send({ "message": "Bookings that have been started can't be deleted",
-      "statusCode": 404 });
-      return
-    }
+  if (booking.startDate <= today) {
+    res.status(400).send({ "message": "Bookings that have been started can't be deleted",
+    "statusCode": 404 });
+    return
+  }
 
   const spot = await Spot.findByPk(booking.spotId)
 
