@@ -1,6 +1,6 @@
 const express = require('express');
 
-const { setTokenCookie, restoreUser } = require('../../utils/auth');
+const { setTokenCookie, restoreUser, requireAuth } = require('../../utils/auth');
 const { User } = require('../../db/models');
 const { Spot } = require('../../db/models');
 const { Booking } = require('../../db/models');
@@ -12,7 +12,7 @@ const { handleValidationErrors } = require('../../utils/validation');
 const router = express.Router();
 
 const validateLogin = [
-  check('email')
+  check('credential')
     .exists({ checkFalsy: true })
     .notEmpty()
     .withMessage('Email is required'),
@@ -22,30 +22,13 @@ const validateLogin = [
   handleValidationErrors
 ];
 
-const validateSignup = [
-  check('email')
-    .exists({ checkFalsy: true })
-    .isEmail()
-    .withMessage('Invalid email'),
-  check('firstName')
-    .exists({ checkFalsy: true })
-    .withMessage('First Name is required'),
-  check('lastName')
-    .exists({ checkFalsy: true })
-    .withMessage('Last Name is required'),
-  check('password')
-    .exists({ checkFalsy: true })
-    .isLength({ min: 6 })
-    .withMessage('Password must be 6 characters or more.'),
-  handleValidationErrors
-];
-
-// Log in
+// // Log in
 router.post(
-  '/login',
+  '/',
   validateLogin,
   async (req, res, next) => {
-    const { email, password } = req.body;
+    const { password } = req.body;
+    const email = req.body.credential
 
     const user = await User.login({ email, password });
 
@@ -81,6 +64,24 @@ router.post(
   }
 );
 
+// Get current user
+router.get('/',restoreUser, requireAuth,(req, res) => {
+  const { user } = req;
+  if (user) {
+  let currentUser = {
+    id: user.id,
+    firstName: user.firstName,
+    lastName: user.lastName,
+    email: user.email
+  }
+
+    return res.json(
+      currentUser
+    );
+  } else return res.json({});
+});
+
+
 // Log out
 router.delete(
   '/',
@@ -90,43 +91,6 @@ router.delete(
   }
 );
 
-// Sign up
-router.post(
-  '/signup',
-  validateSignup,
-  async (req, res, next) => {
-    const { firstName, lastName, email, password } = req.body;
 
-    const checkforEmail = await User.findOne({
-      where: {
-        email: email
-      }
-    })
-
-    if (checkforEmail) {
-
-      const err = new Error();
-      err.status = 403;
-      err.errors = { "email": "User with that email already exists" };
-      res.json(
-      { message: "User already exists", "statusCode": 403,
-       errors: { "email": "User with that email already exists" } })
-      return next(err);
-    }
-
-    const user = await User.signup({ firstName, lastName, email, password });
-
-    const token = await setTokenCookie(res, user);
-
-    res.status(200)
-    return res.json({
-      id: user.id,
-      firstName: user.firstName,
-      lastName: user.lastName,
-      email: user.email,
-      token: token
-    });
-  }
-);
 
 module.exports = router;

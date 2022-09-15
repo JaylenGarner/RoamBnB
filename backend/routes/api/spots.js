@@ -26,59 +26,93 @@ router.get('/', async (req, res) => {
   return res.json({"Spots": spots});
 })
 
+// Get spots owned by current user
+router.get('/current', restoreUser, requireAuth, async (req, res) => {
+  const { user } = req;
+
+  const spots = await Spot.findAll({
+    where: {
+      ownerId: user.id
+    },
+    attributes: [
+      'id', 'ownerId', 'address', 'city', 'state', 'country','lat', 'lng',
+      'name', 'description','price', 'createdAt', 'updatedAt', 'previewImage'
+    ]
+  })
+
+  res.json({"Spots" :spots})
+})
+
 // Get Details Of a Spot From An Id
 router.get('/:spotId', async (req, res) => {
   const { spotId } = req.params
 
-  const isValidSpot = await Spot.findByPk(spotId)
+  const spot = await Spot.findByPk(spotId)
 
-  if (!isValidSpot) {
+  if (!spot) {
     res.status(404).send({ "message": "Spot couldn't be found", "statusCode": 404 });
     return
   }
 
-  const spot = await Spot.findOne({
-    where: { id : spotId },
-
-    attributes: [
-      'id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name',
-      'description', 'price', 'createdAt', 'updatedAt',
-       [sequelize.fn("COUNT", sequelize.col("Reviews.id")), "numReviews"],
-       [sequelize.fn("AVG", sequelize.col("Reviews.stars")), "avgStarRating"]
-    ],
-
-    group: ['Spot.id','Images.id', 'Owner.id'],
-
-    include: [
-      {
-      model: Image,
-      where: {
-        imageableId: spotId,
-        imageableType: 'spot'
-      },
-      attributes: [
-        'id', 'imageableId', 'url'
-      ]
-    },
-    {
-    model: User,
-    as: 'Owner',
-    attributes: [
-      'id', 'firstName', 'lastName'
-    ]
-  },
-  {
-    model: Review,
+  const reviews = await Review.findAll({
     where: {
       spotId: spotId
+    }
+  })
+
+  const numReviews = reviews.length
+
+  const avgStarHelper = (arr) => {
+    let sum = 0
+
+    for (let i = 0; i < reviews.length; i++) {
+      let review = reviews[i]
+      sum += review.stars
+    }
+
+    if (sum === 0) return 0
+    return sum / arr.length
+  }
+
+  const avgStarRating = avgStarHelper(reviews)
+
+  const images = await Image.findAll({
+    where: {
+      imageableId: spotId,
+      imageableType: 'spot'
     },
-    attributes: []
-  }],
+    attributes: [
+      'id', 'imageableId', 'url'
+    ]
+  })
+
+  const owner = await User.findByPk(spot.ownerId)
+
+  const result = {
+    id: spot.id,
+    ownerId: spot.ownerId,
+    address: spot.address,
+    city: spot.city,
+    state: spot.state,
+    country: spot.country,
+    lat: spot.lat,
+    lng: spot.lng,
+    name: spot.name,
+    description: spot.description,
+    price: spot.price,
+    createdAt: spot.createdAt,
+    updatedAt: spot.updatedAt,
+    numReviews,
+    avgStarRating,
+    Images: images,
+    Owner: owner
+  }
+
+  return res.json(result);
+
 })
 
-return res.json(spot);
 
-})
 
 // Get All Reviews By a Spot's ID
 router.get('/:spotId/reviews', async (req, res, next) => {
