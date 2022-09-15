@@ -1,5 +1,5 @@
 const express = require('express')
-const { Review, Image } = require('../../db/models');
+const { Review, Image, User, Spot } = require('../../db/models');
 const { restoreUser, requireAuth } = require('../../utils/auth')
 
 const { check } = require('express-validator');
@@ -7,17 +7,69 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
 
-// Get all Reviews ***TESTING PURPOSES***
-router.get('/', async (req, res) => {
-  const reviews = await Review.findAll()
-  res.json(reviews)
-})
+// Get all of the current users reviews
+router.get('/current', restoreUser, requireAuth, async (req, res) => {
+  const { user } = req;
+  const reviews = await Review.findAll({
+    where: {
+      userId: user.id
+    },
+    attributes: [
+      'id', 'userId', 'spotId', 'review', 'stars', 'createdAt', 'updatedAt'
+    ],
 
-// Get a review ***TESTING PURPOSES***
-router.get('/:reviewId', async (req, res) => {
-  const { reviewId } = req.params
-  const review = await Review.findByPk(reviewId)
-  res.json(review)
+    include: [
+      {
+      model: User,
+      attributes: [
+        'id', 'firstName','lastName'
+      ]
+    },
+    {
+      model: Spot,
+      attributes: [
+        'id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price'
+      ]
+    },
+    // {
+    //   model: Image,
+    //   where: {
+    //     imageableType: 'review'
+    //   },
+    //   attributes: [
+    //     'id', 'imageableId', 'url'
+    //   ]
+    // },
+  ]
+  })
+
+  for (const review of reviews) {
+
+    const resImages = []
+
+    const images = await Image.findAll({ where: {
+      imageableId: review.id,
+      imageableType: 'review'
+     } });
+
+     for (let i = 0; i < images.length; i++) {
+      const currImage = images[i]
+      let resImage = {
+        id: currImage.id,
+        imageableId: currImage.imageableId,
+        url: currImage.url
+      }
+      resImages.push(resImage)
+     }
+
+    review.dataValues['Images'] = resImages
+  }
+
+  res.json({
+    Reviews: reviews
+  });
+
+  res.json(reviews)
 })
 
 const validateReview = [
@@ -30,7 +82,6 @@ const validateReview = [
     .withMessage('Stars must be an integer from 1 to 5'),
   handleValidationErrors
 ];
-
 
 // Edit a review
 router.put('/:reviewId', restoreUser, requireAuth, validateReview, async (req, res) => {

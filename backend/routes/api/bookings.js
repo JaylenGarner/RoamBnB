@@ -51,7 +51,6 @@ router.delete('/:bookingId', restoreUser, requireAuth, async (req, res) => {
   const { bookingId } = req.params;
   const userId = user.id;
 
-  // const booking = await Booking.findByPk(bookingId)
   const booking = await Booking.findOne({where: { id: bookingId },
     attributes: ['id', 'userId']
   })
@@ -81,6 +80,30 @@ router.delete('/:bookingId', restoreUser, requireAuth, async (req, res) => {
   }
 
   res.json({message: "This is not your booking or spot"})
+})
+
+// Get all of the current users bookings
+router.get('/current', restoreUser, requireAuth, async (req, res) => {
+  const { user } = req;
+  const bookings = await Booking.findAll({
+    where: {
+      userId: user.id
+    },
+    attributes: [
+      'id', 'spotId', 'userId', 'startDate', 'endDate', 'createdAt', 'updatedAt'
+    ],
+
+    include: [
+      {
+      model: Spot,
+      attributes: [
+        'id', 'ownerId', 'address', 'city', 'state', 'country', 'lat',
+      'lng', 'name', 'price', 'previewImage'
+      ]
+    }]
+  })
+
+  res.json(bookings)
 })
 
 module.exports = router;

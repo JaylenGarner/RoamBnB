@@ -65,8 +65,8 @@ router.get('/:spotId', async (req, res) => {
   const avgStarHelper = (arr) => {
     let sum = 0
 
-    for (let i = 0; i < reviews.length; i++) {
-      let review = reviews[i]
+    for (let i = 0; i < arr.length; i++) {
+      let review = arr[i]
       sum += review.stars
     }
 
@@ -111,8 +111,6 @@ router.get('/:spotId', async (req, res) => {
   return res.json(result);
 
 })
-
-
 
 // Get All Reviews By a Spot's ID
 router.get('/:spotId/reviews', async (req, res, next) => {
@@ -407,20 +405,31 @@ router.post('/:spotId/reviews', restoreUser, requireAuth, validateReview, async 
     return
   }
 
-  const hasReview = await Review.findOne({
+  const allReviews = await Review.findAll({
     where: {
-      userId: user.id,
-      spotId: spotId
+      spotId
     }
   })
 
-  if (hasReview) {
+  const hasReview = (arr) => {
+    for (let i = 0; i < arr.length; i++) {
+      const review = arr[i]
+
+      if (review.userId === user.id) return true
+      return false
+    }
+  }
+
+  if (hasReview(allReviews)) {
     res.status(403).send({ "message": "User already has a review for this spot",
     "statusCode": 403 });
     return
   }
 
-  if (spot.ownerId !== user.id) {
+
+  // if (spot.ownerId === user.id) {
+  //   return res.json({message: "You can't review your own spot"})
+  // }
 
     const newReview = await Review.create({
       userId: user.id,
@@ -438,9 +447,6 @@ router.post('/:spotId/reviews', restoreUser, requireAuth, validateReview, async 
       createdAt: newReview.createdAt,
       updatedAt: newReview.updatedAt
     })
-  }
-
-  return res.json({message: "You can't review your own spot"})
 })
 
 // Create a booking for a spot based on the Spot's Id
@@ -455,7 +461,7 @@ router.post('/:spotId/bookings', restoreUser, requireAuth, async (req, res) => {
     return
   }
 
-  if (spot.ownerId !== user.id) {
+  // if (spot.ownerId !== user.id) {
 
   const allBookings = await Booking.findAll({
     where: {
@@ -477,6 +483,7 @@ router.post('/:spotId/bookings', restoreUser, requireAuth, async (req, res) => {
     if (currBooking.startDate >= startDate && currBooking.startDate <= endDate) {
       return res.json({message: "booking conflict"})
     }
+  }
 
 
 
@@ -496,8 +503,8 @@ router.post('/:spotId/bookings', restoreUser, requireAuth, async (req, res) => {
     createdAt: newBooking.createdAt,
     updatedAt: newBooking.updatedAt
   })
-}}
-  return res.json({message: "You can't create a booking for your own spot"})
+// }
+  // return res.json({message: "You can't create a booking for your own spot"})
 })
 
 // Add query filters to get spots
