@@ -180,36 +180,43 @@ router.get('/:spotId/bookings', restoreUser, requireAuth, async (req, res) => {
     return
   }
 
+  const bookings = await Booking.findAll({
+    where: {
+      spotId
+    }
+  })
+  return res.json(bookings)
+
   // If you are the owner
-  if (user.id == spot.ownerId) {
-    const ownerBookings = await Booking.findAll({
-      where: {
-        spotId: spotId
-      },
-      attributes: [
-        'id', 'spotId', 'userId', 'startDate', 'endDate', 'createdAt', 'updatedAt'
-      ],
-      include: {
-        model: User,
-        attributes: [
-          'id', 'firstName', 'lastName'
-        ]
-      }
-    })
+  // if (user.id == spot.ownerId) {
+  //   const ownerBookings = await Booking.findAll({
+  //     where: {
+  //       spotId: spotId
+  //     },
+  //     attributes: [
+  //       'id', 'spotId', 'userId', 'startDate', 'endDate', 'createdAt', 'updatedAt'
+  //     ],
+  //     include: {
+  //       model: User,
+  //       attributes: [
+  //         'id', 'firstName', 'lastName'
+  //       ]
+  //     }
+  //   })
 
-    return res.json(ownerBookings);
+  //   return res.json(ownerBookings);
 
-  } else {
+  // } else {
 
-    // If you are not the owner
-    const bookings = await Booking.findAll({
-      where: {
-        spotId: spotId
-      }
-    })
+  //   // If you are not the owner
+  //   const bookings = await Booking.findAll({
+  //     where: {
+  //       spotId: spotId
+  //     }
+  //   })
 
-    return res.json(bookings)
-  }
+  //   return res.json(bookings)
+  // }
 })
 
 const validateSpot = [
@@ -392,6 +399,7 @@ router.post('/:spotId/images', restoreUser, requireAuth, async (req, res) => {
 
 res.json({message: "You don't own this spot"})
 })
+
 
 // Create a review for a spot based on the Spot's Id
 router.post('/:spotId/reviews', restoreUser, requireAuth, validateReview, async (req, res) => {

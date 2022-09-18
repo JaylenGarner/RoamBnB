@@ -7,43 +7,6 @@ const { restoreUser, requireAuth } = require('../../utils/auth')
 
 const router = express.Router();
 
-// Create a booking
-
-
-// Edit a booking for a spot based on the Spot's Id
-router.put('/:bookingId', restoreUser, requireAuth, async (req, res) => {
-  const { user } = req;
-  const { startDate, endDate } = req.body;
-  const { bookingId } = req.params
-
-  const booking = await Booking.findByPk(bookingId)
-
-  if (!booking) {
-    res.status(404).send({ "message": "Booking couldn't be found", "statusCode": 404 });
-    return
-  }
-
-  if (booking.userId === user.id) {
-    await booking.update({
-        startDate: startDate,
-        endDate: endDate
-    })
-
-    await booking.save();
-
-    return res.json({
-      id: booking.id,
-      spotId: booking.spotId,
-      userId: booking.userId,
-      startDate: booking.startDate,
-      endDate: booking.endDate,
-      updatedAt: spot.updatedAt,
-      createdAt: booking.createdAt
-    })
-  }
-
-  res.json({message: "This is not your booking"})
-})
 
 // Delete a Booking
 router.delete('/:bookingId', restoreUser, requireAuth, async (req, res) => {
@@ -104,6 +67,57 @@ router.get('/current', restoreUser, requireAuth, async (req, res) => {
   })
 
   res.json(bookings)
+})
+
+// Edit a booking based on the Booking Id
+router.put('/:bookingId', restoreUser, requireAuth, async (req, res) => {
+  const { user } = req;
+  const { bookingId } = req.params;
+  const { startDate, endDate } = req.body;
+  const booking = await Booking.findOne({
+    where: {
+      id :bookingId
+    },
+    attributes: ['id', 'spotId', 'userId', 'startDate', 'endDate', 'createdAt', 'updatedAt']
+  })
+
+  if (!booking) {
+    res.status(404).send({ "message": "Booking couldn't be found", "statusCode": 404 });
+    return
+  }
+
+  // if (spot.ownerId !== user.id) {
+
+    if (startDate >= booking.startDate && startDate <= booking.endDate){
+      return res.json({message: "booking conflict"})
+    }
+
+    if (endDate >= booking.startDate && endDate <= booking.endDate){
+      return res.json({message: "booking conflict"})
+    }
+
+    if (booking.startDate >= startDate && booking.startDate <= endDate) {
+      return res.json({message: "booking conflict"})
+    }
+
+    await booking.update({
+    startDate: startDate,
+    endDate: endDate
+  })
+
+  await booking.save();
+
+  return res.json({
+    id: booking.id,
+    spotId: booking.spotId,
+    userId: booking.userId,
+    startDate: booking.startDate,
+    endDate: booking.endDate,
+    createdAt: booking.createdAt,
+    updatedAt: booking.updatedAt
+  })
+// }
+  // return res.json({message: "You can't create a booking for your own spot"})
 })
 
 module.exports = router;
