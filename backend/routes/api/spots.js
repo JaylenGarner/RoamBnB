@@ -15,6 +15,20 @@ const router = express.Router();
 
 // Get All Spots
 router.get('/', async (req, res) => {
+
+  let { page, size, minLat, maxLat, mixLng, maxLng, minPrice, maxPrice } = req.query;
+  let where = {}
+  let pagination = {}
+
+  if (size < 0 || !size) size = 20;
+  if (size > 20) size = 20;
+
+  if (page < 0 || !page) page = 10;
+  if (page > 10) page = 10;
+
+  pagination.limit = size;
+  pagination.offset = size * (page - 1);
+
   const spots = await Spot.findAll({
     attributes: [
       'id', 'ownerId', 'address', 'city', 'state', 'country',
@@ -481,15 +495,35 @@ router.post('/:spotId/bookings', restoreUser, requireAuth, async (req, res) => {
     let currBooking = allBookings[i]
 
     if (startDate >= currBooking.startDate && startDate <= currBooking.endDate){
-      return res.json({message: "booking conflict"})
+      const err = new Error();
+      err.status = 403;
+      res.json({
+      "message": "Sorry, this spot is already booked for the specified dates",
+      "statusCode": 403,
+      "errors": {"startDate": "Start date conflicts with an existing booking"}
+      })
+
+      return next(err);
     }
 
     if (endDate >= currBooking.startDate && endDate <= currBooking.endDate){
-      return res.json({message: "booking conflict"})
+      const err = new Error();
+      err.status = 403;
+      res.json({
+      "message": "Sorry, this spot is already booked for the specified dates",
+      "statusCode": 403,
+      "errors": {"endDate": "End date conflicts with an existing booking"}
+      })
     }
 
     if (currBooking.startDate >= startDate && currBooking.startDate <= endDate) {
-      return res.json({message: "booking conflict"})
+      const err = new Error();
+      err.status = 403;
+      res.json({
+      "message": "Sorry, this spot is already booked for the specified dates",
+      "statusCode": 403,
+      "errors": {"startDate": "Start date conflicts with an existing booking"}
+      })
     }
   }
 
@@ -514,24 +548,5 @@ router.post('/:spotId/bookings', restoreUser, requireAuth, async (req, res) => {
 // }
   // return res.json({message: "You can't create a booking for your own spot"})
 })
-
-// Add query filters to get spots
-// router.get('/', async (req, res) => {
-//   let { page, size, minLat, maxLat, mixLng, maxLng, minPrice, maxPrice } = req.query;
-//   let where = {}
-//   let pagination = {}
-
-//   if (size < 0 || !size) size = 20;
-//   if (size > 20) size = 20;
-
-//   if (page < 0 || !page) page = 10;
-//   if (page > 10) page = 10;
-
-//   pagination.limit = size;
-//   pagination.offset = size * (page - 1);
-
-// })
-
-
 
 module.exports = router;
