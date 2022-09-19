@@ -13,8 +13,26 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
 
+const queryValidation = [
+  check('page').isInt({ min: 0, max: 10 })
+  .withMessage("Page must be greater than or equal to 0"),
+  check('size').isInt({ min: 0, max: 10 })
+  .withMessage("Size must be greater than or equal to 0"),
+  check('maxLat').isFloat()
+  .withMessage("Maximum latitude is invalid"),
+  check('minLat').isFloat()
+  .withMessage("Minimum latitude is invalid"),
+  check('maxLng').isFloat()
+  .withMessage("Maximum longitude is invalid"),
+  check('minLng').isFloat()
+  .withMessage("Minimum longitude is invalid"),
+  check('minPrice').isFloat({ min: 0 })
+  .withMessage("Maximum price must be greater than 0"),
+  check('maxPrice').isFloat({ max: 0 })
+  .withMessage("Maximum price must be greater than 0")
+]
 // Get All Spots
-router.get('/', async (req, res) => {
+router.get('/', queryValidation, async (req, res) => {
 
   let { page, size, minLat, maxLat, mixLng, maxLng, minPrice, maxPrice } = req.query;
   let where = {}
@@ -26,18 +44,23 @@ router.get('/', async (req, res) => {
   if (page < 0 || !page) page = 10;
   if (page > 10) page = 10;
 
-  pagination.limit = size;
-  pagination.offset = size * (page - 1);
+  limit = size;
+  offset = size * (page - 1);
 
   const spots = await Spot.findAll({
     attributes: [
       'id', 'ownerId', 'address', 'city', 'state', 'country',
       'lat','lng', 'name', 'description', 'price',
       'createdAt', 'updatedAt', 'previewImage'
-    ]
+    ],
+    limit,
+    offset
   })
 
-  return res.json({"Spots": spots});
+
+
+  res.json({"Spots": spots}, page, size);
+  return
 })
 
 // Get spots owned by current user
