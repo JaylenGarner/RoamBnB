@@ -33,11 +33,8 @@ router.post(
     const user = await User.login({ email, password });
 
     if (!user) {
-      const err = new Error();
-      err.status = 401;
-      res.json(
-      { "message": "Invalid credentials", "statusCode": 401 })
-      return next(err);
+      res.status(401).send({ "message": "Invalid credentials", "statusCode": 401 });
+      return
     }
 
     const userInfo = await User.scope('loginUser').findOne({

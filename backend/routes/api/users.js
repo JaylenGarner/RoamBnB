@@ -44,13 +44,11 @@ router.post(
 
     if (checkforEmail) {
 
-      const err = new Error();
-      err.status = 403;
-      err.errors = { "email": "User with that email already exists" };
-      res.json(
-      { message: "User already exists", "statusCode": 403,
-       errors: { "email": "User with that email already exists" } })
-      return next(err);
+      res.status(403).send({ "message": "User already exists", "statusCode": 403,
+      errors: { "email": "User with that email already exists" }
+      });
+
+      return
     }
 
     const user = await User.signup({ firstName, lastName, email, password });

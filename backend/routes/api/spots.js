@@ -33,10 +33,24 @@ const queryValidation = [
 ]
 // Get All Spots
 router.get('/', queryValidation, async (req, res) => {
-
   let { page, size, minLat, maxLat, mixLng, maxLng, minPrice, maxPrice } = req.query;
   let where = {}
   let pagination = {}
+
+  if (!(page && size)) {
+    const spots = await Spot.findAll({
+      attributes: [
+        'id', 'ownerId', 'address', 'city', 'state', 'country',
+        'lat','lng', 'name', 'description', 'price',
+        'createdAt', 'updatedAt', 'previewImage'
+      ]
+    })
+
+    res.json({"Spots": spots});
+    return
+  }
+
+  // res.json(req.query)
 
   if (size < 0 || !size) size = 20;
   if (size > 20) size = 20;
@@ -56,8 +70,6 @@ router.get('/', queryValidation, async (req, res) => {
     limit,
     offset
   })
-
-
 
   res.json({"Spots": spots}, page, size);
   return
@@ -366,10 +378,8 @@ router.put('/:spotId', restoreUser, requireAuth, validateSpot, async (req, res) 
   const spot = await Spot.findByPk(spotId)
 
   if (!spot) {
-    const err = new Error();
-      err.status = 404;
-      res.json({ message: "Spot couldn't be found", "statusCode": 404})
-      return next(err);
+    res.status(404).send({ message: "Spot couldn't be found", "statusCode": 404 });
+    return
   }
 
   if (spot.ownerId === user.id) {
@@ -506,7 +516,11 @@ router.post('/:spotId/bookings', restoreUser, requireAuth, async (req, res) => {
     return
   }
 
-  // if (spot.ownerId !== user.id) {
+  if (spot.ownerId === user.id) {
+    res.status(403).send({"message": "You can't create a booking for your own spot",
+    "statusCode": 404})
+    return
+  }
 
   const allBookings = await Booking.findAll({
     where: {
@@ -569,7 +583,7 @@ router.post('/:spotId/bookings', restoreUser, requireAuth, async (req, res) => {
     updatedAt: newBooking.updatedAt
   })
 // }
-  // return res.json({message: "You can't create a booking for your own spot"})
+  return res.json({message: "You can't create a booking for your own spot"})
 })
 
 module.exports = router;
