@@ -518,7 +518,7 @@ router.post('/:spotId/bookings', restoreUser, requireAuth, async (req, res) => {
 
   if (spot.ownerId === user.id) {
     res.status(403).send({"message": "You can't create a booking for your own spot",
-    "statusCode": 404})
+    "statusCode": 403})
     return
   }
 
@@ -532,35 +532,29 @@ router.post('/:spotId/bookings', restoreUser, requireAuth, async (req, res) => {
     let currBooking = allBookings[i]
 
     if (startDate >= currBooking.startDate && startDate <= currBooking.endDate){
-      const err = new Error();
-      err.status = 403;
-      res.json({
-      "message": "Sorry, this spot is already booked for the specified dates",
-      "statusCode": 403,
-      "errors": {"startDate": "Start date conflicts with an existing booking"}
-      })
-
-      return next(err);
+      res.status(403).send({
+        "message": "Sorry, this spot is already booked for the specified dates",
+        "statusCode": 403,
+        "errors": {"startDate": "Start date conflicts with an existing booking"}
+        })
+      return
     }
 
     if (endDate >= currBooking.startDate && endDate <= currBooking.endDate){
-      const err = new Error();
-      err.status = 403;
-      res.json({
-      "message": "Sorry, this spot is already booked for the specified dates",
-      "statusCode": 403,
-      "errors": {"endDate": "End date conflicts with an existing booking"}
+      res.status(403).send({
+        "message": "Sorry, this spot is already booked for the specified dates",
+        "statusCode": 403,
+        "errors": {"endDate": "End date conflicts with an existing booking"}
       })
     }
 
     if (currBooking.startDate >= startDate && currBooking.startDate <= endDate) {
-      const err = new Error();
-      err.status = 403;
-      res.json({
-      "message": "Sorry, this spot is already booked for the specified dates",
-      "statusCode": 403,
-      "errors": {"startDate": "Start date conflicts with an existing booking"}
+      res.status(403).send({
+        "message": "Sorry, this spot is already booked for the specified dates",
+        "statusCode": 403,
+        "errors": {"startDate": "Start date conflicts with an existing booking"}
       })
+      return
     }
   }
 
