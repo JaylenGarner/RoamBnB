@@ -437,6 +437,9 @@ router.post('/:spotId/images', restoreUser, requireAuth, async (req, res) => {
     imageableType: 'spot'
   })
 
+  spot.previewImage = image.url
+  spot.save()
+
   return res.json({
     id: image.id,
     imageableId: image.imageableId,
