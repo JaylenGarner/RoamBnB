@@ -92,10 +92,8 @@ router.put('/:reviewId', restoreUser, requireAuth, validateReview, async (req, r
   const reviewToEdit = await Review.findByPk(reviewId)
 
   if (!reviewToEdit) {
-    const err = new Error();
-      err.status = 404;
-      res.json({ message: "Review couldn't be found", "statusCode": 404})
-      return next(err);
+    res.status(404).send({ "message": "Review couldn't be found", "statusCode": 404 });
+    return
   }
 
   if (reviewToEdit.userId === user.id) {
