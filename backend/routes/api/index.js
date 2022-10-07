@@ -25,8 +25,8 @@ router.use('/bookings', bookingsRouter);
 
 router.use('/images', imagesRouter);
 
-router.post('/test', (req, res) => {
-  res.json({ requestBody: req.body });
+router.get('/', (req, res) => {
+  res.json({ "Jaylen's AirBbB API"});
 });
 
 module.exports = router;
