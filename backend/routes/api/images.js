@@ -6,20 +6,6 @@ const { handleValidationErrors } = require('../../utils/validation');
 
 const router = express.Router();
 
-// Get all images ***TESTING PURPOSES***
-router.get('/', async (req, res) => {
-  const images = await Image.findAll()
-  res.json(images)
-})
-
-// Get an image ***TESTING PURPOSES***
-router.get('/:imageId', async (req, res) => {
-  const { imageId } = req.params
-  const image = await Image.findByPk(imageId)
-
-  res.json(image)
-})
-
 // Delete an image
 router.delete('/:imageId', restoreUser, requireAuth, async (req, res) => {
   const { user } = req;

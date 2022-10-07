@@ -53,7 +53,7 @@ Returns the information about the current user that is logged in.
 - Request
 
   - Method: GET
-  - URL: api/users/:userId
+  - URL: api/session/current
   - Body: none
 
 - Successful Response
@@ -81,7 +81,7 @@ information.
 - Request
 
   - Method: POST
-  - URL: api/login
+  - URL: api/session/login
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -151,7 +151,7 @@ user's information.
 - Request
 
   - Method: POST
-  - URL: api/signup
+  - URL: api/users/signup
   - Headers:
     - Content-Type: application/json
   - Body:
@@ -267,7 +267,7 @@ Returns all the spots owned (created) by the current user.
 - Request
 
   - Method: GET
-  - URL: api/users/:userId/spots
+  - URL: api/spots/current
   - Body: none
 
 - Successful Response
@@ -581,7 +581,7 @@ Returns all the reviews written by the current user.
 - Request
 
   - Method: GET
-  - URL: api/users/:userId/reviews
+  - URL: api/reviews/current
   - Body: none
 
 - Successful Response
@@ -896,7 +896,7 @@ Return all the bookings that the current user has made.
 - Request
 
   - Method: GET
-  - URL: api/users/:userId/bookings
+  - URL: api/bookings/current
   - Body: none
 
 - Successful Response

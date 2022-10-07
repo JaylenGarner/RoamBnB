@@ -86,8 +86,6 @@ router.put('/:bookingId', restoreUser, requireAuth, async (req, res) => {
     return
   }
 
-  // if (spot.ownerId !== user.id) {
-
     if (startDate >= booking.startDate && startDate <= booking.endDate){
       return res.json({message: "booking conflict"})
     }
@@ -116,8 +114,6 @@ router.put('/:bookingId', restoreUser, requireAuth, async (req, res) => {
     createdAt: booking.createdAt,
     updatedAt: booking.updatedAt
   })
-// }
-  // return res.json({message: "You can't create a booking for your own spot"})
 })
 
 module.exports = router;

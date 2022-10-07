@@ -31,15 +31,6 @@ router.get('/current', restoreUser, requireAuth, async (req, res) => {
         'id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price'
       ]
     },
-    // {
-    //   model: Image,
-    //   where: {
-    //     imageableType: 'review'
-    //   },
-    //   attributes: [
-    //     'id', 'imageableId', 'url'
-    //   ]
-    // },
   ]
   })
 
@@ -162,6 +153,7 @@ router.post('/:reviewId/images', restoreUser, requireAuth, async (req, res) => {
     return res.json({
       id: image.id,
       imageableId: reviewId,
+      imageableType: image.imageableType,
       url: image.url
     })
   }

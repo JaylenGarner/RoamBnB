@@ -50,8 +50,6 @@ router.get('/', queryValidation, async (req, res) => {
     return
   }
 
-  // res.json(req.query)
-
   if (size < 0 || !size) size = 20;
   if (size > 20) size = 20;
 
@@ -236,36 +234,6 @@ router.get('/:spotId/bookings', restoreUser, requireAuth, async (req, res) => {
   })
   return res.json(bookings)
 
-  // If you are the owner
-  // if (user.id == spot.ownerId) {
-  //   const ownerBookings = await Booking.findAll({
-  //     where: {
-  //       spotId: spotId
-  //     },
-  //     attributes: [
-  //       'id', 'spotId', 'userId', 'startDate', 'endDate', 'createdAt', 'updatedAt'
-  //     ],
-  //     include: {
-  //       model: User,
-  //       attributes: [
-  //         'id', 'firstName', 'lastName'
-  //       ]
-  //     }
-  //   })
-
-  //   return res.json(ownerBookings);
-
-  // } else {
-
-  //   // If you are not the owner
-  //   const bookings = await Booking.findAll({
-  //     where: {
-  //       spotId: spotId
-  //     }
-  //   })
-
-  //   return res.json(bookings)
-  // }
 })
 
 const validateSpot = [
@@ -483,11 +451,6 @@ router.post('/:spotId/reviews', restoreUser, requireAuth, validateReview, async 
     "statusCode": 403 });
     return
   }
-
-
-  // if (spot.ownerId === user.id) {
-  //   return res.json({message: "You can't review your own spot"})
-  // }
 
     const newReview = await Review.create({
       userId: user.id,
