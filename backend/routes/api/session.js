@@ -62,7 +62,7 @@ router.post(
 );
 
 // Get current user
-router.get('/',restoreUser, requireAuth,(req, res) => {
+router.get('/',restoreUser,(req, res) => {
   const { user } = req;
   if (user) {
   let currentUser = {
