@@ -26,30 +26,34 @@ function LoginFormPage() {
   }
 
   return (
+    <div className='login-panel'>
+      <div className='login-form-label'>
+        <h2>Login</h2>
+      </div>
     <form onSubmit={handleSubmit} className='login-form'>
+      <h3 id='welcome'>Welcome to AirBnB</h3>
       <ul>
         {errors.map((error, idx) => <li key={idx}>{error}</li>)}
       </ul>
-      <label>
-        Username or Email
         <input
           type="text"
+          className='text-fields'
+          placeholder='Email'
           value={credential}
           onChange={(e) => setCredential(e.target.value)}
           required
         />
-      </label>
-      <label>
-        Password
         <input
           type="password"
+          className='text-fields'
+          placeholder='Password'
           value={password}
           onChange={(e) => setPassword(e.target.value)}
           required
         />
-      </label>
-      <button type="submit">Log In</button>
+      <button className='login-button'type="submit">Continue</button>
     </form>
+    </div>
   );
 }
 
