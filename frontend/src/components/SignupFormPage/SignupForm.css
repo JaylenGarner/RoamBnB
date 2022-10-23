@@ -1,17 +1,16 @@
 .signup-form-label {
-  border-bottom: 1px solid rgb(207, 198, 198);;
+  border-bottom: 2px solid rgb(207, 198, 198);;
   border-radius: 2%;
   display: flex;
   justify-content: center;
 }
 
 .signup-panel {
-  /* display: flex; */
   width: 566px;
   height: 634px;
-  border: 1px solid rgb(207, 198, 198);
+  border: 2px solid rgb(207, 198, 198);
   border-radius: 1%;
-  /* justify-content: center; */
+  margin: 0px auto;
 }
 
 .signup-form {
@@ -33,15 +32,31 @@
   font-size: 16px;
   color: white;
   margin-top: 30px;
+  border-radius: 10px;
 }
 
 #welcome {
-  padding-right: 300px;
+  padding-right: 324px;
+  padding-top: 35px;
+  font-size: 22px;
 }
 
-.text-fields {
-  height: 48px;
+.signup-text-fields {
+  height: 52px;
   width: 502px;
-  border: 1px solid rgb(207, 198, 198);
-  border-radius: 1%;
+  border: 1.2px solid rgb(207, 198, 198);
+  font-size: 16px;
+  padding-left: 10px;
+  outline-color: black;
+}
+
+#signup-email {
+  border-top-right-radius: 10px;
+  border-top-left-radius: 10px;
+  height: 52px;
+}
+
+#signup-confirm-password {
+  border-bottom-right-radius: 10px;
+  border-bottom-left-radius: 10px;
 }

@@ -37,7 +37,8 @@ function LoginFormPage() {
       </ul>
         <input
           type="text"
-          className='text-fields'
+          id='login-email'
+          className='login-text-fields'
           placeholder='Email'
           value={credential}
           onChange={(e) => setCredential(e.target.value)}
@@ -45,7 +46,8 @@ function LoginFormPage() {
         />
         <input
           type="password"
-          className='text-fields'
+          id='login-password'
+          className='login-text-fields'
           placeholder='Password'
           value={password}
           onChange={(e) => setPassword(e.target.value)}

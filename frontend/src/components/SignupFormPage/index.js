@@ -30,7 +30,7 @@ function SignupFormPage() {
   return (
     <div className="signup-panel">
       <div className="signup-form-label">
-      <h2>Sign-up</h2>
+      <h2>Sign Up</h2>
       </div>
     <form onSubmit={handleSubmit} className='login-form'>
     <h3 id='welcome'>Welcome to AirBnB</h3>
@@ -39,7 +39,8 @@ function SignupFormPage() {
       </ul>
         <input
           type="text"
-          className='text-fields'
+          id="signup-email"
+          className='signup-text-fields'
           placeholder="Email"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
@@ -47,7 +48,8 @@ function SignupFormPage() {
         />
         <input
           type="password"
-          className='text-fields'
+          id="signup-password"
+          className='signup-text-fields'
           placeholder="Password"
           value={password}
           onChange={(e) => setPassword(e.target.value)}
@@ -55,7 +57,8 @@ function SignupFormPage() {
         />
         <input
           type="password"
-          className='text-fields'
+          id='signup-confirm-password'
+          className='signup-text-fields'
           placeholder="Confirm Password"
           value={confirmPassword}
           onChange={(e) => setConfirmPassword(e.target.value)}

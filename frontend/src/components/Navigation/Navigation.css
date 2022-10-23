@@ -1,0 +1,24 @@
+.nav-bar {
+  width: 100%;
+  height: 80px;
+  border-bottom: .5px solid rgb(243, 232, 232);
+  display: flex;
+}
+
+.nav-bar-links {
+  font-family: sans-serif;
+  text-decoration: none;
+  color: rgb(124, 119, 119)
+}
+
+.logo {
+  width: 110px;
+  height: 50pxpx;
+  margin-left: 33px;
+  margin-top: 16px;
+}
+
+.profile-button-container {
+  align-self: center;
+  padding-left: 1850px
+}
