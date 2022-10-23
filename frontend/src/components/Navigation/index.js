@@ -1,24 +1,22 @@
 import React from 'react';
 import { NavLink } from 'react-router-dom';
 import { useSelector } from 'react-redux';
-import ProfileButton from './ProfileButton';
+import SessionProfileButton from './SessionProfileButton';
+import NoSessionProfileButton from './NoSessionProfileButton';
 import logo from '../../assets/airbnb.png'
 import './Navigation.css';
 
 function Navigation({ isLoaded }){
   const sessionUser = useSelector(state => state.session.user);
 
-  let sessionLinks;
+  let profileButton;
   if (sessionUser) {
-    sessionLinks = (
-      <ProfileButton user={sessionUser}/>
+    profileButton = (
+      <SessionProfileButton user={sessionUser}/>
     );
   } else {
-    sessionLinks = (
-      <>
-        <NavLink to="/login" className={'nav-bar-links'} id='nav-bar-login'>Log In</NavLink>
-        <NavLink to="/signup" className={'nav-bar-links'} id='nav-bar-signup'>Sign Up</NavLink>
-      </>
+    profileButton = (
+      <NoSessionProfileButton />
     );
   }
 
@@ -29,7 +27,7 @@ function Navigation({ isLoaded }){
             <img className='logo' src={logo} alt='airbnb logo'/>
           </a>
         </NavLink>
-        {isLoaded && sessionLinks}
+        {isLoaded && profileButton}
     </div>
   );
 }
