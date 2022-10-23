@@ -38,12 +38,9 @@ function SessionProfileButton({ user }) {
       </button>
       {showMenu && (
         <ul className="profile-dropdown">
-          <li>{user.username}</li>
-          <li>{user.email}</li>
-          <li>
+          <h3>{user.email}</h3>
             <button onClick={logout}>Log Out</button>
-          </li>
-        </ul>
+         </ul>
       )}
     </div>
   );
