@@ -14,7 +14,7 @@ const rentalListings = [
     name: 'apartment',
     description: 'long term apartment rental here in Norwich',
     price: 60,
-    previewImage: 'url-filler',
+    previewImage: 'https://images.unsplash.com/photo-1583608205776-bfd35f0d9f83?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=2670&q=80',
     avgStarRating: 3.5,
     images: 'https://www.pexels.com/photo/house-lights-turned-on-106399/'
   },
@@ -29,9 +29,9 @@ const rentalListings = [
     name: 'Lake House',
     description: 'Lake house nightly rental',
     price: 250,
-    previewImage: 'url-filler',
+    previewImage: 'https://images.unsplash.com/photo-1575517111478-7f6afd0973db?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80',
     avgStarRating: 4.3,
-    images: 'https://www.pexels.com/photo/photograph-of-a-white-and-green-house-9472589/'
+    images: 'https://images.unsplash.com/photo-1575517111478-7f6afd0973db?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80'
   },
   {
     ownerId: 1,
@@ -44,9 +44,9 @@ const rentalListings = [
     name: 'Beach house',
     description: 'Beach house nightly rental',
     price: 400,
-    previewImage: 'url-filler',
+    previewImage: 'https://images.unsplash.com/photo-1575517111478-7f6afd0973db?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80',
     avgStarRating: 4.9,
-    images: 'https://www.pexels.com/photo/trees-behind-a-house-8031875/'
+    images: 'https://images.unsplash.com/photo-1582063289852-62e3ba2747f8?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1740&q=80'
   }
 ];
 
