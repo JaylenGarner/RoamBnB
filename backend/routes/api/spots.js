@@ -284,7 +284,7 @@ const validateReview = [
 ];
 
 // Create a spot
-router.post('/', restoreUser, requireAuth, validateSpot, async (req, res) => {
+router.post('/', requireAuth, validateSpot, async (req, res) => {
   const { user } = req;
   const { address, city, state, country, lat, lng, name, description, price } = req.body;
 
