@@ -1,7 +1,9 @@
 // frontend/src/components/Navigation/ProfileButton.js
 import React, { useState, useEffect } from "react";
 import { useDispatch } from 'react-redux';
+import { NavLink } from "react-router-dom";
 import * as sessionActions from '../../store/session';
+import CreateSpotForm from "../CreateSpotForm";
 import './Navigation.css';
 
 function SessionProfileButton({ user }) {
@@ -31,6 +33,11 @@ function SessionProfileButton({ user }) {
     dispatch(sessionActions.logout());
   };
 
+  // const spotForm = (e) => {
+  //   e.preventDefault();
+  //   <Redirect to='/create'></Redirect>
+  // }
+
   return (
     <div className="profile-button-container">
       <button onClick={openMenu} className='profile-button'>
@@ -39,6 +46,7 @@ function SessionProfileButton({ user }) {
       {showMenu && (
         <ul className="profile-dropdown">
           <h3>{user.email}</h3>
+            <NavLink to='/create'>Create a Spot</NavLink>
             <button onClick={logout}>Log Out</button>
          </ul>
       )}
