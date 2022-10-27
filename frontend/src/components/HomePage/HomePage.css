@@ -1,5 +1,16 @@
+.grid-1 {
+  display: grid;
+  grid-template-columns: 358.14px 358.14px 358.14px;
+  grid-template-rows: auto auto auto;
+  padding: 50px;
+  grid-gap: 25px;
+}
+
+.spot-container {
+  width: 358.14px;
+}
+
 .preview-image {
-  height: 304.33px;
-  width: 289.11px;
-  display: flex;
+  height: 377px;
+  width: 358.14px;
 }

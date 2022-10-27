@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllSpots } from '../../store/spots'
 import { NavLink } from 'react-router-dom';
+import './HomePage.css';
 
 
 
@@ -19,12 +20,16 @@ function HomePage() {
   }, [dispatch]);
 
   return (
-    <div className='home-page'>
+    <div className='grid-1'>
       {spotsArr.map((spot) => {
         return (
-          <div className='preview-image' key={spot.id}>
+          <div  key={spot.id} className='spot-container'>
             <NavLink to={`/${spot.id}`}>
-            <img src={spot.previewImage} className='preview-image'></img>
+              <img src={spot.previewImage} className='preview-image'></img>
+              <div className='spot-details'>
+              <span>{spot.city}, {spot.state}</span>
+              <span>${spot.price} night</span>
+              </div>
             </NavLink>
           </div>
         )
