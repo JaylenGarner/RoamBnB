@@ -286,7 +286,7 @@ const validateReview = [
 // Create a spot
 router.post('/', requireAuth, validateSpot, async (req, res) => {
   const { user } = req;
-  const { address, city, state, country, lat, lng, name, description, price } = req.body;
+  const { address, city, state, country, lat, lng, name, description, price, previewImage } = req.body;
 
   const spot = await Spot.create({
     ownerId: user.id,
@@ -298,7 +298,8 @@ router.post('/', requireAuth, validateSpot, async (req, res) => {
     lng,
     name,
     description,
-    price
+    price,
+    previewImage
   })
 
   res.json({
@@ -313,13 +314,14 @@ router.post('/', requireAuth, validateSpot, async (req, res) => {
     name: spot.name,
     description: spot.description,
     price: spot.price,
+    previewImage: spot.previewImage,
     createdAt: spot.createdAt,
     updatedAt: spot.updatedAt
   })
 })
 
 // Delete a spot
-router.delete('/:spotId', restoreUser, requireAuth, async (req, res) => {
+router.delete('/:spotId', requireAuth, async (req, res) => {
   const { spotId } = req.params;
   const { user } = req;
 
@@ -330,19 +332,19 @@ router.delete('/:spotId', restoreUser, requireAuth, async (req, res) => {
     return
   }
 
-  if (spot.ownerId === user.id) {
+  // if (spot.ownerId === user.id) {
     await spot.destroy()
     res.json({ "message": "Successfully deleted", "statusCode": 200 })
-  }
+  // }
 
-  return res.json({message: "Authorization error: You are not the spot owner"})
+  // return res.json({message: "Authorization error: You are not the spot owner"})
 })
 
 // Edit a spot
 router.put('/:spotId', restoreUser, requireAuth, validateSpot, async (req, res) => {
   const { user } = req;
   const { spotId } = req.params;
-  const { address, city, state, country, lat, lng, name, description, price } = req.body;
+  const { address, city, state, country, lat, lng, name, description, price, previewImage } = req.body;
   const spot = await Spot.findByPk(spotId)
 
   if (!spot) {
@@ -360,7 +362,8 @@ router.put('/:spotId', restoreUser, requireAuth, validateSpot, async (req, res) 
         lng: lng,
         name: name,
         description: description,
-        price: price
+        price: price,
+        previewImage: previewImage
     })
 
     await spot.save();

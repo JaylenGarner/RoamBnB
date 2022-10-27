@@ -9,6 +9,8 @@ import CreateSpotForm from "./components/CreateSpotForm";
 import EditSpotForm from "./components/EditSpotForm";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
+import TestComp from "./components/TestComponent";
+import { getAllSpots } from "./store/spots";
 
 // import TestComponent from "./components/TestComponent/index.js";
 
@@ -33,11 +35,14 @@ function App() {
           <Route exact path='/create'>
             <CreateSpotForm />
           </Route>
-          <Route exact path='/edit'>
-            <EditSpotForm />
+          <Route exact path='/test'>
+            <TestComp />
           </Route>
-          <Route path='/:spotId'>
+          <Route exact path='/:spotId'>
             <SpotDetails />
+          </Route>
+          <Route path='/:spotId/edit'>
+            <EditSpotForm />
           </Route>
           <Route exact path="/">
             <HomePage />

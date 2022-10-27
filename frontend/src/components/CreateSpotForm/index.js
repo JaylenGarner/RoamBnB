@@ -19,21 +19,11 @@ const CreateSpotForm = () => {
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
-
-  const updateAddress = (e) => setAddress(e.target.value);
-  const updateCity = (e) => setCity(e.target.value);
-  const updateState = (e) => setState(e.target.value);
-  const updateCountry = (e) => setCountry(e.target.value);
-  const updateLat = (e) => setLat(e.target.value);
-  const updateLng = (e) => setLng(e.target.value);
-  const updateName = (e) => setName(e.target.value);
-  const updateDescription = (e) => setDescription(e.target.value);
-  const updatePrice = (e) => setPrice(e.target.value)
+  const [previewImage, setPreviewImage] = useState('');
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newSpot = { address, city, state, country, lat, lng, name, description, price };
-
+    const newSpot = { address, city, state, country, lat, lng, name, description, price, previewImage };
 
     return dispatch(createSpot(newSpot)).then(async (res) => {
       history.push(`/${res.id}`)
@@ -43,7 +33,7 @@ const CreateSpotForm = () => {
     return (
       <div className='login-panel'>
         <div className='login-form-label'>
-          <h2>Become an AirBnB Host</h2>
+          <h2>Create Your Listing</h2>
         </div>
       <form onSubmit={handleSubmit} className='login-form'>
         <h3 id='welcome'>Get started</h3>
@@ -51,76 +41,54 @@ const CreateSpotForm = () => {
           {/* {errors.map((error, idx) => <li key={idx}>{error}</li>)} */}
         </ul>
           <input
-            type="text"
-            className='login-text-fields'
-            placeholder='Address'
-            value={address}
-            onChange={(e) => updateAddress(e)}
-            required
+            type="text" className='login-text-fields' placeholder='Address'
+            value={address} required
+            onChange={(e) => setAddress(e.target.value)}
           />
           <input
-            type="text"
-            className='login-text-fields'
-            placeholder='City'
-            value={city}
-            onChange={(e) => updateCity(e)}
-            required
+            type="text" className='login-text-fields' placeholder='City'
+            value={city} required
+            onChange={(e) => setCity(e.target.value)}
           />
           <input
-            type="text"
-            className='login-text-fields'
-            placeholder='State'
-            value={state}
-            onChange={(e) => updateState(e)}
-            required
+            type="text" className='login-text-fields' placeholder='State'
+            value={state} required
+            onChange={(e) => setState(e.target.value)}
           />
            <input
-            type="text"
-            className='login-text-fields'
-            placeholder='Country'
-            value={country}
-            onChange={(e) => updateCountry(e)}
-            required
+            type="text" className='login-text-fields' placeholder='Country'
+            value={country} required
+            onChange={(e) => setCountry(e.target.value)}
           />
            <input
-            type="text"
-            className='login-text-fields'
-            placeholder='Latitude'
-            value={lat}
-            onChange={(e) => updateLat(e)}
-            required
-          />
+            type="text" className='login-text-fields' placeholder='Latitude'
+            value={lat} required
+            onChange={(e) => setLat(e.target.value)}
+            />
           <input
-            type="text"
-            className='login-text-fields'
-            placeholder='Longitude'
+            type="text" className='login-text-fields' placeholder='Longitude'
             value={lng}
-            onChange={(e) => updateLng(e)}
-            required
+            onChange={(e) => setLng(e.target.value)} required
           />
           <input
-            type="text"
-            className='login-text-fields'
-            placeholder='Name'
-            value={name}
-            onChange={(e) => updateName(e)}
-            required
+            type="text" className='login-text-fields' placeholder='Name'
+            value={name} required
+            onChange={(e) => setName(e.target.value)}
           />
           <input
-            type="text"
-            className='login-text-fields'
-            placeholder='Description'
-            value={description}
-            onChange={(e) => updateDescription(e)}
-            required
+            type="text" className='login-text-fields' placeholder='Description'
+            value={description} required
+            onChange={(e) => setDescription(e.target.value)}
           />
           <input
-            type="text"
-            className='login-text-fields'
-            placeholder='Price'
-            value={price}
-            onChange={(e) => updatePrice(e)}
-            required
+            type="text" className='login-text-fields' placeholder='Price'
+            value={price} required
+            onChange={(e) => setPrice(e.target.value)}
+          />
+          <input
+            type="text" className='login-text-fields' placeholder='Preview Image (URL)'
+            value={previewImage} required
+            onChange={(e) => setPreviewImage(e.target.value)}
           />
         <button type="submit">Submit</button>
       </form>
