@@ -20,11 +20,6 @@
   align-items: center;
 }
 
-* {
-  box-sizing: border-box;
-  font-family: sans-serif;
-}
-
 .signup-button {
   background-color: #E31C59;
   height: 48px;

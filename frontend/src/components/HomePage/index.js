@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAllSpots } from '../../store/spots'
 import { NavLink } from 'react-router-dom';
 import './HomePage.css';
+import '../../index.css'
 
 
 
@@ -22,17 +23,25 @@ function HomePage() {
   return (
     <div className='grid-1'>
       {spotsArr.map((spot) => {
+        if (!spot) {
+          return null
+        } else {
         return (
-          <div  key={spot.id} className='spot-container'>
-            <NavLink to={`/${spot.id}`}>
-              <img src={spot.previewImage} className='preview-image'></img>
+          <div  key={spot.id} className='home-spot-container'>
+            <NavLink to={`/${spot.id}`} className='spot-nav-links'>
+              <div className='preview-image' style={{
+                backgroundImage:`url(${spot.previewImage})`
+              }}></div>
               <div className='spot-details'>
-              <span>{spot.city}, {spot.state}</span>
-              <span>${spot.price} night</span>
+              <span className='spot-text'>{spot.city}, {spot.state}</span>
+              <br></br>
+              <span>${spot.price} </span>
+              <span className='night'>night</span>
               </div>
             </NavLink>
           </div>
         )
+        }
       })}
     </div>
   );

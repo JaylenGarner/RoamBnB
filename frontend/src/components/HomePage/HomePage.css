@@ -6,11 +6,25 @@
   grid-gap: 25px;
 }
 
-.spot-container {
+.home-spot-container {
   width: 358.14px;
 }
 
 .preview-image {
   height: 377px;
   width: 358.14px;
+  border-radius: 10px;
+  background-size: contain;
+  background-size: cover;
+  margin-bottom: 10px;
+}
+
+.spot-nav-links {
+  text-decoration: none;
+  color: black;
+  font-weight:450;
+}
+.night{
+  font-weight: 200;
+  font-size: 15px;
 }
