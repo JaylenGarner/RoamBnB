@@ -21,6 +21,7 @@ function HomePage() {
   }, [dispatch]);
 
   return (
+    <div className='home-page-container'>
     <div className='grid-1'>
       {spotsArr.map((spot) => {
         if (!spot) {
@@ -40,9 +41,9 @@ function HomePage() {
               </div>
             </NavLink>
           </div>
-        )
-        }
-      })}
+          )}}
+        )}
+    </div>
     </div>
   );
 }

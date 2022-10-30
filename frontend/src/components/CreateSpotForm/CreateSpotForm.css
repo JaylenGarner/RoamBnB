@@ -42,3 +42,8 @@
   margin-top: 30px;
   border-radius: 10px;
 }
+#welcome {
+  padding-right: 1px;
+  align-self: flex-start;
+  margin-left: 25px;
+}
