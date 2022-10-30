@@ -1,3 +1,7 @@
+.signup-container {
+  padding-top: 40px;
+}
+
 .signup-form-label {
   border-bottom: 2px solid rgb(207, 198, 198);;
   border-radius: 2%;
@@ -7,7 +11,7 @@
 
 .signup-panel {
   width: 566px;
-  height: 634px;
+  height: 580px;
   border: 2px solid rgb(207, 198, 198);
   border-radius: 1%;
   margin: 0px auto;

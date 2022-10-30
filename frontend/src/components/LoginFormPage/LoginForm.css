@@ -1,3 +1,7 @@
+.login-container {
+  padding-top: 40px;
+}
+
 .login-form-label {
   border-bottom: 2px solid rgb(207, 198, 198);;
   border-radius: 2%;
@@ -7,7 +11,7 @@
 
 .login-panel {
   width: 566px;
-  height: 634px;
+  height: 423px;
   border: 2px solid rgb(207, 198, 198);
   border-radius: 1%;
   margin: 0px auto;
@@ -36,9 +40,7 @@
 }
 
 #welcome {
-  padding-right: 324px;
-  padding-top: 35px;
-  font-size: 22px;
+  padding-left: 30px;
 }
 
 .login-text-fields {

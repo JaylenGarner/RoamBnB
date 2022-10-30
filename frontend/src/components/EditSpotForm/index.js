@@ -6,6 +6,7 @@ import { useEffect } from 'react';
 
 import { getAllSpots } from '../../store/spots';
 import { editSpot } from '../../store/spots';
+import './EditSpotForm.css'
 // import { ValidationError } from '../utils/validationError';
 
 const EditSpotForm = () => {
@@ -46,67 +47,69 @@ const EditSpotForm = () => {
   }
 
     return (
-      <div className='login-panel'>
-        <div className='login-form-label'>
+      <div className='edit-spot-container'>
+      <div className='edit-spot-panel'>
+        <div className='edit-spot-label'>
           <h2>Edit Your Listing</h2>
         </div>
-      <form onSubmit={handleSubmit} className='login-form'>
+      <form onSubmit={handleSubmit} className='edit-spot-form'>
         <h3 id='welcome'>Edit Your Listing</h3>
         <ul>
           {/* {errors.map((error, idx) => <li key={idx}>{error}</li>)} */}
         </ul>
         <input
-            type="text" className='login-text-fields' placeholder={address}
+            type="text" className='edit-spot-fields' placeholder={address}
             value={address} required
             onChange={(e) => setAddress(e.target.value)}
           />
           <input
-            type="text" className='login-text-fields' placeholder='City'
+            type="text" className='edit-spot-fields' placeholder='City'
             value={city} required
             onChange={(e) => setCity(e.target.value)}
           />
           <input
-            type="text" className='login-text-fields' placeholder='State'
+            type="text" className='edit-spot-fields' placeholder='State'
             value={state} required
             onChange={(e) => setState(e.target.value)}
           />
            <input
-            type="text" className='login-text-fields' placeholder='Country'
+            type="text" className='edit-spot-fields' placeholder='Country'
             value={country} required
             onChange={(e) => setCountry(e.target.value)}
           />
            <input
-            type="text" className='login-text-fields' placeholder='Latitude'
+            type="text" className='edit-spot-fields' placeholder='Latitude'
             value={lat} required
             onChange={(e) => setLat(e.target.value)}
             />
           <input
-            type="text" className='login-text-fields' placeholder='Longitude'
+            type="text" className='edit-spot-fields' placeholder='Longitude'
             value={lng}
             onChange={(e) => setLng(e.target.value)} required
           />
           <input
-            type="text" className='login-text-fields' placeholder='Name'
+            type="text" className='edit-spot-fields' placeholder='Name'
             value={name} required
             onChange={(e) => setName(e.target.value)}
           />
           <input
-            type="text" className='login-text-fields' placeholder='Description'
+            type="text" className='edit-spot-fields' placeholder='Description'
             value={description} required
             onChange={(e) => setDescription(e.target.value)}
           />
           <input
-            type="text" className='login-text-fields' placeholder='Price'
+            type="text" className='edit-spot-fields' placeholder='Price'
             value={price} required
             onChange={(e) => setPrice(e.target.value)}
           />
           <input
-            type="text" className='login-text-fields' placeholder='Preview Image (URL)'
+            type="text" className='edit-spot-fields' placeholder='Preview Image (URL)'
             value={previewImage} required
             onChange={(e) => setPreviewImage(e.target.value)}
           />
-        <button type="submit">Submit</button>
+        <button type="submit" className='edit-spot-button'>Submit</button>
       </form>
+      </div>
       </div>
     );
 }

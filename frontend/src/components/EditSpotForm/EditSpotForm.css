@@ -1,0 +1,48 @@
+.edit-spot-container {
+  padding-top: 40px;
+}
+
+.edit-spot-label {
+  border-bottom: 2px solid rgb(207, 198, 198);;
+  border-radius: 2%;
+  display: flex;
+  justify-content: center;
+}
+
+.edit-spot-panel {
+  width: 566px;
+  height: 840px;
+  border: 2px solid rgb(207, 198, 198);
+  border-radius: 1%;
+  margin: 0px auto;
+}
+
+.edit-spot-form {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+
+.edit-spot-fields {
+  height: 52px;
+  width: 502px;
+  border: 1.2px solid rgb(207, 198, 198);
+  font-size: 16px;
+  padding-left: 10px;
+  outline-color: black;
+}
+
+.edit-spot-button {
+  background-color: #E31C59;
+  height: 48px;
+  width: 502px;
+  font-size: 16px;
+  color: white;
+  margin-top: 30px;
+  border-radius: 10px;
+}
+
+#welcome {
+  padding-left: 7px;
+}

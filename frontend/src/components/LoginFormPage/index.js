@@ -26,6 +26,7 @@ function LoginFormPage() {
   }
 
   return (
+    <div className='login-container'>
     <div className='login-panel'>
       <div className='login-form-label'>
         <h2>Login</h2>
@@ -55,6 +56,7 @@ function LoginFormPage() {
         />
       <button className='login-button'type="submit">Continue</button>
     </form>
+    </div>
     </div>
   );
 }

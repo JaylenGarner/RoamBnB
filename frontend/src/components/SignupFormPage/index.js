@@ -30,6 +30,7 @@ function SignupFormPage() {
   };
 
   return (
+    <div className="signup-container">
     <div className="signup-panel">
       <div className="signup-form-label">
       <h2>Sign Up</h2>
@@ -86,6 +87,7 @@ function SignupFormPage() {
         />
       <button className='signup-button' type="submit">Sign Up</button>
     </form>
+    </div>
     </div>
   );
 }

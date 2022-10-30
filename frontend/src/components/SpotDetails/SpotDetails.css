@@ -1,17 +1,17 @@
 .spot-detail-container {
   display: flex;
   justify-content: center;
+  align-items: flex-start;
 }
 
 .spot-detail-panel {
   height: 900px;
   width: 560px;
-  margin-top: 50px;
-  margin-left: 64px;
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: flex-start;
   align-items: center;
+  padding-top: 30px;
 }
 
 .spot-detail-image {
