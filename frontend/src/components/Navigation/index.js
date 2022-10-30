@@ -23,9 +23,7 @@ function Navigation({ isLoaded }){
   return (
     <div className='nav-bar'>
         <NavLink exact to="/" className={'home-button'}>
-          <a href='' className='logo'>
             <img className='logo' src={logo} alt='airbnb logo'/>
-          </a>
         </NavLink>
         {isLoaded && profileButton}
     </div>

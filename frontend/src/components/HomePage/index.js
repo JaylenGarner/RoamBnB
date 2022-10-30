@@ -5,6 +5,10 @@ import { NavLink } from 'react-router-dom';
 import './HomePage.css';
 import '../../index.css'
 
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faStar} from '@fortawesome/free-solid-svg-icons'
+
+
 
 
 function HomePage() {
@@ -12,9 +16,20 @@ function HomePage() {
   // const sessionUser = useSelector(state => state.session.user);
   const spots = useSelector((state) => state.spots)
   const spotsArr = Object.values(spots)
-  // if (sessionUser) return (
-  // console.log(spots)
-  // );
+
+  const starsTool = (spot) => {
+    if (spot.avgStarRating) {
+      return <span>
+        <FontAwesomeIcon icon={faStar}></FontAwesomeIcon>
+        &nbsp;
+        {spot.avgStarRating}
+        </span>
+    } else {
+      return 'No Reviews'
+    }
+  }
+
+  const star = <FontAwesomeIcon icon={faStar}></FontAwesomeIcon>
 
   useEffect(() => {
     dispatch(getAllSpots());
@@ -34,10 +49,16 @@ function HomePage() {
                 backgroundImage:`url(${spot.previewImage})`
               }}></div>
               <div className='spot-details'>
-              <span className='spot-text'>{spot.city}, {spot.state}</span>
-              <br></br>
-              <span>${spot.price} </span>
-              <span className='night'>night</span>
+                <div className='spot-price-and-stars'>
+                  <span className='spot-text'>{spot.city}, {spot.state}</span>
+                  {/* <span className='star-icon'>★</span> */}
+
+                  <span className='spot-avg-stars'>
+                  {starsTool(spot)}
+                  </span>
+                </div>
+                <span>${spot.price} </span>
+                <span className='night'>night</span>
               </div>
             </NavLink>
           </div>

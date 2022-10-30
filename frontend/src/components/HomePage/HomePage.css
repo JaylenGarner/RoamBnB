@@ -29,7 +29,18 @@
   color: black;
   font-weight:450;
 }
+
 .night{
   font-weight: 200;
   font-size: 15px;
+}
+
+.spot-price-and-stars {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+}
+
+.spot-avg-stars {
+  font-weight: 200;
 }

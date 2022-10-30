@@ -42,7 +42,7 @@ router.get('/', queryValidation, async (req, res) => {
       attributes: [
         'id', 'ownerId', 'address', 'city', 'state', 'country',
         'lat','lng', 'name', 'description', 'price',
-        'createdAt', 'updatedAt', 'previewImage'
+        'createdAt', 'updatedAt', 'previewImage', 'avgStarRating'
       ]
     })
 
@@ -63,7 +63,7 @@ router.get('/', queryValidation, async (req, res) => {
     attributes: [
       'id', 'ownerId', 'address', 'city', 'state', 'country',
       'lat','lng', 'name', 'description', 'price',
-      'createdAt', 'updatedAt', 'previewImage'
+      'createdAt', 'updatedAt', 'previewImage', 'avgStarRating'
     ],
     limit,
     offset

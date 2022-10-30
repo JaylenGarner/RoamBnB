@@ -1,31 +1,27 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllSpots } from '../../store/spots'
+import { useHistory } from 'react-router-dom';
+import { getAllReviews } from '../../store/reviews';
 
 
 
-function TestComp() {
-  const dispatch = useDispatch();
-  // const sessionUser = useSelector(state => state.session.user);
-  const spots = useSelector((state) => state.spots)
-  const spotsArr = Object.values(spots)
-  // if (sessionUser) return (
-  // console.log(spots)
-  // );
+function SpotReviews({reviewsArr}) {
+  const sessionUser = useSelector(state => state.session.user);
 
-  useEffect(() => {
-    dispatch(getAllSpots());
-  }, [dispatch]);
+  const reviews = useSelector((state) => state.reviews)
+
+  if (!reviews) {
+    return null
+  }
 
   return (
-    <div className='home-page'>
-      {spotsArr.map((spot) => {
-return <div className='preview-image' key={spot.id}>
-          <img src={spot.previewImage} className='preview-image'></img>
-        </div>
+    <div>
+      {reviewsArr.map((review) => {
+        return <h3 key={review.id}>{review.review}</h3>
       })}
     </div>
   );
 }
 
-export default TestComp;
+export default SpotReviews;

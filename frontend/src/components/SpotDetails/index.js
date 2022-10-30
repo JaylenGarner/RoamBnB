@@ -5,6 +5,7 @@ import { getAllReviews } from '../../store/reviews'
 import { NavLink, useHistory } from 'react-router-dom';
 import { deleteSpot } from '../../store/spots';
 import {useParams} from 'react-router-dom'
+import SpotReviews from '../TestComponent';
 import './SpotDetails.css'
 
 function SpotDetails() {
@@ -17,10 +18,11 @@ function SpotDetails() {
   const spot = spots[spotId]
 
   const reviews = useSelector((state) => state.reviews)
+  const reviewsArr = Object.values(reviews)
 
   const sessionUser = useSelector(state => state.session.user);
 
-  useEffect((spotId) => {
+  useEffect(() => {
     dispatch(getAllSpots());
     dispatch(getAllReviews(spotId))
   }, [dispatch]);
@@ -49,11 +51,15 @@ function SpotDetails() {
         {(sessionUser) && (sessionUser.id === spot.ownerId) &&
           (<div id='spot-details-buttons'>
             <NavLink to={`/${spotId}/edit`}>
-              <button class='spot-crud-buttons'>Edit This Listing</button>
+              <button className='spot-crud-buttons'>Edit This Listing</button>
             </NavLink>
             <button onClick={handleDelete} className='spot-crud-buttons' >Delete This Listing</button>
           </div>
         )}
+      </div>
+
+      <div>
+        <SpotReviews reviewsArr={reviewsArr}/>
       </div>
     </div>
   )

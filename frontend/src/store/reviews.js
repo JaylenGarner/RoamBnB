@@ -4,10 +4,11 @@ const GET_REVIEWS = 'spots/GET_REVIEWS';
 const ADD_REVIEW = 'spots/ADD_REVIEW'
 const DELETE_REVIEW = 'spots/DELETE_REVIEW'
 
-const getReviews = (reviews) => {
+const getReviews = (reviews, spotId) => {
   return {
     type: GET_REVIEWS,
-    reviews
+    reviews,
+    spotId
   }
 }
 
@@ -26,11 +27,10 @@ const deleteOneReview = (reviewId) => {
 }
 
 export const getAllReviews = (spotId) => async (dispatch) => {
-  const response = await csrfFetch(`/spots/${spotId}/reviews`)
-
+  const response = await csrfFetch(`/api/spots/${spotId}/reviews`)
   if (response.ok) {
     const data = await response.json()
-    dispatch(getReviews(data.reviews))
+    dispatch(getReviews(data.Reviews))
   }
 }
 
@@ -88,7 +88,7 @@ const reviewsReducer = (state = initialState, action) => {
     case GET_REVIEWS:
       const allReviews = {}
       action.reviews.forEach(review => {
-        allReviews[review.id] = review
+        allReviews[review.id] = review;
       });
       return {
         ...state,
