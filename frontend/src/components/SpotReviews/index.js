@@ -16,11 +16,12 @@ function SpotReviews({reviewsArr}) {
   }
 
   return (
-    <div>
+    <>
+      <h3>Reviews</h3>
       {reviewsArr.map((review) => {
         return <h3 key={review.id}>{review.review}</h3>
       })}
-    </div>
+    </>
   );
 }
 

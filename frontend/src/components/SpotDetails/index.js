@@ -5,7 +5,7 @@ import { getAllReviews } from '../../store/reviews'
 import { NavLink, useHistory } from 'react-router-dom';
 import { deleteSpot } from '../../store/spots';
 import {useParams} from 'react-router-dom'
-import SpotReviews from '../TestComponent';
+import SpotReviews from '../SpotReviews';
 import './SpotDetails.css'
 
 function SpotDetails() {
@@ -57,10 +57,10 @@ function SpotDetails() {
           </div>
         )}
       </div>
-
+{/*
       <div>
         <SpotReviews reviewsArr={reviewsArr}/>
-      </div>
+      </div> */}
     </div>
   )
  }

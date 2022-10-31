@@ -6,7 +6,7 @@
 
 .spot-detail-panel {
   height: 900px;
-  width: 560px;
+  width: 720px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
@@ -16,12 +16,14 @@
 
 .spot-detail-image {
   height: 560px;
-  width: 560px;
+  width: 720px;
   border-radius: 12px;
   background-size: contain;
   background-size: cover;
   margin-bottom: 13px;
 }
+
+/* 1280 x 720 */
 
 #spot-detail-name {
   font-size: 26px;

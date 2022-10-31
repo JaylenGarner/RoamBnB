@@ -5,7 +5,7 @@
 
 .grid-1 {
   display: grid;
-  grid-template-columns: 358.14px 358.14px 358.14px;
+  grid-template-columns: 358.14px 358.14px 358.14px 358.14px 358.14px 358.14px;
   grid-template-rows: auto auto auto;
   padding-top: 50px;
   grid-gap: 25px;
