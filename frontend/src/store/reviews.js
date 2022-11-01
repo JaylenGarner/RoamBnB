@@ -12,10 +12,11 @@ const getReviews = (reviews, spotId) => {
   }
 }
 
-const addOneReview = (review) => {
+const addOneReview = (spotId, review) => {
   return {
     type: ADD_REVIEW,
-    review
+    review,
+    spotId
   }
 }
 
@@ -34,9 +35,9 @@ export const getAllReviews = (spotId) => async (dispatch) => {
   }
 }
 
-export const createReview = (data) => async (dispatch) => {
+export const createReview = (spotId, data) => async (dispatch) => {
   try {
-      const response = await csrfFetch(``, {
+      const response = await csrfFetch(`/api/spots/${spotId}/reviews`, {
           method: 'POST',
           headers: {
               'Content-Type': 'application/json',
@@ -63,7 +64,7 @@ export const createReview = (data) => async (dispatch) => {
       }
 
       const review = await response.json();
-      dispatch(addOneReview(review));
+      dispatch(addOneReview(spotId, review));
       return review;
   } catch (error) {
       throw error;

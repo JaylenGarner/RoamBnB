@@ -6,6 +6,7 @@ import { NavLink, useHistory } from 'react-router-dom';
 import { deleteSpot } from '../../store/spots';
 import {useParams} from 'react-router-dom'
 import SpotReviews from '../SpotReviews';
+import CreateReviewForm from '../SpotReviews/CreateReviewForm';
 import './SpotDetails.css'
 
 function SpotDetails() {
@@ -59,10 +60,13 @@ function SpotDetails() {
         <br></br>
         <div className='reviews-container'>
         <SpotReviews spotId={spot.id}/>
-      </div>
-      </div>
+        </div>
 
+        <div className='create-review-container'>
+        <CreateReviewForm spotId={spot.id}/>
+        </div>
 
+      </div>
     </div>
   )
  }

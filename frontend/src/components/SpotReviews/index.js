@@ -22,12 +22,23 @@ function SpotReviews({spotId}) {
     if (review.spotId === spotId) spotReviews.push(review)
   })
 
+
   const spots = useSelector((state) => state.spots)
   const spot = spots[spotId]
+
+
+  // const [avgStarRating, setAvgStarRating] = useState()
+
+  useEffect(() => {
+
+  }, [spotReviews]);
 
   if (!spotReviews) {
     return null
   }
+
+
+  const star = <FontAwesomeIcon icon={faStar} className='review-star'></FontAwesomeIcon>
 
   const reviewsHeader = () => {
     if (!spotReviews.length) {
@@ -38,8 +49,6 @@ function SpotReviews({spotId}) {
         </h3>)
     }
   }
-
-  const star = <FontAwesomeIcon icon={faStar} className='review-star'></FontAwesomeIcon>
 
   return (
     <div className='reviews-panel'>

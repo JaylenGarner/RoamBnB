@@ -31,6 +31,19 @@ const queryValidation = [
   check('maxPrice').isFloat({ max: 0 })
   .withMessage("Maximum price must be greater than 0")
 ]
+
+const avgStarHelper = (arr) => {
+  let sum = 0
+
+  for (let i = 0; i < arr.length; i++) {
+    let review = arr[i]
+    sum += review.stars
+  }
+
+  if (sum === 0) return 0
+  return sum / arr.length
+}
+
 // Get All Spots
 router.get('/', queryValidation, async (req, res) => {
   let { page, size, minLat, maxLat, mixLng, maxLng, minPrice, maxPrice } = req.query;
@@ -63,7 +76,7 @@ router.get('/', queryValidation, async (req, res) => {
     attributes: [
       'id', 'ownerId', 'address', 'city', 'state', 'country',
       'lat','lng', 'name', 'description', 'price',
-      'createdAt', 'updatedAt', 'previewImage', 'avgStarRating'
+      'createdAt', 'updatedAt', 'previewImage'
     ],
     limit,
     offset
@@ -108,18 +121,6 @@ router.get('/:spotId', async (req, res) => {
   })
 
   const numReviews = reviews.length
-
-  const avgStarHelper = (arr) => {
-    let sum = 0
-
-    for (let i = 0; i < arr.length; i++) {
-      let review = arr[i]
-      sum += review.stars
-    }
-
-    if (sum === 0) return 0
-    return sum / arr.length
-  }
 
   const avgStarRating = avgStarHelper(reviews)
 
@@ -449,11 +450,11 @@ router.post('/:spotId/reviews', restoreUser, requireAuth, validateReview, async 
     }
   }
 
-  if (hasReview(allReviews)) {
-    res.status(403).send({ "message": "User already has a review for this spot",
-    "statusCode": 403 });
-    return
-  }
+  // if (hasReview(allReviews)) {
+  //   res.status(403).send({ "message": "User already has a review for this spot",
+  //   "statusCode": 403 });
+  //   return
+  // }
 
     const newReview = await Review.create({
       userId: user.id,
