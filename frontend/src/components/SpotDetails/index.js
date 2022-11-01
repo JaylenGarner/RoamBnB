@@ -56,11 +56,13 @@ function SpotDetails() {
             <button onClick={handleDelete} className='spot-crud-buttons' >Delete This Listing</button>
           </div>
         )}
+        <br></br>
+        <div className='reviews-container'>
+        <SpotReviews spotId={spot.id}/>
       </div>
-{/*
-      <div>
-        <SpotReviews reviewsArr={reviewsArr}/>
-      </div> */}
+      </div>
+
+
     </div>
   )
  }

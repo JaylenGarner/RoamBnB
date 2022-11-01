@@ -3,25 +3,64 @@ import { useDispatch, useSelector } from 'react-redux';
 import { getAllSpots } from '../../store/spots'
 import { useHistory } from 'react-router-dom';
 import { getAllReviews } from '../../store/reviews';
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faStar} from '@fortawesome/free-solid-svg-icons'
 
+import {getMonth} from '../../tools/dateConverter.js'
+// import {getMonth} from '../../tools/dateConverter.js'
 
+import './SpotReviews.css'
 
-function SpotReviews({reviewsArr}) {
+function SpotReviews({spotId}) {
   const sessionUser = useSelector(state => state.session.user);
 
+  const spotReviews = []
   const reviews = useSelector((state) => state.reviews)
+  const reviewsArr = Object.values(reviews)
 
-  if (!reviews) {
+  const [month, setMonth] = useState('')
+  const [year, setYear] = useState('')
+
+  reviewsArr.forEach((review) => {
+    if (review.spotId === spotId) spotReviews.push(review)
+  })
+
+  const spots = useSelector((state) => state.spots)
+  const spot = spots[spotId]
+
+  if (!spotReviews) {
     return null
   }
 
+  const reviewsHeader = () => {
+    if (!spotReviews.length) {
+      return <h3 className='reviews-header'>No Reviews</h3>
+    } else {
+      return (<h3 className='reviews-header'>
+        {star} {spot.avgStarRating} · {spotReviews.length} reviews
+        </h3>)
+    }
+  }
+
+  const star = <FontAwesomeIcon icon={faStar} className='review-star'></FontAwesomeIcon>
+
   return (
-    <>
-      <h3>Reviews</h3>
-      {reviewsArr.map((review) => {
-        return <h3 key={review.id}>{review.review}</h3>
+    <div className='reviews-panel'>
+      {reviewsHeader()}
+      <br></br>
+      <div className='reviews-grid'>
+      {spotReviews.map((review) => {
+        return (
+          <div className='review' key={review.id}>
+        <h4>Name PlaceHolder</h4>
+        <span key={review.id}>{review.review}</span>
+
+          <span>{getMonth(review.createdAt)}</span>
+          </div>
+        )
       })}
-    </>
+      </div>
+    </div>
   );
 }
 

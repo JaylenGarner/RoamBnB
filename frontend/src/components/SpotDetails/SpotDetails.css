@@ -5,7 +5,7 @@
 }
 
 .spot-detail-panel {
-  height: 900px;
+  height: auto;
   width: 720px;
   display: flex;
   flex-direction: column;
@@ -76,13 +76,9 @@
   border-radius: 10px;
 }
 
-/* #edit-listing-button:hover {
-  color: rgb(88, 83, 83);
-  text-decoration: underline;
-} */
-
-/*
-#delete-listing-button:hover {
-  color: rgb(88, 83, 83);
-  text-decoration: underline;
-} */
+.reviews-container {
+  border-top: solid .01px;
+  border-color: rgb(210, 203, 203);
+  width: 720px;
+  height: auto;
+}
