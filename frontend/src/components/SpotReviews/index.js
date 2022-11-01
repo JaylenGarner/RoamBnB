@@ -18,9 +18,6 @@ function SpotReviews({spotId}) {
   const reviews = useSelector((state) => state.reviews)
   const reviewsArr = Object.values(reviews)
 
-  const [month, setMonth] = useState('')
-  const [year, setYear] = useState('')
-
   reviewsArr.forEach((review) => {
     if (review.spotId === spotId) spotReviews.push(review)
   })
@@ -52,11 +49,11 @@ function SpotReviews({spotId}) {
       {spotReviews.map((review) => {
         return (
           <div className='review' key={review.id}>
-        <h4>Name PlaceHolder</h4>
-        <span key={review.id}>{review.review}</span>
-
-          <span>{getMonth(review.createdAt)} {getYear(review.createdAt)}</span>
-
+            <span>Name PlaceHolder</span>
+            <br></br>
+            <span>{getMonth(review.createdAt)} {getYear(review.createdAt)}</span>
+            <br></br>
+            <span key={review.id}>{review.review}</span>
           </div>
         )
       })}
