@@ -8,9 +8,6 @@ import '../../index.css'
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faStar} from '@fortawesome/free-solid-svg-icons'
 
-
-
-
 function HomePage() {
   const dispatch = useDispatch();
   // const sessionUser = useSelector(state => state.session.user);

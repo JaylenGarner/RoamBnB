@@ -22,12 +22,7 @@ function SpotReviews({spotId}) {
     if (review.spotId === spotId) spotReviews.push(review)
   })
 
-
-  const spots = useSelector((state) => state.spots)
-  const spot = spots[spotId]
-
-
-  // const [avgStarRating, setAvgStarRating] = useState()
+  const spot = useSelector((state) => state.spots.spot)
 
   useEffect(() => {
 

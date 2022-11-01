@@ -7,6 +7,7 @@ import { deleteSpot } from '../../store/spots';
 import {useParams} from 'react-router-dom'
 import SpotReviews from '../SpotReviews';
 import CreateReviewForm from '../SpotReviews/CreateReviewForm';
+import {getOneSpot} from '../../store/spots'
 import './SpotDetails.css'
 
 function SpotDetails() {
@@ -15,8 +16,10 @@ function SpotDetails() {
 
   const { spotId } = useParams();
 
-  const spots = useSelector((state) => state.spots)
-  const spot = spots[spotId]
+  // const spots = useSelector((state) => state.spots)
+  // const spot = spots[spotId]
+
+  const spot = useSelector((state) => state.spots.spot)
 
   const reviews = useSelector((state) => state.reviews)
   const reviewsArr = Object.values(reviews)
@@ -24,7 +27,8 @@ function SpotDetails() {
   const sessionUser = useSelector(state => state.session.user);
 
   useEffect(() => {
-    dispatch(getAllSpots());
+    // dispatch(getAllSpots());
+    dispatch(getOneSpot(spotId))
     dispatch(getAllReviews(spotId))
   }, [dispatch]);
 

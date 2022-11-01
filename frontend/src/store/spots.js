@@ -12,7 +12,7 @@ const getSpots = (spots) => {
   }
 }
 
-const getSpotByID = (spot) => {
+const getSpotById = (spot) => {
   return {
     type: GET_SPOT_BY_ID,
     spot
@@ -47,7 +47,7 @@ export const getOneSpot = (spotId) => async (dispatch) => {
 
   if (response.ok) {
     const data = await response.json()
-    dispatch(getSpotByID(data))
+    dispatch(getSpotById(data))
   }
 }
 
@@ -137,6 +137,7 @@ export const deleteSpot = (spotId) => async dispatch => {
 const initialState = {}
 
 const spotsReducer = (state = initialState, action) => {
+  let newState = {}
   switch (action.type) {
     case GET_SPOTS:
       const allSpots = {}
@@ -144,9 +145,11 @@ const spotsReducer = (state = initialState, action) => {
         allSpots[spot.id] = spot
       });
       return {
-        ...state,
+        // ...state,
         ...allSpots
       }
+    case GET_SPOT_BY_ID:
+      return {spot : action.spot}
     case ADD_SPOT:
       // if (!state[action.spot.id]) {
       return {
