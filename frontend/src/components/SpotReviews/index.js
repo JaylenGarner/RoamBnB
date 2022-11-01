@@ -7,7 +7,7 @@ import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
 import {faStar} from '@fortawesome/free-solid-svg-icons'
 
 import {getMonth} from '../../tools/dateConverter.js'
-// import {getMonth} from '../../tools/dateConverter.js'
+import {getYear} from '../../tools/dateConverter.js'
 
 import './SpotReviews.css'
 
@@ -55,7 +55,8 @@ function SpotReviews({spotId}) {
         <h4>Name PlaceHolder</h4>
         <span key={review.id}>{review.review}</span>
 
-          <span>{getMonth(review.createdAt)}</span>
+          <span>{getMonth(review.createdAt)} {getYear(review.createdAt)}</span>
+
           </div>
         )
       })}

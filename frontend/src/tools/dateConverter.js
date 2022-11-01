@@ -43,3 +43,8 @@ export const getMonth = (date) => {
   const dateObj = dateConverter(date)
   return dateObj.month
 }
+
+export const getYear = (date) => {
+  const dateObj = dateConverter(date)
+  return dateObj.year
+}
