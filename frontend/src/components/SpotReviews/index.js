@@ -35,12 +35,16 @@ function SpotReviews({spotId}) {
 
   const star = <FontAwesomeIcon icon={faStar} className='review-star'></FontAwesomeIcon>
 
+  const twoDecimalPlaces = (avgRating) => {
+    return avgRating.toFixed(2)
+  }
+
   const reviewsHeader = () => {
     if (!spotReviews.length) {
       return <h3 className='reviews-header'>No Reviews</h3>
     } else {
       return (<h3 className='reviews-header'>
-        {star} {spot.avgStarRating} · {spotReviews.length} reviews
+        {star} {twoDecimalPlaces(spot.avgStarRating)} · {spotReviews.length} reviews
         </h3>)
     }
   }

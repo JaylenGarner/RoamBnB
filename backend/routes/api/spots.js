@@ -120,9 +120,13 @@ router.get('/:spotId', async (req, res) => {
     }
   })
 
+  const avgStarRating = avgStarHelper(reviews)
+  const roundedRating = avgStarRating.toFixed(2)
+
   const numReviews = reviews.length
 
-  const avgStarRating = avgStarHelper(reviews)
+  spot.update({avgStarRating: roundedRating})
+  spot.save()
 
   const images = await Image.findAll({
     where: {
