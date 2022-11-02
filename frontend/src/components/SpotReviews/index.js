@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllSpots } from '../../store/spots'
+import { deleteReview } from '../../store/reviews';
 import { useHistory } from 'react-router-dom';
 import { getAllReviews } from '../../store/reviews';
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
@@ -24,6 +25,8 @@ function SpotReviews({spotId}) {
 
   const spot = useSelector((state) => state.spots.spot)
 
+  const dispatch = useDispatch()
+
   useEffect(() => {
 
   }, [spotReviews]);
@@ -32,11 +35,14 @@ function SpotReviews({spotId}) {
     return null
   }
 
-
   const star = <FontAwesomeIcon icon={faStar} className='review-star'></FontAwesomeIcon>
 
   const twoDecimalPlaces = (avgRating) => {
     return avgRating.toFixed(2)
+  }
+
+  const handleDelete = (id)  => {
+    return dispatch(deleteReview(id))
   }
 
   const reviewsHeader = () => {
@@ -62,6 +68,7 @@ function SpotReviews({spotId}) {
             <span>{getMonth(review.createdAt)} {getYear(review.createdAt)}</span>
             <br></br>
             <span key={review.id}>{review.review}</span>
+            <button onClick={(e) => handleDelete(review.id)}>Delete</button>
           </div>
         )
       })}

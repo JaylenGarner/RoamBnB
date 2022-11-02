@@ -13,7 +13,6 @@ const CreateReviewForm = ({spotId}) => {
 
   const [review, setReview ] = useState('')
   const [stars, setStars ] = useState(0)
-  // const [spotId, setSpotId] = useState(id)
 
   const handleSubmit = async (e) => {
     // e.preventDefault();
