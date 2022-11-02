@@ -42,6 +42,13 @@
   margin-top: 30px;
   border-radius: 10px;
 }
+
+.create-spot-button:hover {
+  border: 2px #717171;
+  border-style: ridge;
+  background-color: #be083e;
+}
+
 #welcome {
   padding-right: 1px;
   align-self: flex-start;

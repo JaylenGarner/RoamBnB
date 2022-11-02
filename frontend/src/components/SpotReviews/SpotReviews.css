@@ -8,11 +8,51 @@
 
 .reviews-grid {
   display: grid;
-  grid-template-columns: 360px 360px ;
+  grid-template-columns: 310px 310px ;
   grid-template-rows: auto;
-  /* grid-gap: 25px; */
+  /* grid-gap: 50px; */
+  grid-row-gap: 30px;
+  grid-column-gap: 100px;
 }
 
-/* .review {
+.review {
+  display: flex;
+  flex-direction: column;
+  height: auto
+}
 
-} */
+.review-name {
+  font-size: 16px;
+  font-weight: bold;
+}
+
+.review-date {
+  font-size: 14px;
+  color: #717171
+}
+
+.review-body {
+  height: auto;
+  overflow: scroll;
+}
+
+.delete-review-button-container {
+  padding-top: 20px;
+  align-self: flex-end;
+  justify-content: flex-end;
+  padding-bottom: 20px;
+}
+
+.review-delete-button {
+  width: 60px;
+  height: 24px;
+  background-color: #E31C59;
+  color: white;
+  border-radius: 5px;
+}
+
+.review-delete-button:hover {
+  border: 2px #717171;
+  border-style: ridge;
+  background-color: #be083e;
+}

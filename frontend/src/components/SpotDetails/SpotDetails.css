@@ -76,6 +76,12 @@
   border-radius: 10px;
 }
 
+.spot-crud-buttons:hover {
+  border: 2px #717171;
+  border-style: ridge;
+  background-color: #be083e;
+}
+
 .reviews-container {
   border-top: solid .01px;
   border-color: rgb(210, 203, 203);

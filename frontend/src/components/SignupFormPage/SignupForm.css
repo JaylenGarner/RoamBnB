@@ -34,6 +34,12 @@
   border-radius: 10px;
 }
 
+.signup-button:hover {
+  border: 2px #717171;
+  border-style: ridge;
+  background-color: #be083e;
+}
+
 #welcome {
   padding-right: 324px;
   padding-top: 35px;

@@ -63,12 +63,14 @@ function SpotReviews({spotId}) {
       {spotReviews.map((review) => {
         return (
           <div className='review' key={review.id}>
-            <span>Name PlaceHolder</span>
+            <span className='review-name'>Name PlaceHolder</span>
             <br></br>
-            <span>{getMonth(review.createdAt)} {getYear(review.createdAt)}</span>
+            <span className='review-date'>{getMonth(review.createdAt)} {getYear(review.createdAt)}</span>
             <br></br>
-            <span key={review.id}>{review.review}</span>
-            <button onClick={(e) => handleDelete(review.id)}>Delete</button>
+            <span key={review.id} className='review-body'>{review.review}</span>
+            <div className='delete-review-button-container'>
+            <button onClick={(e) => handleDelete(review.id)} className='review-delete-button'>Delete</button>
+            </div>
           </div>
         )
       })}
