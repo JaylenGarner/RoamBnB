@@ -22,6 +22,10 @@ const CreateSpotForm = () => {
   const [price, setPrice] = useState('');
   const [previewImage, setPreviewImage] = useState('');
 
+  if (!sessionUser) {
+    history.push(`/`)
+  }
+
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newSpot = { address, city, state, country, lat, lng, name, description, price, previewImage };
