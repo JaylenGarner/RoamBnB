@@ -15,10 +15,6 @@ function SpotDetails() {
   const history = useHistory()
 
   const { spotId } = useParams();
-
-  // const spots = useSelector((state) => state.spots)
-  // const spot = spots[spotId]
-
   const spot = useSelector((state) => state.spots.spot)
 
   const reviews = useSelector((state) => state.reviews)
@@ -65,6 +61,7 @@ function SpotDetails() {
         <div className='reviews-container'>
         <SpotReviews spotId={spot.id}/>
         </div>
+
 
         {(sessionUser) && (sessionUser.id !== spot.ownerId) && (
         <div className='create-review-container'>

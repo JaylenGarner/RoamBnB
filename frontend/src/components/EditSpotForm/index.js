@@ -12,13 +12,12 @@ import './EditSpotForm.css'
 const EditSpotForm = () => {
   const history = useHistory();
   const sessionUser = useSelector(state => state.session.user);
+  if (!sessionUser) history.push(`/`)
 
-  if (!sessionUser) {
-    history.push(`/`)
-  }
 
   const { spotId } = useParams()
   const spot = useSelector((state) => state.spots.spot)
+
   // const [errorMessages, setErrorMessages] = useState({});
   const dispatch = useDispatch();
 
@@ -26,7 +25,11 @@ const EditSpotForm = () => {
 
   useEffect(() => {
     dispatch(getOneSpot(spotId))
-  }, [dispatch, spotId]);
+  }, [dispatch]);
+
+  // if (!spot) {
+  //   return null
+  // }
 
   const [address, setAddress] = useState(spot.address);
   const [city, setCity] = useState(spot.city);
