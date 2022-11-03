@@ -10,6 +10,8 @@ import './EditSpotForm.css'
 // import { ValidationError } from '../utils/validationError';
 
 const EditSpotForm = () => {
+
+
   const { spotId } = useParams()
   // const [errorMessages, setErrorMessages] = useState({});
   const dispatch = useDispatch();

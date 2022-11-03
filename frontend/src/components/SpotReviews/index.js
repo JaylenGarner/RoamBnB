@@ -69,17 +69,17 @@ function SpotReviews({spotId}) {
             <span className='review-date'>{getMonth(review.createdAt)} {getYear(review.createdAt)}</span>
             <br></br>
             <span key={review.id} className='review-body'>{review.review}</span>
-            <div className='delete-review-button-container'>
 
-            {(sessionUser.id === review.userId) && (
-            <button onClick={(e) => handleDelete(review.id)} className='review-delete-button'>Delete</button>
+            {(sessionUser) && (sessionUser.id === review.userId) && (
+              <div className='delete-review-button-container'>
+            <button onClick={(e) => handleDelete(review.id)}
+            className='review-delete-button'>Delete</button>
+              </div>
             )}
-
-            </div>
           </div>
-        )
-      })}
+        )})}
       </div>
+      )}
     </div>
   );
 }
