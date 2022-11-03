@@ -48,6 +48,7 @@ export const getOneSpot = (spotId) => async (dispatch) => {
   if (response.ok) {
     const data = await response.json()
     dispatch(getSpotById(data))
+    console.log(data)
   }
 }
 

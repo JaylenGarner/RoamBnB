@@ -61,15 +61,20 @@ function SpotReviews({spotId}) {
       <br></br>
       <div className='reviews-grid'>
       {spotReviews.map((review) => {
+        console.log(review)
         return (
           <div className='review' key={review.id}>
-            <span className='review-name'>Name PlaceHolder</span>
+            <span className='review-name'>{review.User.firstName} {review.User.lastName}</span>
             <br></br>
             <span className='review-date'>{getMonth(review.createdAt)} {getYear(review.createdAt)}</span>
             <br></br>
             <span key={review.id} className='review-body'>{review.review}</span>
             <div className='delete-review-button-container'>
+
+            {(sessionUser.id === review.userId) && (
             <button onClick={(e) => handleDelete(review.id)} className='review-delete-button'>Delete</button>
+            )}
+
             </div>
           </div>
         )

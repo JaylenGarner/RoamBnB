@@ -25,7 +25,6 @@ const CreateSpotForm = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
     const newSpot = { address, city, state, country, lat, lng, name, description, price, previewImage };
-
     return dispatch(createSpot(newSpot)).then(async (res) => {
       history.push(`/${res.id}`)
     })
