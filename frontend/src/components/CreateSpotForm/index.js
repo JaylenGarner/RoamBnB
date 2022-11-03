@@ -6,11 +6,15 @@ import './CreateSpotForm.css'
 // import { ValidationError } from '../utils/validationError';
 
 const CreateSpotForm = () => {
+  const history = useHistory();
+  const sessionUser = useSelector(state => state.session.user);
+
+  if (!sessionUser) {
+    history.push(`/`)
+  }
 
   // const [errorMessages, setErrorMessages] = useState({});
   const dispatch = useDispatch();
-  const sessionUser = useSelector(state => state.session.user);
-  const history = useHistory();
   const [address, setAddress] = useState('');
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
@@ -21,10 +25,6 @@ const CreateSpotForm = () => {
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
   const [previewImage, setPreviewImage] = useState('');
-
-  if (!sessionUser) {
-    history.push(`/`)
-  }
 
   const handleSubmit = async (e) => {
     e.preventDefault();

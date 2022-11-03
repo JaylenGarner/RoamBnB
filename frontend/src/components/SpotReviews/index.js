@@ -79,7 +79,6 @@ function SpotReviews({spotId}) {
           </div>
         )})}
       </div>
-      )}
     </div>
   );
 }

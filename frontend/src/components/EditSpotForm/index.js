@@ -4,39 +4,40 @@ import { useHistory } from 'react-router-dom';
 import { useParams } from 'react-router-dom';
 import { useEffect } from 'react';
 
-import { getAllSpots } from '../../store/spots';
+import { getOneSpot } from '../../store/spots';
 import { editSpot } from '../../store/spots';
 import './EditSpotForm.css'
 // import { ValidationError } from '../utils/validationError';
 
 const EditSpotForm = () => {
+  const history = useHistory();
+  const sessionUser = useSelector(state => state.session.user);
 
+  if (!sessionUser) {
+    history.push(`/`)
+  }
 
   const { spotId } = useParams()
+  const spot = useSelector((state) => state.spots.spot)
   // const [errorMessages, setErrorMessages] = useState({});
   const dispatch = useDispatch();
 
-  const spots = useSelector((state) => state.spots)
-  const targetSpot = spots[spotId]
+  console.log(spot)
 
   useEffect(() => {
-    dispatch(getAllSpots());
+    dispatch(getOneSpot(spotId))
   }, [dispatch, spotId]);
 
-  const sessionUser = useSelector(state => state.session.user);
-  const history = useHistory();
-  const [address, setAddress] = useState(targetSpot.address);
-  const [city, setCity] = useState(targetSpot.city);
-  const [state, setState] = useState(targetSpot.state);
-  const [country, setCountry] = useState(targetSpot.country);
-  const [lat, setLat] = useState(targetSpot.lat);
-  const [lng, setLng] = useState(targetSpot.lng);
-  const [name, setName] = useState(targetSpot.name);
-  const [description, setDescription] = useState(targetSpot.description);
-  const [price, setPrice] = useState(targetSpot.price);
-  const [previewImage, setPreviewImage] = useState(targetSpot.previewImage)
-
-  // const sessionUser = useSelector(state => state.session.user);
+  const [address, setAddress] = useState(spot.address);
+  const [city, setCity] = useState(spot.city);
+  const [state, setState] = useState(spot.state);
+  const [country, setCountry] = useState(spot.country);
+  const [lat, setLat] = useState(spot.lat);
+  const [lng, setLng] = useState(spot.lng);
+  const [name, setName] = useState(spot.name);
+  const [description, setDescription] = useState(spot.description);
+  const [price, setPrice] = useState(spot.price);
+  const [previewImage, setPreviewImage] = useState(spot.previewImage)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
