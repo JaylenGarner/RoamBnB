@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory } from 'react-router-dom';
 import { createReview } from '../../store/reviews';
+import './SpotReviews.css'
 // import { ValidationError } from '../utils/validationError';
 
 const CreateReviewForm = ({spotId}) => {
@@ -15,20 +16,20 @@ const CreateReviewForm = ({spotId}) => {
   const [stars, setStars ] = useState(0)
 
   const handleSubmit = async (e) => {
-    // e.preventDefault();
     const newReview = {review, stars};
 
     return dispatch(createReview(spotId, newReview))
   };
 
   return (
-    <>
-    <h1>Leave a review</h1>
+    <div className='create-review-container'>
     <form onSubmit={handleSubmit} className='create-review-form'>
+    <h3 className='create-review-header'>How was your stay?</h3>
+      <div className='create-review-input-container'>
       <input
-        type="textarea" className='create-review-textarea'
+        type="text" className='create-review-text-input'
         placeholder='Describe Your Experience...'
-        value={review} required
+        value={review}
         onChange={(e) => setReview(e.target.value)}
       />
       <br></br>
@@ -37,9 +38,11 @@ const CreateReviewForm = ({spotId}) => {
         value={stars}
         onChange={(e) => setStars(e.target.value)}
       />
-    <button type="submit" className='create-spot-button'>Submit</button>
+      </div>
+      <br></br>
+    <button type="submit" className='spot-crud-buttons'>Submit</button>
   </form>
-  </>
+  </div>
   )
 }
 
