@@ -61,7 +61,7 @@ function SpotReviews({spotId}) {
       <br></br>
       <div className='reviews-grid'>
       {spotReviews.map((review) => {
-        console.log(review)
+
         return (
           <div className='review' key={review.id}>
             <span className='review-name'>{review.User.firstName} {review.User.lastName}</span>

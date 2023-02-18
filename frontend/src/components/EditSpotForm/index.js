@@ -21,7 +21,6 @@ const EditSpotForm = () => {
   // const [errorMessages, setErrorMessages] = useState({});
   const dispatch = useDispatch();
 
-  console.log(spot)
 
   useEffect(() => {
     dispatch(getOneSpot(spotId))
