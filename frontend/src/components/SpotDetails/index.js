@@ -15,7 +15,7 @@ function SpotDetails() {
   const history = useHistory()
 
   const { spotId } = useParams();
-  const spot = useSelector((state) => state.spots.spot)
+  const spots = useSelector((state) => state.spots)
 
   const reviews = useSelector((state) => state.reviews)
   const reviewsArr = Object.values(reviews)
@@ -23,21 +23,23 @@ function SpotDetails() {
   const sessionUser = useSelector(state => state.session.user);
 
   useEffect(() => {
-    // dispatch(getAllSpots());
     dispatch(getOneSpot(spotId))
     dispatch(getAllReviews(spotId))
-  }, [dispatch]);
+  }, [dispatch, spotId]);
 
-  if (!spot) {
-    return null
-  }
 
   const handleDelete = (e) => {
-    return dispatch(deleteSpot(spot.id)).then(async (res) => {
+    return dispatch(deleteSpot(spotId)).then(async (res) => {
       history.push(`/`)
     })
   }
 
+  if (!spots || !spots[spotId]) {
+    return <></>
+  } else {
+  const spot = spots[spotId]
+
+  if (spot.Owner) {
   return (
     <div className='spot-detail-container'>
       <div className='spot-detail-panel'>
@@ -59,19 +61,21 @@ function SpotDetails() {
         )}
         <br></br>
         <div className='reviews-container'>
-        <SpotReviews spotId={spot.id}/>
+        <SpotReviews spotId={spotId}/>
         </div>
-
 
         {(sessionUser) && (sessionUser.id !== spot.ownerId) && (
         <div className='create-review-container'>
-        <CreateReviewForm spotId={spot.id}/>
+        <CreateReviewForm spotId={spotId}/>
         </div>
         )}
-
       </div>
     </div>
   )
+}
+
+}
+
  }
 
 export default SpotDetails;

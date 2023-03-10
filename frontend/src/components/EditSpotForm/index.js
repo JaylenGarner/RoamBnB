@@ -16,7 +16,7 @@ const EditSpotForm = () => {
 
 
   const { spotId } = useParams()
-  const spot = useSelector((state) => state.spots.spot)
+  const spots = useSelector((state) => state.spots)
 
   // const [errorMessages, setErrorMessages] = useState({});
   const dispatch = useDispatch();
@@ -26,20 +26,19 @@ const EditSpotForm = () => {
     dispatch(getOneSpot(spotId))
   }, [dispatch]);
 
-  // if (!spot) {
-  //   return null
-  // }
 
-  const [address, setAddress] = useState(spot.address);
-  const [city, setCity] = useState(spot.city);
-  const [state, setState] = useState(spot.state);
-  const [country, setCountry] = useState(spot.country);
-  const [lat, setLat] = useState(spot.lat);
-  const [lng, setLng] = useState(spot.lng);
-  const [name, setName] = useState(spot.name);
-  const [description, setDescription] = useState(spot.description);
-  const [price, setPrice] = useState(spot.price);
-  const [previewImage, setPreviewImage] = useState(spot.previewImage)
+  const spot = spots[spotId]
+
+  const [address, setAddress] = useState(spot?.address);
+  const [city, setCity] = useState(spot?.city);
+  const [state, setState] = useState(spot?.state);
+  const [country, setCountry] = useState(spot?.country);
+  const [lat, setLat] = useState(spot?.lat);
+  const [lng, setLng] = useState(spot?.lng);
+  const [name, setName] = useState(spot?.name);
+  const [description, setDescription] = useState(spot?.description);
+  const [price, setPrice] = useState(spot?.price);
+  const [previewImage, setPreviewImage] = useState(spot?.previewImage)
 
   const handleSubmit = async (e) => {
     e.preventDefault();
@@ -49,6 +48,10 @@ const EditSpotForm = () => {
     return dispatch(editSpot(editedSpot, spotId)).then(async (res) => {
       history.push(`/${res.id}`)
     })
+  }
+
+  if (!spots || !spots[spotId]) {
+    return null
   }
 
     return (

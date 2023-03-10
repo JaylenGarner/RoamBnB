@@ -137,28 +137,21 @@ export const deleteSpot = (spotId) => async dispatch => {
 const initialState = {}
 
 const spotsReducer = (state = initialState, action) => {
-  let newState = {}
+  const newState = {...state}
+  if (!action || !action.type) return state;
   switch (action.type) {
     case GET_SPOTS:
-      const allSpots = {}
       action.spots.forEach(spot => {
-        allSpots[spot.id] = spot
+        newState[spot.id] = spot
       });
-      return {
-        // ...state,
-        ...allSpots
-      }
+      return {...newState}
     case GET_SPOT_BY_ID:
-      return {spot : action.spot}
+      newState[action.spot.id] = action.spot
+      return {...newState}
     case ADD_SPOT:
-      // if (!state[action.spot.id]) {
-      return {
-        ...state,
-        [action.spot.id]: action.spot,
-        }
-      // }
+      newState[action.spot.id] = action.spot
+      return {...newState}
     case DELETE_SPOT:
-        let newState = {...state}
         delete newState[action.spotId]
         return newState
     default:
