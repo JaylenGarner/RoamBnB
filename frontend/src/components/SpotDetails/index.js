@@ -19,13 +19,17 @@ function SpotDetails() {
 
   const reviews = useSelector((state) => state.reviews)
   const reviewsArr = Object.values(reviews)
+  const [newReview, setNewReview] = useState('')
 
   const sessionUser = useSelector(state => state.session.user);
+
+  // When a review is created, this will run and setNewReview, whcub will allow the useEffect to render new reviews
+  const reviewRenderTool = (res) => setNewReview(res)
 
   useEffect(() => {
     dispatch(getOneSpot(spotId))
     dispatch(getAllReviews(spotId))
-  }, [dispatch, spotId]);
+  }, [dispatch, spotId, newReview]);
 
 
   const handleDelete = (e) => {
@@ -66,7 +70,7 @@ function SpotDetails() {
 
         {(sessionUser) && (sessionUser.id !== spot.ownerId) && (
         <div className='create-review-container'>
-        <CreateReviewForm spotId={spotId}/>
+        <CreateReviewForm setNewReview={setNewReview}/>
         </div>
         )}
       </div>

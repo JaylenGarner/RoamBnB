@@ -7,13 +7,11 @@ import { useEffect } from 'react';
 import { getOneSpot } from '../../store/spots';
 import { editSpot } from '../../store/spots';
 import './EditSpotForm.css'
-// import { ValidationError } from '../utils/validationError';
 
 const EditSpotForm = () => {
   const history = useHistory();
   const sessionUser = useSelector(state => state.session.user);
   if (!sessionUser) history.push(`/`)
-
 
   const { spotId } = useParams()
   const spots = useSelector((state) => state.spots)

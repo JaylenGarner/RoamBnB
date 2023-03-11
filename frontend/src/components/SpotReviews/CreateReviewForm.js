@@ -1,24 +1,28 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useParams } from 'react-router-dom';
 import { createReview } from '../../store/reviews';
+import { getOneSpot } from '../../store/spots';
+import { getAllReviews } from '../../store/reviews';
 import './SpotReviews.css'
-// import { ValidationError } from '../utils/validationError';
 
-const CreateReviewForm = ({spotId}) => {
-
-  // const [errorMessages, setErrorMessages] = useState({});
+const CreateReviewForm = ({setNewReview}) => {
   const dispatch = useDispatch();
-  // const sessionUser = useSelector(state => state.session.user);
-  // const history = useHistory();
+
+  const {spotId} = useParams()
 
   const [review, setReview ] = useState('')
   const [stars, setStars ] = useState(0)
 
   const handleSubmit = async (e) => {
+    e.preventDefault()
     const newReview = {review, stars};
+    dispatch(createReview(spotId, newReview))
+    setStars(0);
+    setReview('');
 
-    return dispatch(createReview(spotId, newReview))
+    // Re-renders reviews in SpotDetails
+    setNewReview(newReview)
   };
 
   return (
