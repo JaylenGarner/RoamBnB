@@ -20,12 +20,6 @@ function SpotReviews() {
   const spot = spots[spotId]
   const reviews = useSelector((state) => state.reviews)
 
-  // useEffect(() => {
-  //   dispatch(getOneSpot(spotId));
-  //   dispatch(getAllReviews(spotId));
-  // }, [spotId]);
-
-
   const star = <FontAwesomeIcon icon={faStar} className='review-star'></FontAwesomeIcon>
 
   const twoDecimalPlaces = (avgRating) => {
@@ -34,6 +28,7 @@ function SpotReviews() {
 
   const handleDelete = (id)  => {
     dispatch(deleteReview(id))
+    dispatch(getOneSpot(spotId))
   }
 
   const reviewCounter = () => {
@@ -45,7 +40,7 @@ function SpotReviews() {
     return sum;
   }
 
-  const reviewsHeader = (spotReviews) => {
+  const reviewsHeader = () => {
     const count = reviewCounter()
     if (count < 1) {
       return <h3 className='reviews-header'>No Reviews</h3>
