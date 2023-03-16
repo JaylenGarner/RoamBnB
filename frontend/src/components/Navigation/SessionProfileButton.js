@@ -33,10 +33,6 @@ function SessionProfileButton({ user }) {
     dispatch(sessionActions.logout());
   };
 
-  // const spotForm = (e) => {
-  //   e.preventDefault();
-  //   <Redirect to='/create'></Redirect>
-  // }
 
   return (
     <div className="profile-button-container">

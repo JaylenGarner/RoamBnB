@@ -1,13 +1,22 @@
 // frontend/src/components/Navigation/ProfileButton.js
 import React, { useState, useEffect } from "react";
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import * as sessionActions from '../../store/session';
 import { NavLink } from "react-router-dom";
 import './Navigation.css';
+import { IoIosMenu } from "react-icons/io";
+
 
 function NoSessionProfileButton() {
   const dispatch = useDispatch();
+  const sessionUser = useSelector(state => state.session.user);
   const [showMenu, setShowMenu] = useState(false);
+
+  const profilePicCheck = () => {
+    if (sessionUser) {
+      // return <img>{sessionUser}</img>
+    }
+  }
 
 
   const openMenu = () => {
@@ -35,7 +44,12 @@ function NoSessionProfileButton() {
   return (
     <div className="profile-button-container">
       <button onClick={openMenu} className='profile-button'>
-        <i className="fas fa-user-circle" />
+        <div className="drop-down-button-container">
+          <div className="drop-down-icon">
+          <IoIosMenu />
+            <img></img>
+          </div>
+        </div>
       </button>
       {showMenu && (
         <ul className="profile-dropdown">
