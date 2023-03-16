@@ -6,7 +6,7 @@ import { NavLink, useHistory } from 'react-router-dom';
 import { deleteSpot } from '../../store/spots';
 import {useParams} from 'react-router-dom'
 import SpotReviews from '../SpotReviews';
-import CreateReviewForm from '../SpotReviews/CreateReviewForm';
+import CreateReviewForm from '../SpotReviews/CreateReviewForm/CreateReviewForm';
 import {getOneSpot} from '../../store/spots'
 import './SpotDetails.css'
 
@@ -68,11 +68,11 @@ function SpotDetails() {
         <SpotReviews spotId={spotId}/>
         </div>
 
-        {(sessionUser) && (sessionUser.id !== spot.ownerId) && (
+        {/* {(sessionUser) && (sessionUser.id !== spot.ownerId) && (
         <div className='create-review-container'>
         <CreateReviewForm setNewReview={setNewReview}/>
         </div>
-        )}
+        )} */}
       </div>
     </div>
   )

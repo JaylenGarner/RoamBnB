@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { useHistory, useParams } from 'react-router-dom';
-import { createReview } from '../../store/reviews';
-import { getOneSpot } from '../../store/spots';
-import { getAllReviews } from '../../store/reviews';
-import './SpotReviews.css'
+import { createReview } from '../../../store/reviews';
+import { getOneSpot } from '../../../store/spots';
+import { getAllReviews } from '../../../store/reviews';
+import './CreateReviewForm.css'
 
 const CreateReviewForm = ({setNewReview}) => {
   const dispatch = useDispatch();

@@ -26,10 +26,10 @@ function SpotReviews() {
     return avgRating.toFixed(2)
   }
 
-  const handleDelete = (id)  => {
-    dispatch(deleteReview(id))
-    dispatch(getOneSpot(spotId))
-  }
+  // const handleDelete = (id)  => {
+  //   dispatch(deleteReview(id))
+  //   dispatch(getOneSpot(spotId))
+  // }
 
   const reviewCounter = () => {
     let sum = 0;
@@ -75,12 +75,12 @@ function SpotReviews() {
             <br></br>
             <span key={review.id} className='review-body'>{review.review}</span>
 
-            {(sessionUser) && (sessionUser.id === review.userId) && (
+            {/* {(sessionUser) && (sessionUser.id === review.userId) && (
               <div className='delete-review-button-container'>
             <button onClick={(e) => handleDelete(review.id)}
             className='review-delete-button'>Delete</button>
               </div>
-            )}
+            )} */}
           </div>
         )}
         })}
