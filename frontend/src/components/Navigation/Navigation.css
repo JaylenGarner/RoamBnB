@@ -31,12 +31,21 @@
   border: 1.5px solid #E9E9E9;
 }
 
-.drop-down-icon {
-  /* margin-right: 32px; */
-  margin-top: 8px;
+.drop-down-icons {
   font-size: 20px;
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
 }
 
-.drop-down-profile-picture {
+.drop-down-lines {
+margin-top: 7px;
+padding-left: 2px;
+}
 
+.drop-down-image {
+  width: 32px;
+  height: 32px;
+  border-radius: 50px;
+  border: 0.1px solid gray;
 }

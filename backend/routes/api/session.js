@@ -46,6 +46,7 @@ router.post(
         firstName: User.firstName,
         lastName: User.lastName,
         email: User.email,
+        image: User.image
       },
     })
 
@@ -56,6 +57,7 @@ router.post(
       firstName: userInfo.firstName,
       lastName: userInfo.lastName,
       email: userInfo.email,
+      image: userInfo.image,
       token: token
     });
   }
@@ -65,11 +67,13 @@ router.post(
 router.get('/',restoreUser,(req, res) => {
   const { user } = req;
   if (user) {
+
   let currentUser = {
     id: user.id,
     firstName: user.firstName,
     lastName: user.lastName,
-    email: user.email
+    email: user.email,
+    image: user.image
   }
 
     return res.json(
