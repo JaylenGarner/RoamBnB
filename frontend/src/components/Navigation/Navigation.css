@@ -20,7 +20,8 @@
 
 .profile-button-container {
   align-self: center;
-  padding-right: 160px;
+  padding-right: 80px;
+  position: relative;
 }
 
 .profile-button {
@@ -29,6 +30,13 @@
   border-radius: 50px;
   background: none;
   border: 1.5px solid #E9E9E9;
+  transition: 1.5s;
+}
+
+.profile-button:hover {
+  cursor: pointer;
+  box-shadow: 1px 1px 3px 0.1px gray;
+  transition: 0.5s;
 }
 
 .drop-down-icons {
@@ -48,4 +56,39 @@ padding-left: 2px;
   height: 32px;
   border-radius: 50px;
   border: 0.1px solid gray;
+}
+
+.drop-down-container {
+  position: absolute;
+  top: 50px;
+  right: 80px;
+  background-color: white;
+  border: 1px solid #E9E9E9;
+  border-radius: 8px;
+  z-index: 1;
+  width: 220px;
+  box-shadow: 1px 1px 3px 0.1px gray;
+  transition: 1s;
+  text-align: left;
+}
+
+.roambnb-your-home-container {
+  position: fixed;
+  right: 200px;
+  top: 28px;
+  padding: 10px;
+  border-radius: 20px;
+  transition: 1.5s;
+}
+
+.roambnb-your-home-container:hover {
+  background-color: rgb(245, 238, 238);
+  transition: 1s;
+  cursor: pointer;
+}
+
+
+.roambnb-your-home {
+  font-weight: bold;
+  font-size: 15px;
 }

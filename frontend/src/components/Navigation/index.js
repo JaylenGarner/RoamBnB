@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 import { NavLink } from 'react-router-dom';
 import { useDispatch, useSelector } from 'react-redux';
-import ActiveUserDropDown from './ActiveUserDropDown';
-import NoUserDropDown from './NoUserDropDown';
+import ActiveUserDropDown from './ActiveUserDropDown/ActiveUserDropDown';
+import NoUserDropDown from './NoUserDropDown/NoUserDropDown';
 import logo from '../../assets/airbnb.png'
 import { IoIosMenu } from "react-icons/io";
 import './Navigation.css';
@@ -42,6 +42,9 @@ function Navigation({ isLoaded }){
         <NavLink exact to="/" className={'home-button'}>
             <img className='logo' src={logo} alt='airbnb logo'/>
         </NavLink>
+        <div className='roambnb-your-home-container'>
+          <span className='roambnb-your-home'>Roambnb your home</span>
+        </div>
         {isLoaded && (
             <div className="profile-button-container">
             <button onClick={openMenu} className='profile-button'>
@@ -52,8 +55,12 @@ function Navigation({ isLoaded }){
                 </div>
               </div>
             </button>
-            {showMenu && sessionUser && <ActiveUserDropDown />}
-            {showMenu && !sessionUser && <NoUserDropDown />}
+            {showMenu && (
+              <div className="drop-down-container">
+                {sessionUser && <ActiveUserDropDown />}
+                {!sessionUser && <NoUserDropDown />}
+              </div>
+            )}
             </div>
         )}
     </div>

@@ -10,7 +10,7 @@ const CreateSpotForm = () => {
   const sessionUser = useSelector(state => state.session.user);
 
   if (!sessionUser) {
-    history.push(`/`)
+    history.push(`/login`)
   }
 
   // const [errorMessages, setErrorMessages] = useState({});
