@@ -1,15 +1,9 @@
-// frontend/src/components/Navigation/ProfileButton.js
-import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from 'react-redux';
-import * as sessionActions from '../../../store/session';
 import { NavLink } from "react-router-dom";
-import './NoUserDropDown.css';
-import { IoIosMenu } from "react-icons/io";
+import '../DropDowns.css';
 
 
 function NoUserDropDown() {
-  const dispatch = useDispatch();
-  const sessionUser = useSelector(state => state.session.user);
 
   return (
     <div className="no-user-dropdown-container">

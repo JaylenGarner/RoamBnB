@@ -1,6 +1,7 @@
 .home-page-container {
   display: flex;
   justify-content: center;
+  padding-top: 80px;
 }
 
 .grid-1 {

@@ -43,7 +43,9 @@ function Navigation({ isLoaded }){
             <img className='logo' src={logo} alt='airbnb logo'/>
         </NavLink>
         <div className='roambnb-your-home-container'>
-          <span className='roambnb-your-home'>Roambnb your home</span>
+        <NavLink exact to="/create" className='roambnb-your-home'>
+          <span >Roambnb your home</span>
+        </NavLink>
         </div>
         {isLoaded && (
             <div className="profile-button-container">

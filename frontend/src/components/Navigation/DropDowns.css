@@ -25,4 +25,5 @@
 .no-user-navbar-item:hover {
   background-color: rgb(245, 238, 238);
   transition: 1s;
+  cursor: pointer;
 }

@@ -1,9 +1,13 @@
 .nav-bar {
   width: 100%;
   height: 80px;
+  top: 0px;
   border-bottom: .5px solid rgb(243, 232, 232);
   display: flex;
   justify-content: space-between;
+  position:fixed;
+  z-index: 1000;
+  background-color: white;
 }
 
 .nav-bar-links {
@@ -15,7 +19,7 @@
 .logo {
   width: 100px;
   margin-left: 80px;
-  margin-top: 16px;
+  margin-top: 22px;
 }
 
 .profile-button-container {
@@ -75,10 +79,10 @@ padding-left: 2px;
 .roambnb-your-home-container {
   position: fixed;
   right: 200px;
-  top: 28px;
+  top: 22px;
   padding: 10px;
   border-radius: 20px;
-  transition: 1.5s;
+  transition: 0.5s;
 }
 
 .roambnb-your-home-container:hover {
@@ -91,4 +95,6 @@ padding-left: 2px;
 .roambnb-your-home {
   font-weight: bold;
   font-size: 15px;
+  text-decoration: none;
+  color: black;
 }
