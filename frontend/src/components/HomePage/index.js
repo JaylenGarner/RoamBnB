@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { getAllSpots } from '../../store/spots'
 import { NavLink } from 'react-router-dom';
+import {useParams} from 'react-router-dom'
 import './HomePage.css';
 import '../../index.css'
 
@@ -10,9 +11,10 @@ import {faStar} from '@fortawesome/free-solid-svg-icons'
 
 function HomePage() {
   const dispatch = useDispatch();
-  // const sessionUser = useSelector(state => state.session.user);
   const spots = useSelector((state) => state.spots)
-  const spotsArr = Object.values(spots)
+
+  // The presense of a user id will make the home page component only render spots owner by that user
+  const { userId } = useParams()
 
   const starsTool = (spot) => {
     if (spot.avgStarRating) {
@@ -32,10 +34,16 @@ function HomePage() {
     dispatch(getAllSpots());
   }, [dispatch]);
 
+  const filteredSpots = Object.values(spots).filter(
+    (spot) => !userId || spot.ownerId === Number(userId)
+  );
+
+  console.log(filteredSpots)
+
   return (
     <div className='home-page-container'>
     <div className='grid-1'>
-      {spotsArr.map((spot) => {
+      {filteredSpots.map((spot) => {
         if (!spot) {
           return null
         } else {

@@ -32,6 +32,9 @@ function App() {
           <Route path="/signup">
             <SignupFormPage />
           </Route>
+          <Route path="/:userId/spots">
+            <HomePage />
+          </Route>
           <Route exact path='/create'>
             <CreateSpotForm />
           </Route>
