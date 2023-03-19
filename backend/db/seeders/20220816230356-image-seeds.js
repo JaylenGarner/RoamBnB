@@ -6,7 +6,12 @@ let imageSeeds = [
   {
     imageableId: 1,
     imageableType: 'spot',
-    url: 'https://www.pexels.com/photo/residential-house-4469150/'
+    url: 'https://a0.muscache.com/im/pictures/miso/Hosting-46677438/original/20de6995-c6aa-402c-b14d-8f2c43cf8962.jpeg?im_w=1200'
+  },
+  {
+    imageableId: 1,
+    imageableType: 'spot',
+    url: 'https://a0.muscache.com/im/pictures/miso/Hosting-46677438/original/e1ea285e-f417-43e3-80ae-b1d6114c9d90.jpeg?im_w=720'
   },
 ]
 
