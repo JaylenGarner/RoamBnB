@@ -47,10 +47,10 @@ function SpotDetails() {
   return (
     <div className='spot-detail-container'>
       <div className='spot-detail-panel'>
-      <span id='spot-detail-name'>{spot.name} hosted by {spot.Owner.firstName}</span> <br></br>
+      <span id='spot-detail-name'>{spot.description}</span> <br></br>
       <span id='spot-detail-location'>{spot.city}, {spot.state}, {spot.country}</span>
       <img src={spot.previewImage} className='spot-detail-image'></img>
-      <span id='spot-detail-description'> {spot.description}</span> <br></br>
+      <span id='spot-detail-description'>{spot.name} hosted by {spot.Owner.firstName}</span> <br></br>
       <div className='spot-detail-price-container'>
       <span id='spot-detail-price'>${spot.price} </span>
       <span id='spot-detail-night'>night</span>
@@ -67,12 +67,6 @@ function SpotDetails() {
         <div className='reviews-container'>
         <SpotReviews spotId={spotId}/>
         </div>
-
-        {/* {(sessionUser) && (sessionUser.id !== spot.ownerId) && (
-        <div className='create-review-container'>
-        <CreateReviewForm setNewReview={setNewReview}/>
-        </div>
-        )} */}
       </div>
     </div>
   )

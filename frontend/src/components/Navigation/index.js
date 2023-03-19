@@ -42,11 +42,11 @@ function Navigation({ isLoaded }){
         <NavLink exact to="/" className={'home-button'}>
             <img className='logo' src={logo} alt='airbnb logo'/>
         </NavLink>
-        <div className='roambnb-your-home-container'>
         <NavLink exact to="/create" className='roambnb-your-home'>
+        <div className='roambnb-your-home-container'>
           <span >Roambnb your home</span>
-        </NavLink>
         </div>
+        </NavLink>
         {isLoaded && (
             <div className="profile-button-container">
             <button onClick={openMenu} className='profile-button'>

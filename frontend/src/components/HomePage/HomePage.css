@@ -11,7 +11,7 @@
   /* grid-template-columns: 358.14px 358.14px 358.14px 358.14px 358.14px 358.14px; */
   /* grid-template-columns: 20% 20% 20% 20% 20%;
    */
-  grid-template-columns: repeat(3, 1fr);
+  grid-template-columns: repeat(4, 1fr);
   /* grid-template-rows: auto; */
   padding-top: 50px;
   grid-gap: 25px;
@@ -22,12 +22,18 @@
 } */
 
 .preview-image {
-  height: 377px;
-  width: 358.14px;
+  height: 22vw;
+  width: 22vw;
   border-radius: 10px;
   background-size: contain;
   background-size: cover;
   margin-bottom: 10px;
+  transition: 1s
+}
+
+.preview-image:hover{
+ opacity: 0.7;
+ transition: 0.5s
 }
 
 .spot-nav-links {
