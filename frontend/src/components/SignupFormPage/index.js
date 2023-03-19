@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Redirect } from "react-router-dom";
 import * as sessionActions from "../../store/session";
+import { NavLink } from "react-router-dom";
 import './SignupForm.css';
 
 function SignupFormPage() {
@@ -86,6 +87,10 @@ function SignupFormPage() {
           required
         />
       <button className='signup-button' type="submit">Sign Up</button>
+      <div className='login-form-sign-up-area'>
+        <span className='dont-have-an-account'>Don't have an account? </span>
+        <NavLink to={'/login'} className='sign-up-link'>Login</NavLink>
+      </div>
     </form>
     </div>
     </div>

@@ -11,7 +11,7 @@
 
 .login-panel {
   width: 566px;
-  height: 423px;
+  height: 60vh;
   border: 2px solid rgb(207, 198, 198);
   border-radius: 1%;
   margin: 0px auto;
@@ -37,12 +37,16 @@
   color: white;
   margin-top: 30px;
   border-radius: 10px;
+  margin-bottom: 10px;
+  transition: 0.5s;
 }
 
 .login-button:hover {
   border: 2px #717171;
   border-style: ridge;
   background-color: #be083e;
+  cursor: pointer;
+  transition: 0.5s;
 }
 
 #welcome {
@@ -67,4 +71,19 @@
 #login-password {
   border-bottom-right-radius: 10px;
   border-bottom-left-radius: 10px;
+}
+
+.login-form-sign-up-area {
+  padding-top: 12px;
+}
+
+.sign-up-link {
+  color: gray;
+  text-decoration: none;
+  transition: 0.5s;
+}
+
+.sign-up-link:hover {
+  color: #e31c59;
+  transition: 0.5s;
 }

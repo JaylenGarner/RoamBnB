@@ -8,24 +8,84 @@
 
 .spot-detail-panel {
   height: auto;
-  width: 720px;
+  width: fit-content;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
   align-items: center;
   padding-top: 30px;
 }
+/* IMAGES */
 
-.spot-detail-image {
-  height: 560px;
-  width: 720px;
+/* One Spot Image */
+
+.spot-detail-image-one-of-one {
+  height: 34vw;
+  width: 55vw;
   border-radius: 12px;
   background-size: contain;
   background-size: cover;
   margin-bottom: 13px;
 }
 
-/* 1280 x 720 */
+/* Two Spot Images */
+
+.spot-detail-image-one-of-two {
+  height: 30vw;
+  width: 40vw;
+  margin-right: 10px;
+  border-radius: 12px;
+  background-size: contain;
+  background-size: cover;
+  margin-bottom: 13px;
+}
+
+.spot-detail-image-two-of-two {
+  height: 30vw;
+  width: 40vw;
+  border-radius: 12px;
+  background-size: contain;
+  background-size: cover;
+  margin-bottom: 13px;
+}
+
+/* Three Spot Images */
+
+.spot-detaails-three-images-container {
+  display: flex;
+}
+
+.spot-detail-image-one-of-three {
+  height: 34vw;
+  width: 45vw;
+  border-radius: 12px;
+  background-size: contain;
+  background-size: cover;
+  margin-right: 1vw;
+  margin-bottom: 13px;
+}
+
+.spot-detaails-three-images-container-two {
+display: flex;
+flex-direction: column;
+}
+
+.spot-detail-image-two-of-three {
+  height: 16.5vw;
+  width: 28vw;
+  border-radius: 12px;
+  background-size: contain;
+  background-size: cover;
+  margin-bottom: 1vw;
+}
+
+.spot-detail-image-three-of-three {
+  height: 16.5vw;
+  width: 28vw;
+  border-radius: 12px;
+  background-size: contain;
+  background-size: cover;
+}
 
 #spot-detail-name {
   font-size: 26px;
@@ -47,8 +107,13 @@
 #spot-detail-description {
   font-size: 22px;
   font-family: sans-serif;
-  align-self: center;
+  align-self: flex-start;
   font-weight: bold;
+}
+
+.spot-detail-price-container {
+    align-self: flex-start;
+    /* padding-left: 5vw; */
 }
 
 #spot-detail-price {

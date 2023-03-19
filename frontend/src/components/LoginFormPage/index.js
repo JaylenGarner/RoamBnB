@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import * as sessionActions from '../../store/session';
 import { useDispatch, useSelector } from 'react-redux';
 import { Redirect } from 'react-router-dom';
+import { NavLink } from "react-router-dom";
 import './LoginForm.css'
 
 function LoginFormPage() {
@@ -32,7 +33,7 @@ function LoginFormPage() {
         <h2>Login</h2>
       </div>
     <form onSubmit={handleSubmit} className='login-form'>
-      <h3 id='welcome'>Welcome to AirBnB</h3>
+      <h3 id='welcome'>Welcome to RoamBnB</h3>
       <ul>
         {errors.map((error, idx) => <li key={idx}>{error}</li>)}
       </ul>
@@ -55,6 +56,10 @@ function LoginFormPage() {
           required
         />
       <button className='login-button'type="submit">Continue</button>
+      <div className='login-form-sign-up-area'>
+        <span className='dont-have-an-account'>Don't have an account? </span>
+        <NavLink to={'/signup'} className='sign-up-link'>Sign up</NavLink>
+      </div>
     </form>
     </div>
     </div>
