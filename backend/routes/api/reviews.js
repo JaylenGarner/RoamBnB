@@ -28,7 +28,7 @@ router.get('/current', restoreUser, requireAuth, async (req, res) => {
     {
       model: Spot,
       attributes: [
-        'id', 'ownerId', 'address', 'city', 'state', 'country', 'lat', 'lng', 'name', 'price'
+        'id', 'ownerId', 'address', 'city', 'state', 'country','name', 'price'
       ]
     },
   ]

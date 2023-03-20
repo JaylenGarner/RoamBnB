@@ -18,14 +18,6 @@ const queryValidation = [
   .withMessage("Page must be greater than or equal to 0"),
   check('size').isInt({ min: 0, max: 10 })
   .withMessage("Size must be greater than or equal to 0"),
-  check('maxLat').isFloat()
-  .withMessage("Maximum latitude is invalid"),
-  check('minLat').isFloat()
-  .withMessage("Minimum latitude is invalid"),
-  check('maxLng').isFloat()
-  .withMessage("Maximum longitude is invalid"),
-  check('minLng').isFloat()
-  .withMessage("Minimum longitude is invalid"),
   check('minPrice').isFloat({ min: 0 })
   .withMessage("Maximum price must be greater than 0"),
   check('maxPrice').isFloat({ max: 0 })
@@ -46,7 +38,7 @@ const avgStarHelper = (arr) => {
 
 // Get All Spots
 router.get('/', queryValidation, async (req, res) => {
-  let { page, size, minLat, maxLat, mixLng, maxLng, minPrice, maxPrice } = req.query;
+  let { page, size, minPrice, maxPrice } = req.query;
   let where = {}
   let pagination = {}
 
@@ -54,7 +46,7 @@ router.get('/', queryValidation, async (req, res) => {
     const spots = await Spot.findAll({
       attributes: [
         'id', 'ownerId', 'address', 'city', 'state', 'country',
-        'lat','lng', 'name', 'description', 'price',
+        'name', 'description', 'price',
         'createdAt', 'updatedAt', 'previewImage', 'avgStarRating'
       ]
     })
@@ -75,7 +67,7 @@ router.get('/', queryValidation, async (req, res) => {
   const spots = await Spot.findAll({
     attributes: [
       'id', 'ownerId', 'address', 'city', 'state', 'country',
-      'lat','lng', 'name', 'description', 'price',
+      'name', 'description', 'price',
       'createdAt', 'updatedAt', 'previewImage'
     ],
     limit,
@@ -95,7 +87,7 @@ router.get('/current', restoreUser, requireAuth, async (req, res) => {
       ownerId: user.id
     },
     attributes: [
-      'id', 'ownerId', 'address', 'city', 'state', 'country','lat', 'lng',
+      'id', 'ownerId', 'address', 'city', 'state', 'country',
       'name', 'description','price', 'createdAt', 'updatedAt', 'previewImage'
     ]
   })
@@ -148,8 +140,6 @@ router.get('/:spotId', async (req, res) => {
     city: spot.city,
     state: spot.state,
     country: spot.country,
-    lat: spot.lat,
-    lng: spot.lng,
     name: spot.name,
     description: spot.description,
     price: spot.price,
@@ -163,7 +153,6 @@ router.get('/:spotId', async (req, res) => {
   }
 
   return res.json(result);
-
 })
 
 // Get All Reviews By a Spot's ID
@@ -256,12 +245,6 @@ const validateSpot = [
   check('country')
     .exists({ checkFalsy: true })
     .withMessage('Country is required'),
-  check('lat')
-    .exists({ checkFalsy: true })
-    .withMessage('Latitude is not valid'),
-  check('lng')
-    .exists({ checkFalsy: true })
-    .withMessage('Longitude is not valid'),
   check('name')
     .exists({ checkFalsy: true })
     .withMessage('Name must be less than 50 characters'),
@@ -293,21 +276,13 @@ const validateReview = [
 // Create a spot
 router.post('/', requireAuth, validateSpot, async (req, res) => {
   const { user } = req;
-  const { address, city, state, country, lat, lng, name, description, price, previewImage } = req.body;
+  const { address, city, state, country, name, description, price, previewImage, image1, image2 } = req.body;
 
-  const spot = await Spot.create({
-    ownerId: user.id,
-    address,
-    city,
-    state,
-    country,
-    lat,
-    lng,
-    name,
-    description,
-    price,
-    previewImage
-  })
+  const spot = await Spot.create({ ownerId: user.id, address, city, state, country, name, description, price, previewImage})
+
+  console.log(image1, image2)
+  if (image1) Image.create({imageableId: spot.id, imageableType: 'spot', url: image1})
+  if (image2) Image.create({imageableId: spot.id, imageableType: 'spot', url: image2})
 
   res.json({
     id: spot.id,
@@ -316,8 +291,6 @@ router.post('/', requireAuth, validateSpot, async (req, res) => {
     city: spot.city,
     state: spot.state,
     country: spot.country,
-    lat: spot.lat,
-    lng: spot.lng,
     name: spot.name,
     description: spot.description,
     price: spot.price,
@@ -351,7 +324,7 @@ router.delete('/:spotId', requireAuth, async (req, res) => {
 router.put('/:spotId', restoreUser, requireAuth, validateSpot, async (req, res) => {
   const { user } = req;
   const { spotId } = req.params;
-  const { address, city, state, country, lat, lng, name, description, price, previewImage } = req.body;
+  const { address, city, state, country, name, description, price, previewImage } = req.body;
   const spot = await Spot.findByPk(spotId)
 
   if (!spot) {
@@ -365,8 +338,6 @@ router.put('/:spotId', restoreUser, requireAuth, validateSpot, async (req, res) 
         city: city,
         state: state,
         country: country,
-        lat: lat,
-        lng: lng,
         name: name,
         description: description,
         price: price,
@@ -382,8 +353,6 @@ router.put('/:spotId', restoreUser, requireAuth, validateSpot, async (req, res) 
       city: spot.city,
       state: spot.state,
       country: spot.country,
-      lat: spot.lat,
-      lng: spot.lng,
       name: spot.name,
       description: spot.description,
       price: spot.price,

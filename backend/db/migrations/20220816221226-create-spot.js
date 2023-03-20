@@ -29,12 +29,6 @@ module.exports = {
       country: {
         type: Sequelize.STRING
       },
-      lat: {
-        type: Sequelize.DECIMAL
-      },
-      lng: {
-        type: Sequelize.DECIMAL
-      },
       name: {
         type: Sequelize.STRING
       },
