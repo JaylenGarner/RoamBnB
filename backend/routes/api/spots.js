@@ -280,7 +280,7 @@ router.post('/', requireAuth, validateSpot, async (req, res) => {
 
   const spot = await Spot.create({ ownerId: user.id, address, city, state, country, name, description, price, previewImage})
 
-  console.log(image1, image2)
+  console.log(image1,)
   if (image1) Image.create({imageableId: spot.id, imageableType: 'spot', url: image1})
   if (image2) Image.create({imageableId: spot.id, imageableType: 'spot', url: image2})
 
@@ -324,8 +324,33 @@ router.delete('/:spotId', requireAuth, async (req, res) => {
 router.put('/:spotId', restoreUser, requireAuth, validateSpot, async (req, res) => {
   const { user } = req;
   const { spotId } = req.params;
-  const { address, city, state, country, name, description, price, previewImage } = req.body;
+  const { address, city, state, country, name, description, price, previewImage, image1Id, image1, image2Id, image2 } = req.body;
   const spot = await Spot.findByPk(spotId)
+
+  if (image1Id) {
+
+    const firstImage = await Image.findByPk(image1Id)
+
+    if (image1 && firstImage) {
+      await firstImage.update({url: image1})
+    } else if (firstImage) {
+      await firstImage.destroy()
+    }
+  } else if (!image1Id && image1) {
+    await Image.create({imageableId: spotId, imageableType: 'spot', url: image1})
+  }
+
+  if (image2Id) {
+    const secondImage = await Image.findByPk(image2Id)
+
+    if (image2) {
+      await secondImage.update({url: image2})
+    } else {
+      await secondImage.destroy()
+    }
+  } else if (!image2Id && image2) {
+    await Image.create({imageableId: spotId, imageableType: 'spot', url: image2})
+  }
 
   if (!spot) {
     res.status(404).send({ message: "Spot couldn't be found", "statusCode": 404 });
