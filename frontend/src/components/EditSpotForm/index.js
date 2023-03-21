@@ -31,18 +31,45 @@ const EditSpotForm = () => {
   const [city, setCity] = useState(spot?.city);
   const [state, setState] = useState(spot?.state);
   const [country, setCountry] = useState(spot?.country);
-  const [lat, setLat] = useState(spot?.lat);
-  const [lng, setLng] = useState(spot?.lng);
   const [name, setName] = useState(spot?.name);
   const [description, setDescription] = useState(spot?.description);
   const [price, setPrice] = useState(spot?.price);
   const [previewImage, setPreviewImage] = useState(spot?.previewImage)
 
+  // Grab IDs to target the images on the backend for updating
+  const [image1Id, setImage1Id] = useState()
+  const [image2Id, setImage2Id] = useState()
+
+  const [image1, setImage1] = useState()
+  const [image2, setImage2] = useState()
+
+  useEffect(() => {
+
+    dispatch(getOneSpot(spotId))
+
+    console.log(spot?.Images)
+
+    if (spot?.Images[0] && spot?.Images[1]) {
+      setImage1Id(spot.Images[0].id)
+      setImage1(spot.Images[0].url)
+      setImage2Id(spot.Images[1].id)
+      setImage2(spot.Images[1].url)
+    } else if (spot?.Images[0] && !spot?.Images[1]) {
+      setImage1Id(spot.Images[0].id)
+      setImage1(spot.Images[0].url)
+    } else if (!spot?.Images[0] && spot?.Images[1]) {
+      setImage1Id(spot.Images[1].id)
+      setImage1(spot.Images[1].url)
+    }
+
+  }, [dispatch]);
+
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     //!!START SILENT
-    const editedSpot = { address, city, state, country, lat, lng, name, description, price, previewImage };
+    const editedSpot = { address, city, state, country, name, description, price, previewImage, image1Id, image1, image2Id, image2 };
     return dispatch(editSpot(editedSpot, spotId)).then(async (res) => {
       history.push(`/${res.id}`)
     })
@@ -64,7 +91,7 @@ const EditSpotForm = () => {
           {/* {errors.map((error, idx) => <li key={idx}>{error}</li>)} */}
         </ul>
         <input
-            type="text" className='edit-spot-fields' placeholder={address}
+            type="text" className='edit-spot-fields' placeholder='Address'
             value={address} required
             onChange={(e) => setAddress(e.target.value)}
           />
@@ -82,16 +109,6 @@ const EditSpotForm = () => {
             type="text" className='edit-spot-fields' placeholder='Country'
             value={country} required
             onChange={(e) => setCountry(e.target.value)}
-          />
-           <input
-            type="text" className='edit-spot-fields' placeholder='Latitude'
-            value={lat} required
-            onChange={(e) => setLat(e.target.value)}
-            />
-          <input
-            type="text" className='edit-spot-fields' placeholder='Longitude'
-            value={lng}
-            onChange={(e) => setLng(e.target.value)} required
           />
           <input
             type="text" className='edit-spot-fields' placeholder='Name'
@@ -112,6 +129,16 @@ const EditSpotForm = () => {
             type="text" className='edit-spot-fields' placeholder='Preview Image (URL)'
             value={previewImage} required
             onChange={(e) => setPreviewImage(e.target.value)}
+          />
+           <input
+            type="text" className='edit-spot-fields' placeholder='Add Image'
+            value={image1}
+            onChange={(e) => setImage1(e.target.value)}
+          />
+           <input
+            type="text" className='edit-spot-fields' placeholder='Add Image'
+            value={image2}
+            onChange={(e) => setImage2(e.target.value)}
           />
         <button type="submit" className='edit-spot-button'>Submit</button>
       </form>

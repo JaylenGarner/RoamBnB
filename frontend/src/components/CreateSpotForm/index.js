@@ -19,16 +19,17 @@ const CreateSpotForm = () => {
   const [city, setCity] = useState('');
   const [state, setState] = useState('');
   const [country, setCountry] = useState('');
-  const [lat, setLat] = useState('');
-  const [lng, setLng] = useState('');
   const [name, setName] = useState('');
   const [description, setDescription] = useState('');
   const [price, setPrice] = useState('');
   const [previewImage, setPreviewImage] = useState('');
+  const [image1, setImage1] = useState('');
+  const [image2, setImage2] = useState('');
+
 
   const handleSubmit = async (e) => {
     e.preventDefault();
-    const newSpot = { address, city, state, country, lat, lng, name, description, price, previewImage };
+    const newSpot = { address, city, state, country, name, description, price, previewImage, image1, image2 };
     return dispatch(createSpot(newSpot)).then(async (res) => {
       history.push(`/${res.id}`)
     })
@@ -41,12 +42,12 @@ const CreateSpotForm = () => {
           <h2>Create Your Listing</h2>
         </div>
       <form onSubmit={handleSubmit} className='create-spot-form'>
-        <h3 id='welcome'>Get started</h3>
-        <ul>
+        <h3 className='welcome'>Get started</h3>
+        {/* <ul> */}
           {/* {errors.map((error, idx) => <li key={idx}>{error}</li>)} */}
-        </ul>
+        {/* </ul> */}
           <input
-            type="text" className='create-spot-fields' placeholder='Address'
+            type="text" className='create-spot-field-top create-spot-fields' placeholder='Address'
             value={address} required
             onChange={(e) => setAddress(e.target.value)}
           />
@@ -65,16 +66,6 @@ const CreateSpotForm = () => {
             value={country} required
             onChange={(e) => setCountry(e.target.value)}
           />
-           <input
-            type="text" className='create-spot-fields' placeholder='Latitude'
-            value={lat} required
-            onChange={(e) => setLat(e.target.value)}
-            />
-          <input
-            type="text" className='create-spot-fields' placeholder='Longitude'
-            value={lng}
-            onChange={(e) => setLng(e.target.value)} required
-          />
           <input
             type="text" className='create-spot-fields' placeholder='Name'
             value={name} required
@@ -91,9 +82,19 @@ const CreateSpotForm = () => {
             onChange={(e) => setPrice(e.target.value)}
           />
           <input
-            type="text" className='create-spot-fields' placeholder='Preview Image (URL)'
+            type="text" className='create-spot-fields' placeholder='Main Image (URL)'
             value={previewImage} required
             onChange={(e) => setPreviewImage(e.target.value)}
+          />
+           <input
+            type="text" className='create-spot-fields' placeholder='Add Image (URL)'
+            value={image1} required
+            onChange={(e) => setImage1(e.target.value)}
+          />
+           <input
+            type="text" className='create-spot-fields create-spot-field-bottom' placeholder='Add Image (URL)'
+            value={image2} required
+            onChange={(e) => setImage2(e.target.value)}
           />
         <button type="submit" className='create-spot-button'>Submit</button>
       </form>

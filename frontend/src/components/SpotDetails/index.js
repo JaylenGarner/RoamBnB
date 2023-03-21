@@ -49,9 +49,9 @@ function SpotDetails() {
       )
     } else if (count === 2) {
       return (
-        <div className='spot-detaails-three-images-container'>
+        <div className='spot-details-three-images-container'>
           <img src={spot.previewImage} className='spot-detail-image-one-of-three'></img>
-          <div className='spot-detaails-three-images-container-two'>
+          <div className='spot-details-three-images-container-two'>
           <img src={spot.Images[0].url} className='spot-detail-image-two-of-three'></img>
           <img src={spot.Images[1].url} className='spot-detail-image-three-of-three'></img>
           </div>
@@ -70,15 +70,9 @@ function SpotDetails() {
     <div className='spot-detail-container'>
       <div className='spot-detail-panel'>
       <span id='spot-detail-name'>{spot.description}</span> <br></br>
+      <div className='upper-spot-details-area'>
       <span id='spot-detail-location'>{spot.city}, {spot.state}, {spot.country}</span>
-      {/* <img src={spot.previewImage} className='spot-detail-image'></img> */}
-      {renderImages(spot)}
-      <span id='spot-detail-description'>{spot.name} hosted by {spot.Owner.firstName}</span> <br></br>
-      <div className='spot-detail-price-container'>
-      <span id='spot-detail-price'>${spot.price} </span>
-      <span id='spot-detail-night'>night</span>
-      </div>
-        {(sessionUser) && (sessionUser.id === spot.ownerId) &&
+      {(sessionUser) && (sessionUser.id === spot.ownerId) &&
           (<div id='spot-details-buttons'>
             <NavLink to={`/${spotId}/edit`}>
               <button className='spot-crud-buttons'>Edit This Listing</button>
@@ -86,6 +80,14 @@ function SpotDetails() {
             <button onClick={handleDelete} className='spot-crud-buttons' >Delete This Listing</button>
           </div>
         )}
+       </div>
+      {/* <img src={spot.previewImage} className='spot-detail-image'></img> */}
+      {renderImages(spot)}
+      <span id='spot-detail-description'>{spot.name} hosted by {spot.Owner.firstName}</span> <br></br>
+      <div className='spot-detail-price-container'>
+      <span id='spot-detail-price'>${spot.price} </span>
+      <span id='spot-detail-night'>night</span>
+      </div>
         <br></br>
         <div className='reviews-container'>
         <SpotReviews spotId={spotId}/>

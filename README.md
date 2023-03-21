@@ -246,8 +246,6 @@ Returns all the spots.
           "city": "San Francisco",
           "state": "California",
           "country": "United States of America",
-          "lat": 37.7645358,
-          "lng": -122.4730327,
           "name": "App Academy",
           "description": "Place where web developers are created",
           "price": 123,
@@ -287,8 +285,6 @@ Returns all the spots owned (created) by the current user.
           "city": "San Francisco",
           "state": "California",
           "country": "United States of America",
-          "lat": 37.7645358,
-          "lng": -122.4730327,
           "name": "App Academy",
           "description": "Place where web developers are created",
           "price": 123,
@@ -326,8 +322,6 @@ Returns the details of a spot specified by its id.
       "city": "San Francisco",
       "state": "California",
       "country": "United States of America",
-      "lat": 37.7645358,
-      "lng": -122.4730327,
       "name": "App Academy",
       "description": "Place where web developers are created",
       "price": 123,
@@ -383,8 +377,6 @@ Creates and returns a new spot.
       "city": "San Francisco",
       "state": "California",
       "country": "United States of America",
-      "lat": 37.7645358,
-      "lng": -122.4730327,
       "name": "App Academy",
       "description": "Place where web developers are created",
       "price": 123
@@ -406,8 +398,6 @@ Creates and returns a new spot.
       "city": "San Francisco",
       "state": "California",
       "country": "United States of America",
-      "lat": 37.7645358,
-      "lng": -122.4730327,
       "name": "App Academy",
       "description": "Place where web developers are created",
       "price": 123,
@@ -432,8 +422,6 @@ Creates and returns a new spot.
         "city": "City is required",
         "state": "State is required",
         "country": "Country is required",
-        "lat": "Latitude is not valid",
-        "lng": "Longitude is not valid",
         "name": "Name must be less than 50 characters",
         "description": "Description is required",
         "price": "Price per day is required"
@@ -461,8 +449,6 @@ Updates and returns an existing spot.
       "city": "San Francisco",
       "state": "California",
       "country": "United States of America",
-      "lat": 37.7645358,
-      "lng": -122.4730327,
       "name": "App Academy",
       "description": "Place where web developers are created",
       "price": 123
@@ -484,8 +470,6 @@ Updates and returns an existing spot.
       "city": "San Francisco",
       "state": "California",
       "country": "United States of America",
-      "lat": 37.7645358,
-      "lng": -122.4730327,
       "name": "App Academy",
       "description": "Place where web developers are created",
       "price": 123,
@@ -510,8 +494,6 @@ Updates and returns an existing spot.
         "city": "City is required",
         "state": "State is required",
         "country": "Country is required",
-        "lat": "Latitude is not valid",
-        "lng": "Longitude is not valid",
         "name": "Name must be less than 50 characters",
         "description": "Description is required",
         "price": "Price per day is required"
@@ -614,8 +596,6 @@ Returns all the reviews written by the current user.
             "city": "San Francisco",
             "state": "California",
             "country": "United States of America",
-            "lat": 37.7645358,
-            "lng": -122.4730327,
             "name": "App Academy",
             "price": 123
           },
@@ -919,8 +899,6 @@ Return all the bookings that the current user has made.
             "city": "San Francisco",
             "state": "California",
             "country": "United States of America",
-            "lat": 37.7645358,
-            "lng": -122.4730327,
             "name": "App Academy",
             "price": 123,
             "previewImage": "image url"
@@ -1377,8 +1355,6 @@ Return spots filtered by query parameters.
   - Query Parameters
     - page: integer, minimum: 0, maximum: 10, default: 0
     - size: integer, minimum: 0, maximum: 20, default: 20
-    - minLat: decimal, optional
-    - maxLat: decimal, optional
     - minLng: decimal, optional
     - maxLng: decimal, optional
     - minPrice: decimal, optional, minimum: 0
@@ -1402,8 +1378,6 @@ Return spots filtered by query parameters.
           "city": "San Francisco",
           "state": "California",
           "country": "United States of America",
-          "lat": 37.7645358,
-          "lng": -122.4730327,
           "name": "App Academy",
           "description": "Place where web developers are created",
           "price": 123,
@@ -1431,10 +1405,6 @@ Return spots filtered by query parameters.
       "errors": {
         "page": "Page must be greater than or equal to 0",
         "size": "Size must be greater than or equal to 0",
-        "maxLat": "Maximum latitude is invalid",
-        "minLat": "Minimum latitude is invalid",
-        "minLng": "Maximum longitude is invalid",
-        "maxLng": "Minimum longitude is invalid",
         "minPrice": "Maximum price must be greater than 0",
         "maxPrice": "Minimum price must be greater than 0"
       }
