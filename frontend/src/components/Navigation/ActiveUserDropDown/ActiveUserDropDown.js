@@ -16,7 +16,7 @@ function ActiveUserDropDown() {
 
   return (
       <div className="no-user-dropdown-container">
-        <NavLink to="/" className='no-user-navbar-item dropdown-non-login' >Trips</NavLink>
+        <NavLink to="/trips" className='no-user-navbar-item dropdown-non-login' >Trips</NavLink>
         <NavLink to="/create" className='no-user-navbar-item dropdown-non-login' >Roambnb your home</NavLink>
         <NavLink to={`/${sessionUser.id}/spots`} className='no-user-navbar-item dropdown-non-login' >Manage Listings</NavLink>
         <span onClick={logout} className='no-user-navbar-item dropdown-non-login'>Log Out</span>

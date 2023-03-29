@@ -162,6 +162,12 @@ const bookingsReducer = (state = initialState, action) => {
         newState[booking.id] = booking
       });
       return {...newState}
+    case GET_USER_BOOKINGS:
+        action.bookings.forEach(booking => {
+        newState[booking.id] = booking
+        });
+        return {...newState}
+
     // case GET_SPOT_BY_ID:
     //   newState[action.spot.id] = action.spot
     //   return {...newState}

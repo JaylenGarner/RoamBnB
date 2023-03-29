@@ -10,7 +10,8 @@ import EditSpotForm from "./components/EditSpotForm";
 import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import SpotReviews from "./components/SpotReviews";
-import { getAllSpots } from "./store/spots";
+import UserBookings from "./components/Bookings/UserBookings";
+
 
 // import TestComponent from "./components/TestComponent/index.js";
 
@@ -31,6 +32,9 @@ function App() {
           </Route>
           <Route path="/signup">
             <SignupFormPage />
+          </Route>
+          <Route exact path="/trips">
+            <UserBookings />
           </Route>
           <Route path="/:userId/spots">
             <HomePage />
