@@ -8,6 +8,7 @@ import {useParams} from 'react-router-dom'
 import SpotReviews from '../SpotReviews';
 import CreateReviewForm from '../SpotReviews/CreateReviewForm/CreateReviewForm';
 import {getOneSpot} from '../../store/spots'
+import SpotBookings from '../Bookings/SpotBookings';
 import './SpotDetails.css'
 
 function SpotDetails() {
@@ -81,7 +82,7 @@ function SpotDetails() {
           </div>
         )}
        </div>
-      {/* <img src={spot.previewImage} className='spot-detail-image'></img> */}
+
       {renderImages(spot)}
       <span id='spot-detail-description'>{spot.name} hosted by {spot.Owner.firstName}</span> <br></br>
       <div className='spot-detail-price-container'>
@@ -89,6 +90,7 @@ function SpotDetails() {
       <span id='spot-detail-night'>night</span>
       </div>
         <br></br>
+        <SpotBookings />
         <div className='reviews-container'>
         <SpotReviews spotId={spotId}/>
         </div>

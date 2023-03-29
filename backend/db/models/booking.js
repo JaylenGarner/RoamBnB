@@ -32,7 +32,7 @@ module.exports = (sequelize, DataTypes) => {
     modelName: 'Booking',
     defaultScope: {
       attributes: [
-        'spotId', 'startDate', 'endDate'
+        'id', 'userId', 'spotId', 'startDate', 'endDate'
       ]
     },
   }

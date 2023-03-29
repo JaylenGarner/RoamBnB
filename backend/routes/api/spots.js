@@ -226,8 +226,16 @@ router.get('/:spotId/bookings', restoreUser, requireAuth, async (req, res) => {
   const bookings = await Booking.findAll({
     where: {
       spotId
-    }
+    },
+    include: [
+      {
+      model: User,
+      attributes: [
+        'id', 'image', 'firstName', 'lastName'
+      ]
+    }]
   })
+
   return res.json(bookings)
 
 })
