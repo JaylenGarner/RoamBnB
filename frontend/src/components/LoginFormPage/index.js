@@ -33,10 +33,12 @@ function LoginFormPage() {
         <h2>Login</h2>
       </div>
     <form onSubmit={handleSubmit} className='login-form'>
-      <h3 id='welcome'>Welcome to RoamBnB</h3>
+      <h3 className='welcome'>Welcome to RoamBnB</h3>
+      {errors.length !== 0 &&
       <ul>
         {errors.map((error, idx) => <li key={idx}>{error}</li>)}
       </ul>
+        }
         <input
           type="text"
           id='login-email'

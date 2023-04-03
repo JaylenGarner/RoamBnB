@@ -2,7 +2,7 @@ import { csrfFetch } from "./csrf";
 
 const GET_SPOT_BOOKINGS = 'bookings/GET_SPOT_BOOKINGS';
 const GET_USER_BOOKINGS = 'bookings/GET_USER_BOOKINGS'
-// const GET_SPOT_BY_ID = 'spots/GET_SPOT_BY_ID'
+const GET_BOOKING_BY_ID = 'bookings/GET_BOOKING_BY_ID'
 // const ADD_SPOT = 'spots/ADD_SPOT'
 // const DELETE_SPOT = 'spots/DELETE_SPOT'
 
@@ -20,12 +20,12 @@ const getUserBookings = (bookings) => {
     }
   }
 
-// const getSpotById = (spot) => {
-//   return {
-//     type: GET_SPOT_BY_ID,
-//     spot
-//   }
-// }
+const getBookingById = (booking) => {
+  return {
+    type: GET_BOOKING_BY_ID,
+    booking
+  }
+}
 
 // const addOneSpot = (spot) => {
 //   return {
@@ -59,14 +59,14 @@ export const getAllUserBookings = () => async (dispatch) => {
     }
   }
 
-// export const getOneSpot = (spotId) => async (dispatch) => {
-//   const response = await fetch(`/api/spots/${spotId}`)
+export const getOneBooking = (bookingId) => async (dispatch) => {
+  const response = await fetch(`/api/bookings/${bookingId}`)
 
-//   if (response.ok) {
-//     const data = await response.json()
-//     dispatch(getSpotById(data))
-//   }
-// }
+  if (response.ok) {
+    const data = await response.json()
+    dispatch(getBookingById(data))
+  }
+}
 
 // export const createSpot = (data) => async (dispatch) => {
 //   try {
@@ -168,9 +168,9 @@ const bookingsReducer = (state = initialState, action) => {
         });
         return {...newState}
 
-    // case GET_SPOT_BY_ID:
-    //   newState[action.spot.id] = action.spot
-    //   return {...newState}
+    case GET_BOOKING_BY_ID:
+      newState[action.booking.id] = action.booking
+      return {...newState}
     // case ADD_SPOT:
     //   newState[action.spot.id] = action.spot
     //   return {...newState}

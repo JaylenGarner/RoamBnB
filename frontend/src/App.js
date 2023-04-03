@@ -11,6 +11,7 @@ import * as sessionActions from "./store/session";
 import Navigation from "./components/Navigation";
 import SpotReviews from "./components/SpotReviews";
 import UserBookings from "./components/Bookings/UserBookings";
+import BookingPage from "./components/BookingPage";
 
 
 // import TestComponent from "./components/TestComponent/index.js";
@@ -35,6 +36,9 @@ function App() {
           </Route>
           <Route exact path="/trips">
             <UserBookings />
+          </Route>
+          <Route exact path="/trips/:bookingId">
+            <BookingPage />
           </Route>
           <Route path="/:userId/spots">
             <HomePage />

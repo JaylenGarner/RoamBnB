@@ -1,3 +1,52 @@
 .trips-container {
     padding-top: 120px;
+    padding-left: 100px
+}
+
+.trip-grid {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+}
+
+.trip-info-container {
+    display: flex;
+    padding-top: 20px;
+}
+
+.trip-image {
+    width: 80px;
+    height: 80px;
+    border-radius: 8px;
+}
+
+.trip-info-details {
+    padding-left: 15px;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+.trips-heading {
+    padding-bottom: 20px;
+}
+
+.upcoming-trips-container {
+    padding-bottom: 20px;
+}
+
+.trip-city {
+    font-size: 16px;
+    font-weight: bold;
+}
+
+.trip-details {
+    padding-top: 5px;
+    color: #717171;
+    font-size: 15px;
+    font-weight: 300;
+}
+
+.trip-nav-link {
+    color: black;
+    text-decoration: none;
 }

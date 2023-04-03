@@ -11,7 +11,7 @@
 
 .login-panel {
   width: 566px;
-  height: 60vh;
+  height: 420px;
   border: 2px solid rgb(207, 198, 198);
   border-radius: 1%;
   margin: 0px auto;
@@ -49,8 +49,10 @@
   transition: 0.5s;
 }
 
-#welcome {
-  padding-left: 30px;
+.welcome {
+  padding-left: 8px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 }
 
 .login-text-fields {

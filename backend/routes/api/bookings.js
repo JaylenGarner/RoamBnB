@@ -1,5 +1,5 @@
 const express = require('express')
-const { Booking, Spot } = require('../../db/models');
+const { Booking, Spot, User } = require('../../db/models');
 
 const { check } = require('express-validator');
 const { handleValidationErrors } = require('../../utils/validation');
@@ -62,10 +62,38 @@ router.get('/current', restoreUser, requireAuth, async (req, res) => {
       attributes: [
         'id', 'ownerId', 'address', 'city', 'state', 'country', 'name', 'price', 'previewImage'
       ]
+    },
+    {
+      model: User,
+      attributes: [
+        'id', 'firstName'
+      ]
     }]
   })
 
   res.json(bookings)
+})
+
+// Get booking by id
+
+router.get('/:bookingId', restoreUser, requireAuth, async (req, res) => {
+  const { bookingId } = req.params;
+  const booking = await Booking.findByPk(bookingId)
+
+  if (!booking) {
+    res.status(404).send({ "message": "Booking couldn't be found", "statusCode": 404 });
+    return
+  }
+
+  return res.json({
+    id: booking.id,
+    spotId: booking.spotId,
+    userId: booking.userId,
+    startDate: booking.startDate,
+    endDate: booking.endDate,
+    createdAt: booking.createdAt,
+    updatedAt: booking.updatedAt
+  })
 })
 
 // Edit a booking based on the Booking Id

@@ -6,26 +6,26 @@ let bookingSeeds = [
   {
     userId: 1,
     spotId: 1,
-    startDate: `11-05-2021`,
-    endDate:`11-08-2021`
+    startDate: `11-5-2021`,
+    endDate:`11-8-2021`
   },
   {
     userId: 1,
     spotId: 2,
-    startDate: `12-05-2023`,
-    endDate:`01-15-2024`
+    startDate: `12-5-2023`,
+    endDate:`1-15-2024`
   },
   {
     userId: 2,
     spotId: 3,
-    startDate: `01-02-2023`,
-    endDate:`01-12-2023`
+    startDate: `1-2-2023`,
+    endDate:`1-12-2023`
   },
   {
   userId: 3,
   spotId: 2,
-  startDate: '01-05-2025',
-  endDate: '01-06-2026'
+  startDate: '1-5-2025',
+  endDate: '1-6-2026'
   }
 ]
 
