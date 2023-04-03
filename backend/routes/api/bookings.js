@@ -78,7 +78,28 @@ router.get('/current', restoreUser, requireAuth, async (req, res) => {
 
 router.get('/:bookingId', restoreUser, requireAuth, async (req, res) => {
   const { bookingId } = req.params;
-  const booking = await Booking.findByPk(bookingId)
+  const booking = await Booking.findByPk(bookingId, {
+    attributes: [
+      'id', 'spotId', 'userId', 'startDate', 'endDate', 'createdAt', 'updatedAt'
+    ],
+    include: [
+      {
+        model: Spot,
+        attributes: [
+          'id', 'ownerId', 'address', 'city', 'state', 'country', 'name', 'price', 'previewImage'
+        ],
+        include: [
+          {
+            model: User,
+            as: 'Owner',
+            attributes: [
+              'id', 'firstName', 'image'
+            ]
+          }
+        ]
+      }
+    ]
+  });
 
   if (!booking) {
     res.status(404).send({ "message": "Booking couldn't be found", "statusCode": 404 });
@@ -92,7 +113,8 @@ router.get('/:bookingId', restoreUser, requireAuth, async (req, res) => {
     startDate: booking.startDate,
     endDate: booking.endDate,
     createdAt: booking.createdAt,
-    updatedAt: booking.updatedAt
+    updatedAt: booking.updatedAt,
+    Spot: booking.Spot
   })
 })
 
