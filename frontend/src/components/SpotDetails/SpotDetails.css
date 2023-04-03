@@ -32,6 +32,7 @@
   background-size: contain;
   background-size: cover;
   margin-bottom: 13px;
+  object-fit: cover;
 }
 
 /* Two Spot Images */
@@ -44,6 +45,8 @@
   background-size: contain;
   background-size: cover;
   margin-bottom: 13px;
+  object-fit: cover;
+
 }
 
 .spot-detail-image-two-of-two {
@@ -53,6 +56,8 @@
   background-size: contain;
   background-size: cover;
   margin-bottom: 13px;
+  object-fit: cover;
+
 }
 
 /* Three Spot Images */
@@ -69,6 +74,8 @@
   background-size: cover;
   margin-right: 1vw;
   margin-bottom: 13px;
+  object-fit: cover;
+
 }
 
 .spot-details-three-images-container-two {
@@ -83,6 +90,8 @@ flex-direction: column;
   background-size: contain;
   background-size: cover;
   margin-bottom: 1vw;
+  object-fit: cover;
+
 }
 
 .spot-detail-image-three-of-three {
@@ -91,6 +100,7 @@ flex-direction: column;
   border-radius: 12px;
   background-size: contain;
   background-size: cover;
+  object-fit: cover;
 }
 
 #spot-detail-name {

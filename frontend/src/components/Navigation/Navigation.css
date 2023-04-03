@@ -35,6 +35,7 @@
   background: none;
   border: 1.5px solid #E9E9E9;
   transition: 1.5s;
+
 }
 
 .profile-button:hover {
@@ -60,6 +61,7 @@ padding-left: 2px;
   height: 32px;
   border-radius: 50px;
   border: 0.1px solid gray;
+  object-fit: cover;
 }
 
 .drop-down-container {

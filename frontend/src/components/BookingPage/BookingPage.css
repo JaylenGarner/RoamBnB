@@ -1,3 +1,141 @@
 .booking-page-container {
-    padding-top: 120px;
+    padding-top: 90px;
+    overflow: hidden;
+
+}
+
+.booking-page-grid {
+    display: grid;
+    grid-template-columns: 42vw 56vw;
+    grid-gap: 1vw;
+    grid-template-rows: 1;
+    width: 95vw;
+    height: 86vh;
+}
+
+.booking-info-container {
+    grid-column: 1;
+    margin-left: 5px;
+    box-shadow: 0.1px 0.5px 2px gray;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    overflow: scroll;
+    position: sticky;
+}
+
+.booking-google-maps-area {
+    grid-column: 2;
+}
+
+.booking-page-image {
+    position: relative;
+    height: 400px;
+    width: 100%;
+    border-top-right-radius: 5px;
+    border-top-left-radius: 5px;
+    box-shadow: 0.1px 0.5px 2px gray;
+    filter: brightness(60%);
+    object-fit: cover;
+}
+
+.booking-page-owner-heading {
+    position: absolute;
+    top: 100px;
+    left: 35px;
+    color: white;
+    font-weight: 600;
+    font-size: 32px;
+}
+
+.booking-page-dates-container {
+    display: flex;
+    height: 120px;
+    display: grid;
+    grid-template-columns: 43% 50%;
+    grid-template-rows: 1;
+    padding-top: 20px;
+    padding-bottom: 20px;
+    border-bottom: 1px solid #DDDDDD;
+}
+
+.booking-page-check-in {
+    grid-column: 1;
+    border-right: 1px solid #DDDDDD;
+    padding-left: 25px;
+    /* padding-top: 10px; */
+    margin-top: 10px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+}
+
+.booking-page-check-in-text {
+    font-size: 15px;
+    font-weight: 500;
+    padding-bottom: 8px;
+}
+
+.booking-page-check-in-time {
+    font-size: 15px;
+    color: #717171;
+    padding-top: 8px;
+    font-weight: 200;
+}
+
+.booking-page-check-out {
+    grid-column: 2;
+    padding-left: 25px;
+    margin-top: 10px;
+    height: fit-content;
+    display: flex;
+    flex-direction: column;
+}
+
+.booking-page-reservation-details {
+    padding-top: 20px;
+}
+
+.booking-page-reservation-details-text {
+    /* font-size: 22px; */
+    /* font-weight: bold; */
+     padding-left: 30px;
+}
+
+.booking-page-cancelation-policy {
+    padding-top: 20px;
+    padding-bottom: 20px;
+     padding-left: 30px;
+    border-bottom: 1px solid #DDDDDD;
+}
+
+.booking-page-cancelation-policy-header {
+    font-size: 17px;
+    font-weight: bold;
+}
+
+.booking-page-cancelation-policy-text {
+    font-size: 16px;
+    font-weight: 300;
+}
+
+.booking-page-host-details {
+    padding-top: 20px;
+    padding-bottom: 20px;
+    padding-left: 30px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.booking-page-host-image-container {
+    margin-right: 30px;
+}
+
+.booking-page-host-image {
+    height: 50px;
+    width: 50px;
+    border-radius: 50px;
+    /* border: 0.1px solid #717171; */
+    box-shadow: 0.1px 0.5px 2px gray;
+    object-fit: cover;
 }
