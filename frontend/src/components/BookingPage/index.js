@@ -72,8 +72,6 @@ if (booking) {
                     </div>
 
 
-
-
                     <div className='booking-google-maps-area'>
                     </div>
                 </div>
