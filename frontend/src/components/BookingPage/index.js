@@ -1,13 +1,11 @@
 import { useEffect } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
-import { getOneBooking } from '../../store/bookings'
+import { deleteBooking, getOneBooking } from '../../store/bookings'
 import { useHistory } from 'react-router-dom'
-
+import { getAllReviews } from '../../store/reviews'
 import bookingDateFormatter from '../../tools/bookingDateFormatter'
-
 import "./BookingPage.css";
-
 
 function BookingPage() {
 const dispatch = useDispatch()
@@ -17,13 +15,45 @@ const {bookingId} = useParams()
 const bookings = useSelector((state) => state.bookings)
 const booking = bookings[bookingId]
 const user = useSelector((state) => state.session.user)
+const reviews = useSelector((state) => state.reviews)
+
 
 useEffect(() => {
-
     dispatch(getOneBooking(bookingId))
+  }, [dispatch, bookingId])
 
-}, [dispatch, bookingId])
+  useEffect(() => {
+    if (booking) {
+      dispatch(getAllReviews(booking.spotId))
+    }
+  }, [dispatch, booking])
 
+
+const handleCancelation = (e) => {
+    e.preventDefault()
+    dispatch(deleteBooking(bookingId))
+    history.push(`/trips`)
+}
+
+    const checkForReview = () => {
+    let userReview;
+
+    Object.values(reviews).forEach((review) => {
+        if (review.spotId === booking.spotId && review.userId === user.id) {
+            userReview = review
+        }
+    })
+
+    if (!userReview) {
+        return (
+            <span>How was your stay?</span>
+        )
+    } else {
+        return (
+            <span>{userReview.review}</span>
+        )
+    }
+}
 
 if (booking) {
 
@@ -32,6 +62,10 @@ if (booking) {
     }
 
     if (booking.Spot && booking.Spot.Owner) {
+
+        const startDate = new Date(booking.startDate)
+        const endDate = new Date(booking.endDate)
+        const today = new Date();
 
         const formattedEndDate = bookingDateFormatter(booking.endDate)
 
@@ -56,7 +90,10 @@ if (booking) {
                         </div>
 
                         <div className='booking-page-reservation-details'>
+                            <div className='booking-page-reservation-management'>
                             <h2 className='booking-page-reservation-details-text'>Reservation Details</h2>
+                            {endDate > today && <button onClick={handleCancelation} className='booking-page-cancel-button'>Cancel Trip</button>}
+                            </div>
                             <div className='booking-page-cancelation-policy'>
                                 <span className='booking-page-cancelation-policy-header'>Cancelation policy</span>
                                 <p className='booking-page-cancelation-policy-text'>Free cancellation before 4:00 PM on {formattedEndDate.slice(4)}</p>
@@ -69,8 +106,13 @@ if (booking) {
                         <img src={booking.Spot.Owner.image} className='booking-page-host-image' ></img>
                         </div>
                         </div>
-                    </div>
 
+                        {endDate < today &&
+                        <div className='booking-page-review-area'>
+                        <h2 >Your Review</h2>
+                        {checkForReview()}
+                        </div>}
+                    </div>
 
                     <div className='booking-google-maps-area'>
                     </div>
@@ -84,7 +126,6 @@ if (booking) {
 } else {
     return <></>
 }
-
 }
 
 export default BookingPage

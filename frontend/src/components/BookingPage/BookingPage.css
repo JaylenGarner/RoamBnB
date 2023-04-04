@@ -47,6 +47,34 @@
     font-size: 32px;
 }
 
+.booking-page-cancel-button {
+    color: white;
+    background-color: #FD595E;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 18px;
+    height: 45px;
+    width: 120px;
+    margin-top: 8px;
+    transition: 1s;
+}
+
+.booking-page-cancel-button:hover {
+    background-color: white;
+    border:0.5px solid #FD595E;
+    color: #FD595E;
+    transition: 1s;
+    cursor: pointer;
+}
+
+.booking-page-reservation-management {
+    display: flex;
+    justify-content: space-between;
+    padding-right: 30px;
+    align-content: center;
+}
+
 .booking-page-dates-container {
     display: flex;
     height: 120px;
@@ -62,7 +90,6 @@
     grid-column: 1;
     border-right: 1px solid #DDDDDD;
     padding-left: 25px;
-    /* padding-top: 10px; */
     margin-top: 10px;
     height: fit-content;
     display: flex;
@@ -96,15 +123,13 @@
 }
 
 .booking-page-reservation-details-text {
-    /* font-size: 22px; */
-    /* font-weight: bold; */
-     padding-left: 30px;
+    padding-left: 30px;
 }
 
 .booking-page-cancelation-policy {
     padding-top: 20px;
     padding-bottom: 20px;
-     padding-left: 30px;
+    padding-left: 30px;
     border-bottom: 1px solid #DDDDDD;
 }
 
@@ -125,6 +150,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    border-bottom: 1px solid #DDDDDD;
 }
 
 .booking-page-host-image-container {
@@ -137,4 +163,16 @@
     border-radius: 50px;
     box-shadow: 0.1px 0.5px 2px gray;
     object-fit: cover;
+}
+
+.booking-page-host-image:hover {
+    transform: rotate(360deg);
+    transition: 3s;
+}
+
+.booking-page-review-area {
+    padding-top: 20px;
+    padding-left: 30px;
+    padding-bottom: 20px;
+
 }

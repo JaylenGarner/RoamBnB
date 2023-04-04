@@ -93,9 +93,7 @@ function UserBookings() {
   const displayPastTrips = (trips) => {
     if (!trips.length) {
         return (
-          <div>
-            <h2>You have no past trips</h2>
-          </div>
+         <></>
         );
       } else {
         return (
@@ -124,7 +122,7 @@ function UserBookings() {
 
   if (loading) {
     return <div>Loading...</div>;
-  } else if (upcomingBookings.length || pastBookings.length) {
+  } else {
     return (
       <div className="trips-container">
         <h1 className="trips-heading">Trips</h1>
@@ -137,8 +135,6 @@ function UserBookings() {
         </div>
     </div>
     )
-  } else {
-    return <>You have no trips</>
   }
 }
 

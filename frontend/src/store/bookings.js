@@ -3,8 +3,8 @@ import { csrfFetch } from "./csrf";
 const GET_SPOT_BOOKINGS = 'bookings/GET_SPOT_BOOKINGS';
 const GET_USER_BOOKINGS = 'bookings/GET_USER_BOOKINGS'
 const GET_BOOKING_BY_ID = 'bookings/GET_BOOKING_BY_ID'
+const DELETE_BOOKING = 'bookings/DELETE_BOOKING'
 // const ADD_SPOT = 'spots/ADD_SPOT'
-// const DELETE_SPOT = 'spots/DELETE_SPOT'
 
 const getSpotBookings = (bookings) => {
   return {
@@ -34,12 +34,12 @@ const getBookingById = (booking) => {
 //   }
 // }
 
-// const deleteOneSpot = (spotId) => {
-//   return {
-//     type: DELETE_SPOT,
-//     spotId
-//   }
-// }
+const deleteOneBooking = (bookingId) => {
+  return {
+    type: DELETE_BOOKING,
+    bookingId
+  }
+}
 
 export const getAllSpotBookings = (spotId) => async (dispatch) => {
   const response = await csrfFetch(`/api/spots/${spotId}/bookings`)
@@ -140,16 +140,16 @@ export const getOneBooking = (bookingId) => async (dispatch) => {
 //   }
 // };
 
-// export const deleteSpot = (spotId) => async dispatch => {
-//   const response = await csrfFetch(`/api/spots/${spotId}`, {
-//     method: 'DELETE',
-//   });
+export const deleteBooking = (bookingId) => async dispatch => {
+  const response = await csrfFetch(`/api/bookings/${bookingId}`, {
+    method: 'DELETE',
+  });
 
-//   if (response.ok) {
-//     dispatch(deleteOneSpot(spotId));
-//     return {message: 'Spot was deleted'};
-//   }
-// };
+  if (response.ok) {
+    dispatch(deleteOneBooking(bookingId));
+    return {message: 'Booking was deleted'};
+  }
+};
 
 const initialState = {}
 
@@ -174,9 +174,9 @@ const bookingsReducer = (state = initialState, action) => {
     // case ADD_SPOT:
     //   newState[action.spot.id] = action.spot
     //   return {...newState}
-    // case DELETE_SPOT:
-    //     delete newState[action.spotId]
-    //     return newState
+    case DELETE_BOOKING:
+        delete newState[action.bookingId]
+        return newState
     default:
       return state
   }
