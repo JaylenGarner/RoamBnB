@@ -58,11 +58,20 @@ router.get('/current', restoreUser, requireAuth, async (req, res) => {
 
     include: [
       {
-      model: Spot,
-      attributes: [
-        'id', 'ownerId', 'address', 'city', 'state', 'country', 'name', 'price', 'previewImage'
-      ]
-    },
+        model: Spot,
+        attributes: [
+          'id', 'ownerId', 'address', 'city', 'state', 'country', 'name', 'price', 'previewImage'
+        ],
+        include: [
+          {
+            model: User,
+            as: 'Owner',
+            attributes: [
+              'id', 'firstName', 'image'
+            ]
+          }
+        ]
+      },
     {
       model: User,
       attributes: [
