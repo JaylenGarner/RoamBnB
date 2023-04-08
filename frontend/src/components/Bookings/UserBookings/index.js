@@ -67,9 +67,9 @@ function UserBookings() {
       return (
         <div className="trips-area">
           <h2>Upcoming Trips</h2>
+          <div className="trips-grid">
           {trips.map((trip) => {
             return (
-
               <div className="trip-info-container">
                 <NavLink to={`/trips/${trip.id}`}>
                 <img src={`${trip.Spot.previewImage}`} className='trip-image'></img>
@@ -78,13 +78,13 @@ function UserBookings() {
                 <NavLink to={`/trips/${trip.id}`}  className='trip-nav-link'>
                 <span className="trip-city">{trip.Spot.city}</span>
                 </NavLink>
-                <span className="trip-details">Hosted by {trip.User.firstName}</span>
+                <span className="trip-details">Hosted by {trip.Spot.Owner.firstName}</span>
                 <span className="trip-details">Date</span>
                 </div>
               </div>
-
             );
           })}
+        </div>
         </div>
       );
     }
@@ -99,6 +99,7 @@ function UserBookings() {
         return (
             <div className="trips-area">
             <h2>Where you’ve been</h2>
+            <div className="trips-grid">
             {trips.map((trip) => {
               return (
                 <div className="trip-info-container">
@@ -109,12 +110,13 @@ function UserBookings() {
                   <NavLink to={`/trips/${trip.id}`}  className='trip-nav-link'>
                   <span className="trip-city">{trip.Spot.city}</span>
                   </NavLink>
-                  <span className="trip-details">Hosted by {trip.User.firstName}</span>
+                  <span className="trip-details">Hosted by {trip.Spot.Owner.firstName}</span>
                   <span className="trip-details">Date</span>
                   </div>
                 </div>
               );
             })}
+            </div>
           </div>
         );
       }
@@ -126,11 +128,11 @@ function UserBookings() {
     return (
       <div className="trips-container">
         <h1 className="trips-heading">Trips</h1>
-        <div className="trips-grid upcoming-trips-container">
+        <div className="upcoming-trips-container">
         {displayUpcomingTrips(upcomingBookings)}
         </div>
 
-        <div className="trips-grid past-trips-container">
+        <div className="past-trips-container">
         {displayPastTrips(pastBookings)}
         </div>
     </div>

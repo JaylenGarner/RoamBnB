@@ -47,6 +47,25 @@
     font-size: 32px;
 }
 
+.booking-page-back-button {
+    position: absolute;
+    top: 25px;
+    left: 30px;
+    color: white;
+    font-size: 20px;
+    border: 2px solid white;
+    padding: 6px;
+    border-radius: 50px;
+    transition: 0.5s;
+}
+
+.booking-page-back-button:hover {
+    cursor: pointer;
+    background-color: white;
+    color: black;
+    transition: 0.5s;
+}
+
 .booking-page-cancel-button {
     color: white;
     background-color: #FD595E;
@@ -173,6 +192,20 @@
 .booking-page-review-area {
     padding-top: 20px;
     padding-left: 30px;
-    padding-bottom: 20px;
+    padding-bottom: 30px;
+    padding-right: 30PX;
+}
 
+.booking-page-stars-container {
+    padding-top: 40px;
+    display: flex;
+    justify-content: center;
+    padding-right: 30px;
+    width: 100%;
+    font-size: 40px;
+    color: #ABAEB0;
+}
+
+.booking-page-existing-gold-star {
+    color: #E8B65D;
 }

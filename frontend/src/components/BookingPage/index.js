@@ -7,6 +7,11 @@ import { getAllReviews } from '../../store/reviews'
 import bookingDateFormatter from '../../tools/bookingDateFormatter'
 import "./BookingPage.css";
 
+import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
+import {faArrowLeftLong} from '@fortawesome/free-solid-svg-icons'
+import {faStar} from '@fortawesome/free-solid-svg-icons'
+
+
 function BookingPage() {
 const dispatch = useDispatch()
 const history = useHistory()
@@ -26,8 +31,8 @@ useEffect(() => {
     if (booking) {
       dispatch(getAllReviews(booking.spotId))
     }
-  }, [dispatch, booking])
 
+  }, [dispatch, booking])
 
 const handleCancelation = (e) => {
     e.preventDefault()
@@ -35,8 +40,32 @@ const handleCancelation = (e) => {
     history.push(`/trips`)
 }
 
-    const checkForReview = () => {
-    let userReview;
+const displayReviewStars = (stars) => {
+    let difference = 5 - stars;
+    let starsArray = [];
+
+    for (let i = 0; i < stars; i++) {
+      starsArray.push(
+        <span key={i}>
+          <FontAwesomeIcon icon={faStar} className='booking-page-existing-gold-star' />
+        </span>
+      );
+    }
+
+    for (let i = 0; i < difference; i++) {
+      starsArray.push(
+        <span key={i + stars}>
+          <FontAwesomeIcon icon={faStar} />
+        </span>
+      );
+    }
+
+    return <div>{starsArray}</div>;
+  };
+
+
+const checkForReview = () => {
+let userReview;
 
     Object.values(reviews).forEach((review) => {
         if (review.spotId === booking.spotId && review.userId === user.id) {
@@ -46,11 +75,21 @@ const handleCancelation = (e) => {
 
     if (!userReview) {
         return (
+            <div>
             <span>How was your stay?</span>
+            {/* There is no review, so empty stars awaiting input will be returned */}
+
+            </div>
         )
     } else {
         return (
-            <span>{userReview.review}</span>
+            <div>
+                <span>{userReview.review}</span>
+                <div className='booking-page-stars-container'>
+                {/* There is a review, so the stars will be statically rendered based off the user's review */}
+                {displayReviewStars(userReview.stars)}
+                </div>
+            </div>
         )
     }
 }
@@ -75,7 +114,7 @@ if (booking) {
                     <div className='booking-info-container'>
                         <img src={booking.Spot.previewImage} className='booking-page-image'></img>
                         <h2 className='booking-page-owner-heading'>Your stay at {booking.Spot.Owner.firstName}'s place</h2>
-
+                        <FontAwesomeIcon icon={faArrowLeftLong} className='booking-page-back-button' onClick={() => history.push('/trips')}></FontAwesomeIcon>
                         <div className='booking-page-dates-container'>
                             <div className='booking-page-check-in'>
                                 <span className='booking-page-check-in-text' >Check-in</span>
@@ -109,7 +148,7 @@ if (booking) {
 
                         {endDate < today &&
                         <div className='booking-page-review-area'>
-                        <h2 >Your Review</h2>
+                        <h2>Your Review</h2>
                         {checkForReview()}
                         </div>}
                     </div>
