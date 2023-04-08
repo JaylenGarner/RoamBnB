@@ -6,6 +6,7 @@ import { useHistory } from 'react-router-dom'
 import { getAllReviews } from '../../store/reviews'
 import bookingDateFormatter from '../../tools/bookingDateFormatter'
 import { createReview } from '../../store/reviews'
+import { deleteReview } from '../../store/reviews'
 import "./BookingPage.css";
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
@@ -25,6 +26,7 @@ const reviews = useSelector((state) => state.reviews)
 
 const [stars, setStars] = useState(0)
 const [myReview, setMyReview] = useState('')
+const [reviewSubmitted, setReviewSubmitted] = useState(false);
 
 
 useEffect(() => {
@@ -37,18 +39,24 @@ useEffect(() => {
     }
   }, [dispatch, booking])
 
-  const handleReview = (e) => {
+  const handleReview = async (e) => {
     e.preventDefault()
     const newReview = { review: myReview, stars: stars};
-    console.log(newReview)
-    return dispatch(createReview(booking.spotId, newReview))
+    await dispatch(createReview(booking.spotId, newReview))
+    setReviewSubmitted(true);
 }
 
 
-const handleCancelation = (e) => {
+const handleCancelation = (e , reviewId) => {
     e.preventDefault()
     dispatch(deleteBooking(bookingId))
     history.push(`/trips`)
+}
+
+const handleDelete = (e, reviewId) => {
+    e.preventDefault()
+    dispatch(deleteReview(reviewId))
+    // history.push(`/trips`)
 }
 
 
@@ -117,35 +125,41 @@ const displayReviewStars = (stars) => {
 
 
 const checkForReview = () => {
-let userReview;
+    let userReview;
 
     Object.values(reviews).forEach((review) => {
-        if (review.spotId === booking.spotId && review.userId === user.id) {
-            userReview = review
-        }
-    })
+      if (review.spotId === booking.spotId && review.userId === user.id) {
+        userReview = review;
+      }
+    });
 
-    if (!userReview) {
-        return (
-            <div>
-            {/* There is no review, so empty stars awaiting input will be returned */}
-            <div className='booking-page-stars-container'>
-            {leaveReview()}
-            </div>
-            </div>
-        )
+    if (!userReview && !reviewSubmitted) {
+      return (
+        <div>
+          {/* There is no review, so empty stars awaiting input will be returned */}
+          <div className="booking-page-stars-container">{leaveReview()}</div>
+        </div>
+      );
     } else {
-        return (
-            <div>
-                <span>{userReview.review}</span>
-                <div className='booking-page-stars-container'>
-                {/* There is a review, so the stars will be statically rendered based off the user's review */}
-                {displayReviewStars(userReview.stars)}
-                </div>
-            </div>
-        )
+      if (!userReview && reviewSubmitted) {
+        userReview = { review: myReview, stars: stars };
+      }
+      return (
+        <div>
+        <div className='booking-page-review-text'>
+          <span>{userReview.review}</span>
+          </div>
+          <div className="booking-page-stars-container">
+            {/* There is a review, so the stars will be statically rendered based off the user's review */}
+            {displayReviewStars(userReview.stars)}
+          </div>
+          <div className='booking-page-review-button-container booking-page-delete-review-button-container '>
+          <button onClick={(e) => handleDelete(e, userReview.id)} className='booking-page-review-button'>Delete Review</button>
+          </div>
+        </div>
+      );
     }
-}
+  };
 
 if (booking) {
 
