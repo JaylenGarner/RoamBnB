@@ -28,12 +28,6 @@ let reviewSeeds = [
     stars: 3
   },
   {
-    userId: 1,
-    spotId: 3,
-    review: 'The view from the top floor was something else - I swear, I could see all the way to Staten Island. And the amenities? Fuhgeddaboudit!',
-    stars: 5
-  },
-  {
     userId: 3,
     spotId: 3,
     review: "Stunning view of Empire State Building, modern and clean place with everything needed. Perfect location, unforgettable experience!",
@@ -49,12 +43,6 @@ let reviewSeeds = [
     userId: 1,
     spotId: 4,
     review: "Great retreat at Airstream camper in Prince Edward County. Cozy and peaceful with a unique setting. Perfect location for exploring. I even did some programming while camping! Highly recommended for a refreshing getaway.",
-    stars: 4
-  },
-  {
-    userId: 1,
-    spotId: 5,
-    review: "Absolutely loved the lake house near Jiminy Peak in Averill Park! The place was cozy and comfortable, and the surroundings were so peaceful and beautiful. It was the perfect escape from the city for a few days. I can't wait to come back and enjoy this lovely retreat again.",
     stars: 4
   },
   {

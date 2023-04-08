@@ -197,7 +197,7 @@
 }
 
 .booking-page-stars-container {
-    padding-top: 40px;
+    padding-top: 20px;
     display: flex;
     justify-content: center;
     padding-right: 30px;
@@ -208,4 +208,71 @@
 
 .booking-page-existing-gold-star {
     color: #E8B65D;
+}
+
+.star-container {
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
+}
+
+.rating-input {
+    display: none;
+}
+
+.booking-page-inactive-star {
+    transition: 0.2s
+}
+
+.booking-page-inactive-star:hover,
+.booking-page-inactive-star:hover ~ .booking-page-inactive-star,
+.rating-input:checked ~ .booking-page-inactive-star {
+    cursor: pointer;
+    color: #E8B65D;
+    transition: 0.2s;
+}
+
+.booking-page-review-input {
+    margin-top: 30px;
+    width: 100%;
+    padding: 10px;
+    font-family: inherit;
+    font-size: 16px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    resize: vertical;
+    transition: 0.2s;
+}
+
+.booking-page-review-input:focus {
+    outline: #FD595E;
+    border: 1px solid #FD595E;
+    transition: 1s;
+}
+
+.booking-page-review-button-container {
+    padding-top: 15px;
+    text-align: center;
+    padding-bottom: 30px;
+}
+
+.booking-page-review-button {
+    color: white;
+    background-color: #FD595E;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 18px;
+    height: 45px;
+    width: 160px;
+    margin-top: 8px;
+    transition: 1s;
+}
+
+.booking-page-review-button:hover {
+    background-color: white;
+    border:0.5px solid #FD595E;
+    color: #FD595E;
+    transition: 1s;
+    cursor: pointer;
 }

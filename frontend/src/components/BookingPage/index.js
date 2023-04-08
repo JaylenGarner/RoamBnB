@@ -1,10 +1,11 @@
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { useDispatch, useSelector } from 'react-redux'
 import { useParams } from 'react-router-dom'
 import { deleteBooking, getOneBooking } from '../../store/bookings'
 import { useHistory } from 'react-router-dom'
 import { getAllReviews } from '../../store/reviews'
 import bookingDateFormatter from '../../tools/bookingDateFormatter'
+import { createReview } from '../../store/reviews'
 import "./BookingPage.css";
 
 import {FontAwesomeIcon} from '@fortawesome/react-fontawesome'
@@ -22,6 +23,9 @@ const booking = bookings[bookingId]
 const user = useSelector((state) => state.session.user)
 const reviews = useSelector((state) => state.reviews)
 
+const [stars, setStars] = useState(0)
+const [myReview, setMyReview] = useState('')
+
 
 useEffect(() => {
     dispatch(getOneBooking(bookingId))
@@ -31,13 +35,61 @@ useEffect(() => {
     if (booking) {
       dispatch(getAllReviews(booking.spotId))
     }
-
   }, [dispatch, booking])
+
+  const handleReview = (e) => {
+    e.preventDefault()
+    const newReview = { review: myReview, stars: stars};
+    console.log(newReview)
+    return dispatch(createReview(booking.spotId, newReview))
+}
+
 
 const handleCancelation = (e) => {
     e.preventDefault()
     dispatch(deleteBooking(bookingId))
     history.push(`/trips`)
+}
+
+
+const leaveReview = () => {
+   return (
+    <div>
+    <div id="starContainer" className="star-container">
+  <input type="radio" name="rating" id="star5" className="rating-input" onChange={() => setStars(5)} />
+  <label htmlFor="star5" className="booking-page-inactive-star">
+    <FontAwesomeIcon icon={faStar} />
+  </label>
+  <input type="radio" name="rating" id="star4" className="rating-input" onChange={() => setStars(4)} />
+  <label htmlFor="star4" className="booking-page-inactive-star">
+    <FontAwesomeIcon icon={faStar} />
+  </label>
+  <input type="radio" name="rating" id="star3" className="rating-input" onChange={() => setStars(3)} />
+  <label htmlFor="star3" className="booking-page-inactive-star">
+    <FontAwesomeIcon icon={faStar} />
+  </label>
+  <input type="radio" name="rating" id="star2" className="rating-input" onChange={() => setStars(2)} />
+  <label htmlFor="star2" className="booking-page-inactive-star">
+    <FontAwesomeIcon icon={faStar} />
+  </label>
+  <input type="radio" name="rating" id="star1" className="rating-input" onChange={() => setStars(1)} />
+  <label htmlFor="star1" className="booking-page-inactive-star">
+    <FontAwesomeIcon icon={faStar} />
+  </label>
+</div>
+  <textarea
+    id="review-text"
+    className="booking-page-review-input"
+    value={myReview}
+    onChange={(e) => setMyReview(e.target.value)}
+    placeholder="How was your stay?..."
+    rows="5"
+  />
+  <div className='booking-page-review-button-container'>
+  <button className='booking-page-review-button' onClick={(e) => handleReview(e)}>Leave Review</button>
+  </div>
+</div>
+   )
 }
 
 const displayReviewStars = (stars) => {
@@ -61,7 +113,7 @@ const displayReviewStars = (stars) => {
     }
 
     return <div>{starsArray}</div>;
-  };
+};
 
 
 const checkForReview = () => {
@@ -76,9 +128,10 @@ let userReview;
     if (!userReview) {
         return (
             <div>
-            <span>How was your stay?</span>
             {/* There is no review, so empty stars awaiting input will be returned */}
-
+            <div className='booking-page-stars-container'>
+            {leaveReview()}
+            </div>
             </div>
         )
     } else {
