@@ -28,6 +28,10 @@ const [stars, setStars] = useState(0)
 const [myReview, setMyReview] = useState('')
 const [reviewSubmitted, setReviewSubmitted] = useState(false);
 
+const [starsError, setStarsError] = useState(null);
+const [reviewError, setReviewError] = useState(null)
+
+
 
 useEffect(() => {
     dispatch(getOneBooking(bookingId))
@@ -37,17 +41,36 @@ useEffect(() => {
     if (booking) {
       dispatch(getAllReviews(booking.spotId))
     }
-  }, [dispatch, booking])
+  }, [dispatch, booking, reviewSubmitted])
 
   const handleReview = async (e) => {
     e.preventDefault()
+
+    if (stars === 0 || myReview.length === 0) {
+
+        if (stars === 0) {
+            setStarsError('Please select a star rating.');
+        } else {
+            setStarsError(null)
+        }
+
+        if (myReview.length === 0) {
+            setReviewError('Please enter your review')
+        } else {
+            setReviewError(null)
+        }
+
+        return;
+      }
+
     const newReview = { review: myReview, stars: stars};
     await dispatch(createReview(booking.spotId, newReview))
     setReviewSubmitted(true);
+    setStarsError(null);
+    setReviewError(null)
 }
 
-
-const handleCancelation = (e , reviewId) => {
+const handleCancelation = (e) => {
     e.preventDefault()
     dispatch(deleteBooking(bookingId))
     history.push(`/trips`)
@@ -56,6 +79,9 @@ const handleCancelation = (e , reviewId) => {
 const handleDelete = (e, reviewId) => {
     e.preventDefault()
     dispatch(deleteReview(reviewId))
+    setReviewSubmitted(false);
+    setMyReview('')
+    setStars(0)
     // history.push(`/trips`)
 }
 
@@ -63,6 +89,8 @@ const handleDelete = (e, reviewId) => {
 const leaveReview = () => {
    return (
     <div>
+        <div className='booking-page-error-message'>{starsError}</div>
+        <div className='booking-page-error-message'>{reviewError}</div>
     <div id="starContainer" className="star-container">
   <input type="radio" name="rating" id="star5" className="rating-input" onChange={() => setStars(5)} />
   <label htmlFor="star5" className="booking-page-inactive-star">
