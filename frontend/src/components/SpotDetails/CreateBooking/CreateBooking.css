@@ -4,15 +4,14 @@
   border: 1.2px solid rgb(207, 198, 198) ;
   border-radius: 8px;
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   padding-left: 30px;
   padding-right: 30px;
   padding-top: 10px;
 }
 
 .booking-panel-review-info-container {
-    /* background-color: red; */
-    width: 340px;
+    width: 280px;
     height: 80px;
     display: flex;
     align-items: center;
@@ -37,4 +36,72 @@
 .spot-detail-review-count {
     color: #717171;
     text-decoration: underline;
+}
+
+.create-booking-form-container {
+    width: 280px;
+    /* background-color: red; */
+    height: 60px;
+    border: 1px solid black;
+    border-radius: 8px;
+}
+
+.create-booking-date-fields-container {
+    width: 280px;
+    display: flex;
+    height: 58px;
+}
+
+.create-booking-checkin-container {
+    display: flex;
+    flex-direction: column;
+    width: 120px;
+    align-items: center;
+    justify-content: center;
+}
+
+.create-booking-checkout-container {
+    margin-left: 20px;
+    border-left: 1px solid black;
+}
+
+
+.create-booking-checkin-container > span {
+    font-size: 12px;
+    font-weight: 900;
+    margin-left: 10px;
+}
+
+.date-input {
+    background: none;
+    border: none;
+    margin-left: 15px;
+    margin-top: 5px;
+    width: 100px;
+}
+
+.create-booking-submit-button-container {
+ text-align: center;
+ margin-top: 20px;
+}
+
+.create-booking-button {
+    color: white;
+    background-color: #FD595E;
+    border: none;
+    border-radius: 8px;
+    font-weight: 600;
+    font-size: 18px;
+    height: 45px;
+    width: 280px;
+    margin-top: 8px;
+    transition: 1s;
+}
+
+.create-booking-button:hover {
+    background-color: white;
+    border:0.5px solid #FD595E;
+    color: #FD595E;
+    transition: 1s;
+    cursor: pointer;
 }

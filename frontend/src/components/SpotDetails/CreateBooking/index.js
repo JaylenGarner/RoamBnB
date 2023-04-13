@@ -25,9 +25,34 @@ const CreateBooking = ({reviewCount, avgRating}) => {
                 <span className='spot-detail-rating'> {avgRating} · </span>
                 <span className='spot-detail-review-count'>{reviewCount} reviews</span>
             </div>
-            {/* <span className='create-booking-container'>{reviewCount}</span>
-            <br></br>
-            <span className='create-booking-container'>{avgRating}</span> */}
+            </div>
+            <div className='create-booking-form-container'>
+                <form>
+                    <div className='create-booking-date-fields-container'>
+                        <div className='create-booking-checkin-container'>
+                    <span>CHECK-IN</span>
+                    <input
+                    type="date"
+                    className='date-input'
+                    >
+                        {/* CHECK-IN */}
+                    </input>
+                    </div>
+                    <div className='create-booking-checkin-container create-booking-checkout-container'>
+                    <span>CHECK OUT</span>
+                    <input
+                    placeholder='today'
+                    type="date"
+                    className='date-input'
+                    >
+                        {/* CHECK-IN */}
+                    </input>
+                    </div>
+                    </div>
+                    <div className='create-booking-submit-button-container'>
+                    <button type='submit' className='create-booking-button'>Reserve</button>
+                    </div>
+                </form>
             </div>
         </div>
     )
