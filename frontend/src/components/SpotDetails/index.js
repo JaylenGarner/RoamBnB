@@ -10,6 +10,7 @@ import CreateReviewForm from '../SpotReviews/CreateReviewForm/CreateReviewForm';
 import {getOneSpot} from '../../store/spots'
 import SpotBookings from '../Bookings/SpotBookings';
 import './SpotDetails.css'
+import CreateBooking from './CreateBooking';
 
 function SpotDetails() {
   const dispatch = useDispatch();
@@ -20,6 +21,10 @@ function SpotDetails() {
   const reviews = useSelector((state) => state.reviews)
 
   const sessionUser = useSelector(state => state.session.user);
+
+  const [reviewCount, setReviewCount] = useState(0)
+  const [avgRating, setAvgRating] = useState(0)
+
 
   // When a review is created, this will run and setNewReview, whcub will allow the useEffect to render new reviews
   // const reviewRenderTool = (res) => setNewReview(res)
@@ -85,14 +90,14 @@ function SpotDetails() {
 
       {renderImages(spot)}
       <span id='spot-detail-description'>{spot.name} hosted by {spot.Owner.firstName}</span> <br></br>
-      <div className='spot-detail-price-container'>
-      <span id='spot-detail-price'>${spot.price} </span>
-      <span id='spot-detail-night'>night</span>
-      </div>
         <br></br>
-        <SpotBookings />
         <div className='reviews-container'>
-        <SpotReviews spotId={spotId}/>
+          <div className='spot-reviews'>
+              <SpotReviews spotId={spotId} setReviewCount={setReviewCount} setAvgRating={setAvgRating}/>
+            </div>
+            <div className='create-booking-container'>
+            <CreateBooking reviewCount={reviewCount} avgRating={avgRating}/>
+            </div>
         </div>
       </div>
     </div>

@@ -12,7 +12,7 @@ import { getAllReviews } from '../../store/reviews';
 
 import './SpotReviews.css'
 
-function SpotReviews() {
+function SpotReviews({setReviewCount, setAvgRating}) {
   const dispatch = useDispatch()
   const sessionUser = useSelector(state => state.session.user);
   const { spotId } = useParams()
@@ -20,16 +20,13 @@ function SpotReviews() {
   const spot = spots[spotId]
   const reviews = useSelector((state) => state.reviews)
 
+
   const star = <FontAwesomeIcon icon={faStar} className='review-star'></FontAwesomeIcon>
 
   const twoDecimalPlaces = (avgRating) => {
+    setAvgRating(avgRating.toFixed(2))
     return avgRating.toFixed(2)
   }
-
-  // const handleDelete = (id)  => {
-  //   dispatch(deleteReview(id))
-  //   dispatch(getOneSpot(spotId))
-  // }
 
   const reviewCounter = () => {
     let sum = 0;
@@ -37,6 +34,7 @@ function SpotReviews() {
       if (review.spotId == spotId) sum++
     })
 
+    setReviewCount(sum)
     return sum;
   }
 
@@ -74,13 +72,6 @@ function SpotReviews() {
             <span className='review-date'>{getMonth(review.createdAt)} {getYear(review.createdAt)}</span>
             <br></br>
             <span key={review.id} className='review-body'>{review.review}</span>
-
-            {/* {(sessionUser) && (sessionUser.id === review.userId) && (
-              <div className='delete-review-button-container'>
-            <button onClick={(e) => handleDelete(review.id)}
-            className='review-delete-button'>Delete</button>
-              </div>
-            )} */}
           </div>
         )}
         })}

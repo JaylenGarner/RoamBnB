@@ -1,0 +1,40 @@
+.create-booking-panel {
+  width: 340px;
+  height: 300px;
+  border: 1.2px solid rgb(207, 198, 198) ;
+  border-radius: 8px;
+  display: flex;
+  flex-direction: row;
+  padding-left: 30px;
+  padding-right: 30px;
+  padding-top: 10px;
+}
+
+.booking-panel-review-info-container {
+    /* background-color: red; */
+    width: 340px;
+    height: 80px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+#spot-detail-price {
+  font-weight: 900;
+  font-size: 21px;
+}
+
+#spot-detail-night {
+  font-weight: 200;
+  font-size: 18px;
+}
+
+.spot-detail-rating {
+  font-weight: 900;
+  font-size: 16px;
+}
+
+.spot-detail-review-count {
+    color: #717171;
+    text-decoration: underline;
+}

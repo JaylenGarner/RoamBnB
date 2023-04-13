@@ -198,7 +198,6 @@
 }
 
 .booking-page-stars-container {
-    padding-top: 20px;
     display: flex;
     justify-content: center;
     padding-right: 30px;
@@ -294,5 +293,5 @@
      font-weight: 300;
     color: #FD595E;
     text-align: center;
-    padding-bottom: 20px;
+    padding-bottom: 10px;
 }

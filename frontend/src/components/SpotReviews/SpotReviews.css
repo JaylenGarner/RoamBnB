@@ -10,9 +10,8 @@
   display: grid;
   grid-template-columns: 310px 310px ;
   grid-template-rows: auto;
-  /* grid-gap: 50px; */
   grid-row-gap: 30px;
-  grid-column-gap: 100px;
+  grid-column-gap: 70px;
 }
 
 .review {
