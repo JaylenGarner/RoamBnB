@@ -462,7 +462,6 @@ router.post('/:spotId/reviews', restoreUser, requireAuth, validateReview, async 
   //   res.status(403).send({ "message": "User already has a review for this spot",
   //   "statusCode": 403 });
   //   return
-  // }
 
     const newReview = await Review.create({
       userId: user.id,
@@ -487,75 +486,54 @@ router.post('/:spotId/bookings', restoreUser, requireAuth, async (req, res) => {
   const { user } = req;
   const { spotId } = req.params;
   const { startDate, endDate } = req.body;
-  const spot = await Spot.findByPk(spotId)
 
-  if (!spot) {
-    res.status(404).send({ "message": "Spot couldn't be found", "statusCode": 404 });
-    return
+  // parse start and end dates to Date objects
+  const start = new Date(startDate);
+  const end = new Date(endDate);
+
+  // check that start and end dates are not before today's date
+  const today = new Date();
+  if (start < today || end < today) {
+    res.status(403).send({
+      "message": "Booking dates must be in the future",
+      "statusCode": 403,
+      "errors": { "dates": "Booking dates must be in the future" }
+    });
+    return;
   }
 
-  if (spot.ownerId === user.id) {
-    res.status(403).send({"message": "You can't create a booking for your own spot",
-    "statusCode": 403})
-    return
-  }
-
+  // compare start and end dates with existing bookings
   const allBookings = await Booking.findAll({
     where: {
       spotId: spotId
     }
-  })
+  });
 
   for (let i = 0; i < allBookings.length; i++) {
-    let currBooking = allBookings[i]
+    let currBooking = allBookings[i];
+    let currStartDate = new Date(currBooking.startDate);
+    let currEndDate = new Date(currBooking.endDate);
 
-    if (startDate >= currBooking.startDate && startDate <= currBooking.endDate){
+    if ((start >= currStartDate && start <= currEndDate) ||
+        (end >= currStartDate && end <= currEndDate) ||
+        (currStartDate >= start && currStartDate <= end)) {
       res.status(403).send({
         "message": "Sorry, this spot is already booked for the specified dates",
         "statusCode": 403,
-        "errors": {"startDate": "Start date conflicts with an existing booking"}
-        })
-      return
-    }
-
-    if (endDate >= currBooking.startDate && endDate <= currBooking.endDate){
-      res.status(403).send({
-        "message": "Sorry, this spot is already booked for the specified dates",
-        "statusCode": 403,
-        "errors": {"endDate": "End date conflicts with an existing booking"}
-      })
-    }
-
-    if (currBooking.startDate >= startDate && currBooking.startDate <= endDate) {
-      res.status(403).send({
-        "message": "Sorry, this spot is already booked for the specified dates",
-        "statusCode": 403,
-        "errors": {"startDate": "Start date conflicts with an existing booking"}
-      })
-      return
+        "errors": { "dates": "Dates conflict with an existing booking" }
+      });
+      return;
     }
   }
 
-
-
+  // create new booking
   const newBooking = await Booking.create({
     userId: user.id,
-    spotId: spotId,
-    startDate: startDate,
-    endDate: endDate
-  })
+    spotId,
+    startDate: start, // save Date objects in the database
+    endDate: end
+  });
 
-  return res.json({
-    id: newBooking.id,
-    spotId: newBooking.spotId,
-    userId: newBooking.userId,
-    startDate: newBooking.startDate,
-    endDate: newBooking.endDate,
-    createdAt: newBooking.createdAt,
-    updatedAt: newBooking.updatedAt
-  })
-// }
-  return res.json({message: "You can't create a booking for your own spot"})
-})
-
+  res.status(201).send(newBooking);
+});
 module.exports = router;

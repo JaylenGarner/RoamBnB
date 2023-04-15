@@ -4,7 +4,7 @@ const GET_SPOT_BOOKINGS = 'bookings/GET_SPOT_BOOKINGS';
 const GET_USER_BOOKINGS = 'bookings/GET_USER_BOOKINGS'
 const GET_BOOKING_BY_ID = 'bookings/GET_BOOKING_BY_ID'
 const DELETE_BOOKING = 'bookings/DELETE_BOOKING'
-// const ADD_SPOT = 'spots/ADD_SPOT'
+const ADD_BOOKING = 'bookings/ADD_BOOKING'
 
 const getSpotBookings = (bookings) => {
   return {
@@ -27,12 +27,12 @@ const getBookingById = (booking) => {
   }
 }
 
-// const addOneSpot = (spot) => {
-//   return {
-//     type: ADD_SPOT,
-//     spot
-//   }
-// }
+const addOneBooking = (booking) => {
+  return {
+    type: ADD_BOOKING,
+    booking
+  }
+}
 
 const deleteOneBooking = (bookingId) => {
   return {
@@ -68,77 +68,29 @@ export const getOneBooking = (bookingId) => async (dispatch) => {
   }
 }
 
-// export const createSpot = (data) => async (dispatch) => {
-//   try {
-//       const response = await csrfFetch(`/api/spots`, {
-//           method: 'POST',
-//           headers: {
-//               'Content-Type': 'application/json',
-//           },
-//           body: JSON.stringify(data),
-//       });
+export const createBooking = (startDate, endDate, spotId) => async (dispatch) => {
+  try {
+    const response = await csrfFetch(`/api/spots/${spotId}/bookings`, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({ startDate, endDate }),
+    });
 
-//       if (!response.ok) {
-//           let error;
-//           if (response.status === 422) {
-//               error = await response.json();
-//               throw new Error('error')
-//               // throw new ValidationError(error.errors, response.statusText);
-//           } else {
-//               let errorJSON;
-//               error = await response.text();
-//               try {
-//                   errorJSON = JSON.parse(error);
-//               } catch {
-//                   throw new Error(error);
-//               }
-//               throw new Error(`${errorJSON.title}: ${errorJSON.message}`);
-//           }
-//       }
+    if (!response.ok) {
+      const error = await response.json();
+      return { error: error.errors.dates || error.message }; // return the error object
+    }
 
-//       const spot = await response.json();
-//       dispatch(addOneSpot(spot));
-//       return spot;
-//   } catch (error) {
-//       throw error;
-//   }
-// };
+    const booking = await response.json();
+    dispatch(addOneBooking(booking));
+    return { success: true, booking };
+  } catch (error) {
+    return { success: false, error: error.message };
+  }
+};
 
-// export const editSpot = (data, spotId) => async (dispatch) => {
-//   try {
-//       const response = await csrfFetch(`/api/spots/${spotId}`, {
-//           method: 'PUT',
-//           headers: {
-//               'Content-Type': 'application/json',
-//           },
-//           body: JSON.stringify(data),
-//       });
-
-//       if (!response.ok) {
-//           let error;
-//           if (response.status === 422) {
-//               error = await response.json();
-//               throw new Error('error')
-//               // throw new ValidationError(error.errors, response.statusText);
-//           } else {
-//               let errorJSON;
-//               error = await response.text();
-//               try {
-//                   errorJSON = JSON.parse(error);
-//               } catch {
-//                   throw new Error(error);
-//               }
-//               throw new Error(`${errorJSON.title}: ${errorJSON.message}`);
-//           }
-//       }
-
-//       const spot = await response.json();
-//       dispatch(addOneSpot(spot));
-//       return spot;
-//   } catch (error) {
-//       throw error;
-//   }
-// };
 
 export const deleteBooking = (bookingId) => async dispatch => {
   const response = await csrfFetch(`/api/bookings/${bookingId}`, {
@@ -171,9 +123,9 @@ const bookingsReducer = (state = initialState, action) => {
     case GET_BOOKING_BY_ID:
       newState[action.booking.id] = action.booking
       return {...newState}
-    // case ADD_SPOT:
-    //   newState[action.spot.id] = action.spot
-    //   return {...newState}
+    case ADD_BOOKING:
+      newState[action.booking.id] = action.booking
+      return {...newState}
     case DELETE_BOOKING:
         delete newState[action.bookingId]
         return newState

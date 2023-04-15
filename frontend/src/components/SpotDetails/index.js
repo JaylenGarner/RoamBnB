@@ -96,7 +96,7 @@ function SpotDetails() {
               <SpotReviews spotId={spotId} setReviewCount={setReviewCount} setAvgRating={setAvgRating}/>
             </div>
             <div className='create-booking-container'>
-            <CreateBooking reviewCount={reviewCount} avgRating={avgRating}/>
+              <CreateBooking reviewCount={reviewCount} avgRating={avgRating}/>
             </div>
         </div>
       </div>
