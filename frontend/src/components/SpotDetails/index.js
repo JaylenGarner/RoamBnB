@@ -11,6 +11,7 @@ import {getOneSpot} from '../../store/spots'
 import SpotBookings from '../Bookings/SpotBookings';
 import './SpotDetails.css'
 import CreateBooking from './CreateBooking';
+import { getAllSpotBookings } from '../../store/bookings';
 
 function SpotDetails() {
   const dispatch = useDispatch();
@@ -26,12 +27,10 @@ function SpotDetails() {
   const [avgRating, setAvgRating] = useState(0)
 
 
-  // When a review is created, this will run and setNewReview, whcub will allow the useEffect to render new reviews
-  // const reviewRenderTool = (res) => setNewReview(res)
-
   useEffect(() => {
     dispatch(getOneSpot(spotId))
     dispatch(getAllReviews(spotId))
+    dispatch(getAllSpotBookings(spotId))
   }, [dispatch, spotId]);
 
 

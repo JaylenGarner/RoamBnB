@@ -69,7 +69,6 @@ export const getOneBooking = (bookingId) => async (dispatch) => {
 }
 
 export const createBooking = (startDate, endDate, spotId) => async (dispatch) => {
-  try {
     const response = await csrfFetch(`/api/spots/${spotId}/bookings`, {
       method: 'POST',
       headers: {
@@ -78,18 +77,11 @@ export const createBooking = (startDate, endDate, spotId) => async (dispatch) =>
       body: JSON.stringify({ startDate, endDate }),
     });
 
-    if (!response.ok) {
-      const error = await response.json();
-      return { error: error.errors.dates || error.message }; // return the error object
+    if (response.ok) {
+      const booking = await response.json();
+      dispatch(addOneBooking(booking));
     }
-
-    const booking = await response.json();
-    dispatch(addOneBooking(booking));
-    return { success: true, booking };
-  } catch (error) {
-    return { success: false, error: error.message };
   }
-};
 
 
 export const deleteBooking = (bookingId) => async dispatch => {
