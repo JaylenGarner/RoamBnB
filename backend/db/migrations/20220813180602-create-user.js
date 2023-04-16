@@ -28,7 +28,7 @@ module.exports = {
         allowNull: false
       },
       image: {
-        type: Sequelize.STRING(30),
+        type: Sequelize.STRING(500),
         allowNull: false
       },
       hashedPassword: {
